@@ -1,72 +1,188 @@
-package com.dhanas.grandeenotes.activity;
+package com.dhanas.grandeenotes.Activity;
+
+import android.content.Intent;
+import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ProgressBar;
-
-import com.dhanas.grandeenotes.MainActivity;
+import com.dhanas.grandeenotes.Model.GeneralSettings.GeneralSettings;
 import com.dhanas.grandeenotes.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.dhanas.grandeenotes.Utility.ConnectivityReceiver;
+import com.dhanas.grandeenotes.Utility.MutedVideoView;
+import com.dhanas.grandeenotes.Utility.MyApp;
+import com.dhanas.grandeenotes.Utility.PrefManager;
+import com.dhanas.grandeenotes.Webservice.AppAPI;
+import com.dhanas.grandeenotes.Webservice.BaseURL;
+import com.google.android.material.snackbar.Snackbar;
 
-public class SplashActivity extends AppCompatActivity {
-    ProgressBar mProgress;
-    private FirebaseAuth mAuth;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class SplashActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
+
+    private final int SPLASH_DISPLAY_LENGTH = 500;
+    private PrefManager prefManager;
+    Intent mainIntent;
+
+    private boolean ispaused = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        MyApp.getInstance().initAppLanguage(this);
+        setContentView(R.layout.splash);
 
-        setContentView(R.layout.activity_splash);
 
-        mProgress = (ProgressBar) findViewById(R.id.splash_screen_progress_bar);
+        PrefManager.forceRTLIfSupported(getWindow(), SplashActivity.this);
+        prefManager = new PrefManager(SplashActivity.this);
 
-        new Thread(new Runnable() {
-            public void run() {
-                doWork();
-                startApp();
-                finish();
+        checkConnection();
+
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        if (isConnected) {
+            general_settings();
+
+            MutedVideoView vView = (MutedVideoView) findViewById(R.id.video_view);
+            Uri video = Uri.parse("android.resource://" + getPackageName() + "/"
+                    + R.raw.splash);
+
+            if (vView != null) {
+                vView.setVideoURI(video);
+                vView.setZOrderOnTop(true);
+                vView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    public void onCompletion(MediaPlayer mp) {
+//                        jump();
+                    }
+                });
+
+                vView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+                    @Override
+                    public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
+//                        jump();
+                        return false;
+                    }
+                });
+                vView.start();
+            } else {
+//                jump();
             }
-        }).start();
+        }
     }
 
-    private void doWork() {
-        for (int progress = 0; progress < 100; progress += 10) {
-            try {
-                Thread.sleep(100);
-                mProgress.setProgress(progress);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+
+    // Method to manually check connection status
+    private void checkConnection() {
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        showSnack(isConnected);
+    }
+
+    // Showing the status in Snackbar
+    private void showSnack(boolean isConnected) {
+        String message;
+        int color;
+        if (isConnected) {
+//            message = "Good! Connected to Internet";
+//            color = Color.WHITE;
+        } else {
+            message = "Sorry! Not connected to internet";
+            color = Color.RED;
+
+            Snackbar snackbar = Snackbar
+                    .make(findViewById(R.id.fab), message, Snackbar.LENGTH_LONG);
+
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(R.id.snackbar_text);
+            textView.setTextColor(color);
+            snackbar.show();
         }
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // register connection status listener
+        MyApp.getInstance().setConnectivityListener(this);
+        if (ispaused) {
+            jump();
+        }
+    }
 
-    private void startApp() {
-//        if (check == 1) {
-//            finish();
-//            System.exit(0);
-//        } else {
-//        if (mAuth.getCurrentUser() != null) {
-//
-//        }
-//        else {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-
-//        }
-
-//        }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ispaused = true;
     }
 
 
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        showSnack(isConnected);
+    }
+
+    private void general_settings() {
+        AppAPI bookNPlayAPI = BaseURL.getVideoAPI();
+        Call<GeneralSettings> call = bookNPlayAPI.general_settings();
+        call.enqueue(new Callback<GeneralSettings>() {
+            @Override
+            public void onResponse(Call<GeneralSettings> call, Response<GeneralSettings> response) {
+                if (response.code() == 200) {
+
+                    prefManager = new PrefManager(SplashActivity.this);
+
+                    for (int i = 0; i < response.body().getResult().size(); i++) {
+                        Log.e("==>", "" + response.body().getResult().get(i).getKey());
+                        Log.e("==>", "" + response.body().getResult().get(i).getValue());
+                        prefManager.setValue(response.body().getResult().get(i).getKey(), response.body().getResult().get(i).getValue());
+                    }
+
+
+                    if (!prefManager.isFirstTimeLaunch()) {
+                        if (prefManager.getLoginId().equalsIgnoreCase("0"))
+                            mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
+                        else
+                            mainIntent = new Intent(SplashActivity.this, MainActivity.class);
+                        startActivity(mainIntent);
+                        finish();
+                    } else {
+                        Intent mainIntent = new Intent(SplashActivity.this, WelcomeActivity.class);
+                        startActivity(mainIntent);
+                        finish();
+                    }
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GeneralSettings> call, Throwable t) {
+            }
+        });
+    }
+
+    private void jump() {
+        if (!prefManager.isFirstTimeLaunch()) {
+            if (prefManager.getLoginId().equalsIgnoreCase("0"))
+                mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
+            else
+                mainIntent = new Intent(SplashActivity.this, MainActivity.class);
+            startActivity(mainIntent);
+            finish();
+        } else {
+            Intent mainIntent = new Intent(SplashActivity.this, WelcomeActivity.class);
+            startActivity(mainIntent);
+            finish();
+        }
+    }
 }

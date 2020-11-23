@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "1054189883715",
-    "firebase_url": "https://grandee-notes-e4185.firebaseio.com",
-    "project_id": "grandee-notes-e4185",
-    "storage_bucket": "grandee-notes-e4185.appspot.com"
+    "project_number": "866714287586",
+    "firebase_url": "https://grandee-notes-2d236.firebaseio.com",
+    "project_id": "grandee-notes-2d236",
+    "storage_bucket": "grandee-notes-2d236.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1054189883715:android:d423daece849de9b0adff6",
+        "mobilesdk_app_id": "1:866714287586:android:38784f4af70eec6b4d0dbb",
         "android_client_info": {
           "package_name": "com.dhanas.grandeenotes"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1054189883715-73q5tvk4u2ehcq6c2sof7b8c9k0f1qk5.apps.googleusercontent.com",
+          "client_id": "866714287586-dqd5ruo6r8d8sevaofetlkt29gfk7pc1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.dhanas.grandeenotes",
@@ -23,20 +23,20 @@
           }
         },
         {
-          "client_id": "1054189883715-j7aju7li199gulu0rchm5qj154rsahqe.apps.googleusercontent.com",
+          "client_id": "866714287586-k4utqaamdrsbkqdlp0rhnoju7ivu8eg8.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCSHBOW61CT7noNzVzxn_FPa5_UQjg8Fco"
+          "current_key": "AIzaSyDpXww3rAkcmZQWVmYMFK2fkhIyzCChumE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1054189883715-j7aju7li199gulu0rchm5qj154rsahqe.apps.googleusercontent.com",
+              "client_id": "866714287586-k4utqaamdrsbkqdlp0rhnoju7ivu8eg8.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
