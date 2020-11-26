@@ -29,6 +29,7 @@ import com.dhanas.grandeenotes.Adapter.FeatureAdapter;
 import com.dhanas.grandeenotes.Adapter.FreebookAdapter;
 import com.dhanas.grandeenotes.Adapter.NewArrivalAdapter;
 import com.dhanas.grandeenotes.Adapter.PaidBookAdapter;
+import com.dhanas.grandeenotes.Adapter.SemesterAdapter;
 import com.dhanas.grandeenotes.Model.AuthorModel.AuthorModel;
 import com.dhanas.grandeenotes.Model.BookModel.BookModel;
 import com.dhanas.grandeenotes.Model.CategoryModel.CategoryModel;
@@ -76,6 +77,11 @@ public class Home extends Fragment {
     List<com.dhanas.grandeenotes.Model.AuthorModel.Result> AuthorList;
     RecyclerView rv_author;
     AuthorAdapter authorAdapter;
+
+
+  List<com.dhanas.grandeenotes.Model.AuthorModel.Result> SemList;
+   RecyclerView rv_semester;
+   SemesterAdapter semesterAdapter;
 
     List<com.dhanas.grandeenotes.Model.BookModel.Result> ContinueList;
     RecyclerView rv_continue;

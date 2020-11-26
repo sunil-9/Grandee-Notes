@@ -137,6 +137,7 @@ public class PDFShow extends AppCompatActivity implements OnPageChangeListener, 
     @Override
     public void onPageChanged(int page, int pageCount) {
 
+
     }
 
     @Override

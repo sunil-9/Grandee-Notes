@@ -65,7 +65,7 @@
             android:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_author"
+            android:id="@+id/rv_semester"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="3dp"

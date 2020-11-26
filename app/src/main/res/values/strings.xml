@@ -122,6 +122,7 @@
     <string name="change_language">Language</string>
     <string name="semester">Semester</string>
     <string name="course">Course</string>
+    <string name="ask">Ask</string>
 
 
 </resources>

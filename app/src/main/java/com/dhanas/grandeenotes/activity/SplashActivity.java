@@ -106,7 +106,6 @@ public class SplashActivity extends AppCompatActivity implements ConnectivityRec
             textView.setTextColor(color);
             snackbar.show();
         }
-
     }
 
     @Override

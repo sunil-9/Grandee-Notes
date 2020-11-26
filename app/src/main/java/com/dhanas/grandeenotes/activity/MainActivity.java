@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
     RelativeLayout rl_adView, rl_native_adView;
     private NativeAd listNativeAd;
+    private boolean isHomeFrag= true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,20 +142,29 @@ public class MainActivity extends AppCompatActivity {
             Log.e("Exception=>", "" + e.getMessage());
         }
     }
-
     @Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setMessage("Are you sure you want to exit?")
-                .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finish();
-                    }
-                })
-                .setNegativeButton("No", null)
-                .show();
+
+
+        if(isHomeFrag){
+            new AlertDialog.Builder(this)
+                    .setMessage("Are you sure you want to exit?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
+        }
+        else{
+            pushFragment(new Home());
+        }
     }
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -184,23 +195,28 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.bottom_home:
                 toolbar.setTitle(getResources().getString(R.string.title_home));
+                isHomeFrag= false;
                 pushFragment(new Home());
                 break;
             case R.id.bottom_treding:
                 toolbar.setTitle(getResources().getString(R.string.title_search));
+                isHomeFrag= false;
                 pushFragment(new Search());
                 break;
             case R.id.bottom_category:
                 toolbar.setTitle(getResources().getString(R.string.title_bookmark));
+                isHomeFrag= false;
                 if (prefManager.getLoginId().equalsIgnoreCase("0")) {
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 } else {
                     pushFragment(new BookMark());
                 }
                 break;
-            case R.id.bottom_premium:
+            case R.id.question:
+                Toast.makeText(this, "question and answer", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.bottom_latest:
+                isHomeFrag= false;
                 toolbar.setTitle(getResources().getString(R.string.title_settings));
                 pushFragment(new Settings());
                 break;

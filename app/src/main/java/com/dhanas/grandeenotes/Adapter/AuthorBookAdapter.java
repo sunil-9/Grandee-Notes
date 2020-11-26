@@ -34,7 +34,7 @@ public class AuthorBookAdapter extends RecyclerView.Adapter<AuthorBookAdapter.My
             super(view);
             txt_bookname = (TextView) view.findViewById(R.id.txt_bookname);
             iv_thumb = (ImageView) view.findViewById(R.id.iv_thumb);
-//            txt_view = (TextView) view.findViewById(R.id.txt_view);
+            txt_view = (TextView) view.findViewById(R.id.txt_view);
         }
     }
 
