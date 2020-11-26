@@ -252,6 +252,10 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
+                else  {
+                    Toast.makeText(LoginActivity.this, "failed please try again", Toast.LENGTH_SHORT).show();
+                }
+
             }
 
             @Override

@@ -5,11 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +24,9 @@ import com.dhanas.grandeenotes.Webservice.AppAPI;
 import com.dhanas.grandeenotes.Webservice.BaseURL;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,12 +35,13 @@ import static com.squareup.picasso.Picasso.Priority.HIGH;
 
 public class Registration extends AppCompatActivity {
 
-    String str_fullname, str_email, str_password, str_phone;
+    String str_fullname, str_email, str_password, str_phone,course_id;
     ProgressDialog progressDialog;
     private PrefManager prefManager;
     TextView txt_registration, txt_signup;
     EditText et_fullname, et_email, et_password, et_phone;
     ImageView iv_icon;
+    Spinner spinner_course;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +72,7 @@ public class Registration extends AppCompatActivity {
                 str_password = et_password.getText().toString();
                 str_phone = et_phone.getText().toString();
 
+
                 if (TextUtils.isEmpty(str_fullname)) {
                     Toast.makeText(Registration.this, "Enter FullName", Toast.LENGTH_SHORT).show();
                     return;
@@ -83,7 +92,6 @@ public class Registration extends AppCompatActivity {
                     Toast.makeText(Registration.this, "Enter Phone Number", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 SignUp();
             }
         });
@@ -102,6 +110,45 @@ public class Registration extends AppCompatActivity {
         et_password = (EditText) findViewById(R.id.et_password);
         et_phone = (EditText) findViewById(R.id.et_phone);
         txt_signup = (TextView) findViewById(R.id.txt_signup);
+        spinner_course = findViewById(R.id.spinner_course);
+
+        //for course
+        List<String> list_course = new ArrayList<String>();
+        list_course.add("BCA");
+        list_course.add("BBA");
+        list_course.add("BPH");
+
+
+        ArrayAdapter<String> adapter_course = new ArrayAdapter<String>(Registration.this, android.R.layout.simple_spinner_item, list_course);
+        adapter_course.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_course.setAdapter(adapter_course);
+
+        spinner_course.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        Log.e("onItemSelected: ", "onItemSelected: bca selected" );
+//                        Toast.makeText(Registration.this,"Bca selected",Toast.LENGTH_SHORT).show();
+                        course_id ="1";
+                        break;
+                    case 1:
+                        course_id ="2";
+                        break;
+                    case 2:
+                        course_id ="3";
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+
+        });
 
         iv_icon=findViewById(R.id.iv_icon);
     }
@@ -109,7 +156,7 @@ public class Registration extends AppCompatActivity {
     public void SignUp() {
         progressDialog.show();
         AppAPI bookNPlayAPI = BaseURL.getVideoAPI();
-        Call<LoginRegiModel> call = bookNPlayAPI.Registration(str_fullname, str_email, str_password, str_phone);
+        Call<LoginRegiModel> call = bookNPlayAPI.Registration(str_fullname, str_email,course_id, str_password, str_phone);
         call.enqueue(new Callback<LoginRegiModel>() {
             @Override
             public void onResponse(Call<LoginRegiModel> call, Response<LoginRegiModel> response) {

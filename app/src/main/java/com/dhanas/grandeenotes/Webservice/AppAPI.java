@@ -34,6 +34,7 @@ public interface AppAPI {
     @POST("registration")
     Call<LoginRegiModel> Registration(@Field("fullname") String full_name,
                                       @Field("email") String email_id,
+                                      @Field("course_id") String course_id,
                                       @Field("password") String password,
                                       @Field("mobile_number") String phone);
 
