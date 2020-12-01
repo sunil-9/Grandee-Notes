@@ -104,28 +104,28 @@
                         android:textColor="?attr/textcolor"
                         android:textSize="14dp" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_small"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="@dimen/spacing_small"-->
+<!--                        android:gravity="center"-->
+<!--                        android:orientation="horizontal">-->
 
-                        <ImageView
-                            android:layout_width="@dimen/spacing_large"
-                            android:layout_height="@dimen/spacing_large"
-                            android:layout_marginEnd="@dimen/spacing_medium"
-                            android:tint="?attr/textcolor"
-                            app:srcCompat="@drawable/ic_location" />
+<!--                        <ImageView-->
+<!--                            android:layout_width="@dimen/spacing_large"-->
+<!--                            android:layout_height="@dimen/spacing_large"-->
+<!--                            android:layout_marginEnd="@dimen/spacing_medium"-->
+<!--                            android:tint="?attr/textcolor"-->
+<!--                            app:srcCompat="@drawable/ic_location" />-->
 
-                        <TextView
-                            android:id="@+id/txt_author_location"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto_regular"
-                            android:textColor="?attr/textcolor"
-                            android:textSize="12dp" />
-                    </LinearLayout>
+<!--                        <TextView-->
+<!--                            android:id="@+id/txt_author_location"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:fontFamily="@font/roboto_regular"-->
+<!--                            android:textColor="?attr/textcolor"-->
+<!--                            android:textSize="12dp" />-->
+<!--                    </LinearLayout>-->
 
                     <View
                         android:layout_width="match_parent"
@@ -139,90 +139,11 @@
                         android:orientation="horizontal"
                         android:paddingTop="@dimen/spacing_medium"
                         android:paddingBottom="@dimen/spacing_medium">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
+                        <TextView
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="?attr/backgroundcolor"
-                            android:clickable="true"
                             android:gravity="center"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/txt_books_total"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/roboto_medium"
-                                android:textColor="?attr/textcolor"
-                                android:textSize="18dp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/spacing_medium"
-                                android:fontFamily="@font/roboto_medium"
-                                android:text="@string/Books"
-                                android:textColor="?attr/textcolor"
-                                android:textSize="14dp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="?attr/backgroundcolor"
-                            android:clickable="true"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/txt_view_book"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/roboto_medium"
-                                android:textColor="?attr/textcolor"
-                                android:textSize="18dp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/spacing_medium"
-                                android:fontFamily="@font/roboto_medium"
-                                android:text="@string/Reviews"
-                                android:textColor="?attr/textcolor"
-                                android:textSize="14dp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="?attr/backgroundcolor"
-                            android:clickable="true"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/txt_download_book"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/roboto_medium"
-                                android:textColor="?attr/textcolor"
-                                android:textSize="18dp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/spacing_medium"
-                                android:fontFamily="@font/roboto_medium"
-                                android:text="@string/Downloads"
-                                android:textColor="?attr/textcolor"
-                                android:textSize="14dp" />
-
-                        </LinearLayout>
+                            android:text="tab tile here"/>
 
                     </LinearLayout>
 
@@ -260,125 +181,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?attr/backgroundcolor">
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/card_view_course"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="3dp"
-                        app:cardCornerRadius="2dp"
-                        app:cardPreventCornerOverlap="true"
-                        app:cardUseCompatPadding="true"
-                        app:contentPaddingBottom="0dp"
-                        tools:ignore="MissingConstraints">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="?attr/backgroundcolor"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/txt_course_book"
-                                android:layout_width="match_parent"
-                                android:layout_height="35dp"
-                                android:fontFamily="@font/roboto_medium"
-                                android:gravity="center_vertical"
-                                android:paddingStart="5dp"
-                                android:textColor="?attr/textcolor"
-                                android:textSize="14dp" />
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/rv_coursebooklist"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="3dp"
-                                android:minHeight="@dimen/min_height"
-                                android:scrollbars="vertical"
-                                android:visibility="visible" />
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/card_view_syllabus"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="3dp"
-                        app:cardCornerRadius="2dp"
-                        app:cardPreventCornerOverlap="true"
-                        app:cardUseCompatPadding="true"
-                        app:contentPaddingBottom="0dp"
-                        tools:ignore="MissingConstraints">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="?attr/backgroundcolor"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/txt_syllabus_book"
-                                android:layout_width="match_parent"
-                                android:layout_height="35dp"
-                                android:fontFamily="@font/roboto_medium"
-                                android:gravity="center_vertical"
-                                android:paddingStart="5dp"
-                                android:textColor="?attr/textcolor"
-                                android:textSize="14dp" />
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/rv_syllabuslist"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="3dp"
-                                android:minHeight="@dimen/min_height"
-                                android:scrollbars="vertical"
-                                android:visibility="visible" />
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/card_view_oldquestion"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="3dp"
-                        app:cardCornerRadius="2dp"
-                        app:cardPreventCornerOverlap="true"
-                        app:cardUseCompatPadding="true"
-                        app:contentPaddingBottom="0dp"
-                        tools:ignore="MissingConstraints">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="?attr/backgroundcolor"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/txt_oldquestion_book"
-                                android:layout_width="match_parent"
-                                android:layout_height="35dp"
-                                android:fontFamily="@font/roboto_medium"
-                                android:gravity="center_vertical"
-                                android:paddingStart="5dp"
-                                android:textColor="?attr/textcolor"
-                                android:textSize="14dp" />
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/rv_oldquestionlist"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="3dp"
-                                android:minHeight="@dimen/min_height"
-                                android:scrollbars="vertical"
-                                android:visibility="visible" />
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
 
 
 

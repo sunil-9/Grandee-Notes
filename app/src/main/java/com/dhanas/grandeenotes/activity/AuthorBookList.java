@@ -122,7 +122,6 @@ public class AuthorBookList extends AppCompatActivity {
             rl_adView.setVisibility(View.GONE);
 
         }
-
     }
 
     private void books_by_author() {

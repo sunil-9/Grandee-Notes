@@ -145,6 +145,14 @@
             android:name="com.dhanas.grandeenotes.Activity.AuthorAllActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+       <activity
+            android:name="com.dhanas.grandeenotes.Activity.SemesterAllActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+   <activity
+            android:name="com.dhanas.grandeenotes.Activity.SemesterBookList"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.dhanas.grandeenotes.Activity.MyDownloadBooks"
             android:screenOrientation="portrait"

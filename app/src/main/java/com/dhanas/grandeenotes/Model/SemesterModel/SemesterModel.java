@@ -1,6 +1,5 @@
 package com.dhanas.grandeenotes.Model.SemesterModel;
 
-import com.dhanas.grandeenotes.Model.AuthorModel.Result;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

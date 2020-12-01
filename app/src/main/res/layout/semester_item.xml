@@ -43,7 +43,7 @@
                     android:fontFamily="@font/roboto_medium"
                     android:gravity="center"
                     android:singleLine="true"
-                    android:text="Business"
+                    android:text="@string/semester"
                     android:textColor="?attr/textcolor"
                     android:textIsSelectable="true"
                     android:textSize="@dimen/text_14" />

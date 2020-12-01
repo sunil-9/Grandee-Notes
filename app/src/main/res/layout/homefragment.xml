@@ -34,7 +34,7 @@
                         android:layout_weight="0.7"
                         android:fontFamily="@font/roboto_medium"
                         android:gravity="center_vertical"
-                        android:text="@string/semester"
+                        android:text="@string/teachers"
                         android:textColor="?attr/textcolor"
                         android:textSize="@dimen/text_16" />
 
@@ -61,6 +61,54 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_author"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_margin="3dp"
+                    android:scrollbars="vertical"
+                    android:visibility="visible" />
+
+
+                <LinearLayout
+                    android:id="@+id/ly_semester"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:weightSum="1.0">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="0.7"
+                        android:fontFamily="@font/roboto_medium"
+                        android:gravity="center_vertical"
+                        android:text="@string/semester"
+                        android:textColor="?attr/textcolor"
+                        android:textSize="@dimen/text_16" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:gravity="center_vertical|end">
+
+                        <TextView
+                            android:id="@+id/txt_viewall_semester"
+                            android:layout_width="70dp"
+                            android:layout_height="28dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginStart="10dp"
+                            android:background="@drawable/round_viewall"
+                            android:fontFamily="@font/roboto_bold"
+                            android:gravity="center"
+                            android:text="@string/View_all"
+                            android:textColor="?attr/viewtextcolor"
+                            android:textSize="@dimen/text_12" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_semester"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
                     android:layout_margin="3dp"

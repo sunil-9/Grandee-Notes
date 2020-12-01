@@ -10,6 +10,7 @@ import com.dhanas.grandeenotes.Model.GeneralSettings.GeneralSettings;
 import com.dhanas.grandeenotes.Model.LoginRegister.LoginRegiModel;
 import com.dhanas.grandeenotes.Model.ProfileModel.ProfileModel;
 import com.dhanas.grandeenotes.Model.ReadDowncntModel.ReadDowncntModel;
+import com.dhanas.grandeenotes.Model.SemesterModel.SemesterModel;
 import com.dhanas.grandeenotes.Model.SuccessModel.SuccessModel;
 
 import retrofit2.Call;
@@ -65,6 +66,9 @@ public interface AppAPI {
 
     @GET("autherlist")
     Call<AuthorModel> autherlist();
+
+    @GET("semesterlist")
+    Call<SemesterModel> semesterlist();
 
     @FormUrlEncoded
     @POST("books_by_author")

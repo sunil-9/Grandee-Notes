@@ -192,10 +192,11 @@ public class MainActivity extends AppCompatActivity {
 
         item.setChecked(true);
 
+
         switch (item.getItemId()) {
             case R.id.bottom_home:
                 toolbar.setTitle(getResources().getString(R.string.title_home));
-                isHomeFrag= false;
+                isHomeFrag= true;
                 pushFragment(new Home());
                 break;
             case R.id.bottom_treding:

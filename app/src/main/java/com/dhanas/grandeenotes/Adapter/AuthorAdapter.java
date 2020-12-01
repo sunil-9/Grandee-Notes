@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -55,6 +56,7 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
+        Log.e("onBind(author): ",AuthorList.get(position).getAId());
 
         holder.txt_bookname.setText("" + AuthorList.get(position).getATitle());
 
@@ -68,6 +70,8 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
 //                prefManager.WallpaperList = new ArrayList<>();
 //                prefManager.WallpaperList = LatestList;
 //
+//                Toast.makeText(mcontext, "clicked semester" +AuthorList.get(position).getAImage(), Toast.LENGTH_SHORT).show();
+
                 Intent intent = new Intent(mcontext, AuthorBookList.class);
                 intent.putExtra("a_id", AuthorList.get(position).getAId());
                 intent.putExtra("a_name", AuthorList.get(position).getATitle());

@@ -120,9 +120,14 @@
     <string name="downloading">Downloading</string>
 
     <string name="change_language">Language</string>
-    <string name="semester">Semester</string>
-    <string name="course">Course</string>
-    <string name="ask">Ask</string>
+    <string name="course" translatable="false">Course</string>
+    <string name="ask" translatable="false">Ask</string>
+    <string name="teachers" translatable="false">Teachers</string>
+    <string name="semester" translatable="false">Semester</string>
+    <string name="syllabus">Syllabus</string>
+    <string name="oldquestion">Old Question</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

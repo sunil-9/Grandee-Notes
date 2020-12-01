@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -22,6 +23,7 @@ import com.dhanas.grandeenotes.Activity.FeatureItemsViewAll;
 import com.dhanas.grandeenotes.Activity.FreeBookallview;
 import com.dhanas.grandeenotes.Activity.NewArrivalAll;
 import com.dhanas.grandeenotes.Activity.Paidbookallview;
+import com.dhanas.grandeenotes.Activity.SemesterAllActivity;
 import com.dhanas.grandeenotes.Adapter.AuthorAdapter;
 import com.dhanas.grandeenotes.Adapter.CategoryAdapter;
 import com.dhanas.grandeenotes.Adapter.ContinueReadAdapter;
@@ -35,6 +37,7 @@ import com.dhanas.grandeenotes.Model.BookModel.BookModel;
 import com.dhanas.grandeenotes.Model.CategoryModel.CategoryModel;
 import com.dhanas.grandeenotes.Model.CategoryModel.Result;
 import com.dhanas.grandeenotes.Model.FreeBookModel.FreeBookModel;
+import com.dhanas.grandeenotes.Model.SemesterModel.SemesterModel;
 import com.dhanas.grandeenotes.R;
 import com.dhanas.grandeenotes.Utility.PrefManager;
 import com.dhanas.grandeenotes.Webservice.AppAPI;
@@ -52,7 +55,7 @@ public class Home extends Fragment {
     PrefManager prefManager;
     ProgressDialog progressDialog;
 
-    TextView txt_viewall_new_arrival, txt_viewall_category, txt_viewall_item, txt_viewall_author, txt_viewall_continue, txt_viewall_paidbook, txt_viewall_freebook;
+    TextView txt_viewall_new_arrival, txt_viewall_category, txt_viewall_item, txt_viewall_author,txt_viewall_semester, txt_viewall_continue, txt_viewall_paidbook, txt_viewall_freebook;
 
     List<Result> CategoryList;
     RecyclerView ry_category;
@@ -79,14 +82,14 @@ public class Home extends Fragment {
     AuthorAdapter authorAdapter;
 
 
-  List<com.dhanas.grandeenotes.Model.AuthorModel.Result> SemList;
+  List<com.dhanas.grandeenotes.Model.SemesterModel.Result> SemesterList;
    RecyclerView rv_semester;
    SemesterAdapter semesterAdapter;
 
     List<com.dhanas.grandeenotes.Model.BookModel.Result> ContinueList;
     RecyclerView rv_continue;
     ContinueReadAdapter continueReadAdapter;
-    LinearLayout ly_continue, ly_paid_book, ly_free_book, ly_author, ly_New_Arrival_Book, ly_top_reading_Book, ly_category;
+    LinearLayout ly_continue, ly_paid_book, ly_free_book, ly_author,ly_semester, ly_New_Arrival_Book, ly_top_reading_Book, ly_category;
 
     int progress_hide = 0;
 
@@ -110,6 +113,7 @@ public class Home extends Fragment {
         rv_newarrival = (RecyclerView) root.findViewById(R.id.rv_newarrival);
         rv_feature_item = (RecyclerView) root.findViewById(R.id.rv_feature_item);
         rv_author = (RecyclerView) root.findViewById(R.id.rv_author);
+        rv_semester = (RecyclerView) root.findViewById(R.id.rv_semester);
         rv_continue = (RecyclerView) root.findViewById(R.id.rv_continue);
         rv_freebook = root.findViewById(R.id.rv_freebook);
         rv_paidbook = root.findViewById(R.id.rv_paidbook);
@@ -118,6 +122,7 @@ public class Home extends Fragment {
         ly_paid_book = root.findViewById(R.id.ly_paid_book);
         ly_free_book = root.findViewById(R.id.ly_free_book);
         ly_author = root.findViewById(R.id.ly_author);
+        ly_semester = root.findViewById(R.id.ly_semester);
         ly_New_Arrival_Book = root.findViewById(R.id.ly_New_Arrival_Book);
         ly_top_reading_Book = root.findViewById(R.id.ly_top_reading_Book);
         ly_category = root.findViewById(R.id.ly_category);
@@ -127,6 +132,7 @@ public class Home extends Fragment {
         txt_viewall_category = (TextView) root.findViewById(R.id.txt_viewall_category);
         txt_viewall_item = (TextView) root.findViewById(R.id.txt_viewall_item);
         txt_viewall_author = (TextView) root.findViewById(R.id.txt_viewall_author);
+        txt_viewall_semester = (TextView) root.findViewById(R.id.txt_viewall_semester);
         txt_viewall_continue = (TextView) root.findViewById(R.id.txt_viewall_continue);
         txt_viewall_paidbook = root.findViewById(R.id.txt_viewall_paidbook);
         txt_viewall_freebook = root.findViewById(R.id.txt_viewall_freebook);
@@ -171,9 +177,15 @@ public class Home extends Fragment {
                 startActivity(new Intent(getActivity(), AuthorAllActivity.class));
             }
         });
+     txt_viewall_semester.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), SemesterAllActivity.class));
+            }
+        });
 
         progress_hide = 0;
-
+        SemesterList();
         Get_Category();
         FeatureItem();
         NewArrival();
@@ -214,7 +226,7 @@ public class Home extends Fragment {
 
                 }
                 progress_hide++;
-                if (progress_hide >= 7)
+                if (progress_hide >= 8)
                     progressDialog.dismiss();
             }
 
@@ -254,7 +266,7 @@ public class Home extends Fragment {
                     }
                 }
                 progress_hide++;
-                if (progress_hide >= 7)
+                if (progress_hide >= 8)
                     progressDialog.dismiss();
             }
 
@@ -294,7 +306,7 @@ public class Home extends Fragment {
                     }
                 }
                 progress_hide++;
-                if (progress_hide >= 7)
+                if (progress_hide >= 8)
                     progressDialog.dismiss();
             }
 
@@ -313,7 +325,6 @@ public class Home extends Fragment {
             @Override
             public void onResponse(Call<AuthorModel> call, Response<AuthorModel> response) {
                 if (response.code() == 200) {
-
                     AuthorList = new ArrayList<>();
                     AuthorList = response.body().getResult();
                     Log.e("AuthorList", "" + AuthorList.size());
@@ -334,13 +345,73 @@ public class Home extends Fragment {
                     }
                 }
                 progress_hide++;
-                if (progress_hide >= 7)
+                if (progress_hide >= 8)
                     progressDialog.dismiss();
             }
 
             @Override
             public void onFailure(Call<AuthorModel> call, Throwable t) {
                 progressDialog.dismiss();
+            }
+        });
+    }
+
+
+    private void SemesterList() {
+        progressDialog.show();
+//        Toast.makeText(getActivity(), "semester api searching", Toast.LENGTH_SHORT).show();
+
+        AppAPI bookNPlayAPI = BaseURL.getVideoAPI();
+        Call<SemesterModel> call = bookNPlayAPI.semesterlist();
+        call.enqueue(new Callback<SemesterModel>() {
+
+
+            @Override
+            public void onResponse(Call<SemesterModel> call, Response<SemesterModel> response) {
+                if (response.code() == 200) {
+//                    Toast.makeText(getAcativity(), "semester api found", Toast.LENGTH_SHORT).show();
+                    SemesterList = new ArrayList<>();
+                    if( response.body() != null) {
+                        SemesterList = response.body().getResult();
+                    }
+//                    Toast.makeText(getActivity(), "semester api got some data", Toast.LENGTH_SHORT).show();
+
+                    Log.e("SemesterList", "" + SemesterList.size());
+                    if (SemesterList.size() > 0) {
+                        Log.e("semester data", "" + response);
+                        try {
+//                        Toast.makeText(getActivity(), "semester is :"+SemesterList.get(1).getSname(), Toast.LENGTH_SHORT).show();
+                            semesterAdapter = new SemesterAdapter(getActivity(), SemesterList);
+                            rv_semester.setHasFixedSize(true);
+                            Toast.makeText(getActivity(), "semester list is not null", Toast.LENGTH_SHORT).show();
+                            RecyclerView.LayoutManager mLayoutManager3 = new LinearLayoutManager(getActivity(),
+                                    LinearLayoutManager.HORIZONTAL, false);
+                            rv_semester.setLayoutManager(mLayoutManager3);
+                            rv_semester.setItemAnimator(new DefaultItemAnimator());
+                            rv_semester.setAdapter(semesterAdapter);
+                            semesterAdapter.notifyDataSetChanged();
+                            rv_semester.setVisibility(View.VISIBLE);
+                            ly_semester.setVisibility(View.VISIBLE);
+                        } catch (Exception e) {
+                            Log.d("onResponse semester: " ,e.toString());
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "no semester data found", Toast.LENGTH_SHORT).show();
+                        rv_semester.setVisibility(View.GONE);
+                        ly_semester.setVisibility(View.GONE);
+                    }
+                }
+                progress_hide++;
+                if (progress_hide >= 8)
+                    progressDialog.dismiss();
+
+            }
+            @Override
+            public void onFailure(Call<SemesterModel> call, Throwable t) {
+                Toast.makeText(getActivity(), "failed semester api", Toast.LENGTH_SHORT).show();
+                rv_semester.setVisibility(View.GONE);
+                ly_semester.setVisibility(View.GONE);
+
             }
         });
     }
@@ -375,7 +446,7 @@ public class Home extends Fragment {
                     }
                 }
                 progress_hide++;
-                if (progress_hide >= 7)
+                if (progress_hide >= 8)
                     progressDialog.dismiss();
             }
 
@@ -416,7 +487,7 @@ public class Home extends Fragment {
                     }
                 }
                 progress_hide++;
-                if (progress_hide >= 7)
+                if (progress_hide >= 8)
                     progressDialog.dismiss();
             }
 
@@ -458,7 +529,7 @@ public class Home extends Fragment {
                     }
                 }
                 progress_hide++;
-                if (progress_hide >= 7)
+                if (progress_hide >= 8)
                     progressDialog.dismiss();
 
             }
