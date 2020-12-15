@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -60,13 +61,6 @@
 
         </LinearLayout>
 
-        <RelativeLayout
-            android:id="@+id/rl_adView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="?attr/backgroundcolor"
-            android:visibility="visible"></RelativeLayout>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -76,22 +70,22 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:background="?attr/backgroundcolor"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="?attr/backgroundcolor">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
-                    android:background="?attr/backgroundcolor"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="10dp"
+                    android:background="?attr/backgroundcolor">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:background="?attr/backgroundcolor"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:background="?attr/backgroundcolor">
 
                         <com.mikhaellopez.circularimageview.CircularImageView
                             android:id="@+id/imageView_profile"
@@ -111,10 +105,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_below="@+id/imageView_profile"
-                            android:background="?attr/backgroundcolor"
                             android:layout_marginStart="5dp"
                             android:layout_marginTop="20dp"
                             android:layout_marginEnd="5dp"
+                            android:background="?attr/backgroundcolor"
                             android:orientation="vertical">
 
 
@@ -150,13 +144,13 @@
                                     android:layout_height="match_parent"
                                     android:layout_marginStart="5dp"
                                     android:layout_weight="0.88"
-                                    android:fontFamily="@font/roboto_medium"
                                     android:background="@null"
-                                    android:textSize="14sp"
+                                    android:fontFamily="@font/roboto_medium"
                                     android:gravity="center_vertical"
                                     android:singleLine="true"
                                     android:textColor="?attr/tintclr"
-                                    android:textColorHint="?attr/tintclr" />
+                                    android:textColorHint="?attr/tintclr"
+                                    android:textSize="14sp" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -192,6 +186,7 @@
                                     android:layout_marginStart="5dp"
                                     android:layout_weight="0.88"
                                     android:background="@null"
+                                    android:inputType="textPassword"
                                     android:fontFamily="@font/roboto_medium"
                                     android:gravity="center_vertical"
                                     android:singleLine="true"
@@ -234,13 +229,14 @@
                                     android:layout_height="match_parent"
                                     android:layout_marginStart="5dp"
                                     android:layout_weight="0.88"
-                                    android:fontFamily="@font/roboto_medium"
                                     android:background="@null"
-                                    android:textSize="14sp"
+                                    android:fontFamily="@font/roboto_medium"
                                     android:gravity="center_vertical"
+
                                     android:singleLine="true"
                                     android:textColor="?attr/tintclr"
-                                    android:textColorHint="?attr/tintclr" />
+                                    android:textColorHint="?attr/tintclr"
+                                    android:textSize="14sp" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -258,13 +254,11 @@
                                     android:layout_height="match_parent"
                                     android:layout_weight="0.15"
                                     android:gravity="center">
-
                                     <ImageView
                                         android:layout_width="30dp"
                                         android:layout_height="30dp"
                                         android:background="@drawable/ic_phone" />
                                 </LinearLayout>
-
                                 <View
                                     android:layout_width="1dp"
                                     android:layout_height="match_parent"
@@ -278,13 +272,43 @@
                                     android:layout_weight="0.88"
                                     android:background="@null"
                                     android:fontFamily="@font/roboto_medium"
-                                    android:textSize="14sp"
                                     android:gravity="center_vertical"
                                     android:singleLine="true"
                                     android:textColor="?attr/tintclr"
-                                    android:textColorHint="?attr/tintclr" />
+                                    android:textColorHint="?attr/tintclr"
+                                    android:textSize="14sp" />
                             </LinearLayout>
 
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/txt_change_course"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:layout_weight="0.4"
+                                    android:fontFamily="@font/roboto_regular"
+                                    android:paddingTop="15dp"
+                                    android:paddingBottom="15dp"
+                                    android:text="@string/course"
+                                    android:textColor="?attr/textcolor"
+                                    android:textSize="16sp" />
+
+                                <Spinner
+                                    android:id="@+id/spinner_course"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:backgroundTint="@color/colorPrimary"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginEnd="5dp"
+                                    android:layout_weight="0.6" />
+
+                            </LinearLayout>
 
                             <TextView
                                 android:id="@+id/btn_update"
@@ -312,4 +336,11 @@
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:id="@+id/rl_adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="?attr/backgroundcolor"
+        android:visibility="visible" />
+</RelativeLayout>

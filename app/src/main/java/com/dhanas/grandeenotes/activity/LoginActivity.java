@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String EMAIL = "email";
     private static final String PROFILE = "public_profile";
 
-    String fb_name, fb_email;
+    String fb_name, fb_email,course;
 
     GoogleSignInOptions gso;
     GoogleSignInClient mGoogleSignInClient;
@@ -235,6 +235,7 @@ public class LoginActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 200) {
+                        Toast.makeText(LoginActivity.this, "id is: " + response.body().getUserid(), Toast.LENGTH_SHORT).show();
                         prefManager.setLoginId("" + response.body().getUserid());
 
                         if (prefManager.getValue("interstital_ad").equalsIgnoreCase("yes")) {
@@ -253,7 +254,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
                 else  {
-                    Toast.makeText(LoginActivity.this, "failed please try again", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Failed please try again", Toast.LENGTH_SHORT).show();
                 }
 
             }

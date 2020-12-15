@@ -1,22 +1,123 @@
 package com.dhanas.grandeenotes.Fragment;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.dhanas.grandeenotes.Activity.AuthorAllActivity;
+import com.dhanas.grandeenotes.Activity.AuthorBookList;
+import com.dhanas.grandeenotes.Adapter.AuthorBookAdapter;
+import com.dhanas.grandeenotes.Adapter.CourseAdapter;
+import com.dhanas.grandeenotes.Model.BookModel.BookModel;
+import com.dhanas.grandeenotes.Model.BookModel.Result;
 import com.dhanas.grandeenotes.R;
+import com.dhanas.grandeenotes.Utility.PrefManager;
+import com.dhanas.grandeenotes.Webservice.AppAPI;
+import com.dhanas.grandeenotes.Webservice.BaseURL;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CourseFragment extends Fragment {
+    String semester_id;
 
+    RecyclerView rv_booklist;
 
+    PrefManager prefManager;
+    ProgressDialog progressDialog;
+
+    List<Result> BookList;
+    AuthorBookAdapter bookAdapter;
+
+    public CourseFragment(String semester_id) {
+        this.semester_id = semester_id;
+    }
+
+    View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_course, container, false);
+        view =inflater.inflate(R.layout.fragment_course, container, false);
+        prefManager =new PrefManager(getActivity());
+
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Please wait...");
+        progressDialog.setCanceledOnTouchOutside(false);
+        rv_booklist = (RecyclerView) view.findViewById(R.id.rv_booklist);
+
+
+        books_by_course();
+
+        Toast.makeText(getActivity(), "semester id is: " +semester_id+"user id is: " +prefManager.getLoginId(), Toast.LENGTH_SHORT).show();
+        return view;
     }
+
+    private void books_by_course() {
+        progressDialog.show();
+        AppAPI bookNPlayAPI = BaseURL.getVideoAPI();
+        Log.e("books_by_course", "error id send "+prefManager.getLoginId()+"semeseter"+semester_id);
+        Call<BookModel> call = bookNPlayAPI.books_by_course(semester_id,prefManager.getLoginId());
+        call.enqueue(new Callback<BookModel>() {
+            @Override
+            public void onResponse(Call<BookModel> call, Response<BookModel> response) {
+                if (response.code() == 200) {
+                    BookList = new ArrayList<>();
+                    BookList = response.body().getResult();
+
+                    bookAdapter = new AuthorBookAdapter(getActivity(), BookList);
+                    rv_booklist.setHasFixedSize(true);
+                    RecyclerView.LayoutManager mLayoutManager3 = new LinearLayoutManager(getActivity(),
+                            LinearLayoutManager.HORIZONTAL, false);
+//                    rv_booklist.setLayoutManager(mLayoutManager3);
+                    GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3, LinearLayoutManager.VERTICAL, false);
+                    rv_booklist.setLayoutManager(gridLayoutManager);
+                    rv_booklist.setItemAnimator(new DefaultItemAnimator());
+                    rv_booklist.setAdapter(bookAdapter);
+                    bookAdapter.notifyDataSetChanged();
+
+
+
+//                    Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT).show();
+//                    Log.e("course List", "error size of book is: " + BookList.size());
+//                    Log.e("course List", "error not " + response.body().getResult().toString());
+//                    Total Book count show
+//                    txt_books_total.setText("" + BookList.size());
+//                    authorBookAdapter = new AuthorBookAdapter(AuthorBookList.this, BookList);
+//                    rv_booklist.setHasFixedSize(true);
+//                    RecyclerView.LayoutManager mLayoutManager3 = new LinearLayoutManager(AuthorBookList.this,
+//                            LinearLayoutManager.HORIZONTAL, false);
+////                    rv_booklist.setLayoutManager(mLayoutManager3);
+//                    GridLayoutManager gridLayoutManager = new GridLayoutManager(AuthorBookList.this, 3, LinearLayoutManager.VERTICAL, false);
+//                    rv_booklist.setLayoutManager(gridLayoutManager);
+//                    rv_booklist.setItemAnimator(new DefaultItemAnimator());
+//                    rv_booklist.setAdapter(authorBookAdapter);
+//                    authorBookAdapter.notifyDataSetChanged();
+                }
+                Log.e("course List", "error occured");
+
+                progressDialog.dismiss();
+            }
+            @Override
+            public void onFailure(Call<BookModel> call, Throwable t) {
+                progressDialog.dismiss();
+                Log.e("course List", "error occurred while call "+t.toString());
+            }
+        });
+    }
+
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/course"
+        android:title="@string/course"
+        android:icon="@drawable/ic_books"
+        />
+
+    <item android:id="@+id/old_question"
+        android:title="@string/old_question"
+        android:icon="@drawable/ic_old_question"
+        />
+
+    <item android:id="@+id/Syllabus"
+        android:title="@string/syllabus"
+        android:icon="@drawable/ic_syllabus"
+        />
+
+</menu>

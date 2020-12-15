@@ -45,6 +45,7 @@ public interface AppAPI {
                                          @Field("email") String email_id);
 
 
+
     @GET("general_setting")
     Call<GeneralSettings> general_settings();
 
@@ -64,12 +65,14 @@ public interface AppAPI {
     @GET("popularbooklist")
     Call<BookModel> popularbooklist();
 
-    @GET("autherlist")
-    Call<AuthorModel> autherlist();
+    @FormUrlEncoded
+    @POST("autherlist")
+    Call<AuthorModel> autherlist(@Field("u_id") String u_id);
+//TODO: add course id
 
     @GET("semesterlist")
     Call<SemesterModel> semesterlist();
-
+//TODO: add course id
     @FormUrlEncoded
     @POST("books_by_author")
     Call<BookModel> books_by_author(@Field("a_id") String a_id);
@@ -77,6 +80,24 @@ public interface AppAPI {
     @FormUrlEncoded
     @POST("bookdetails")
     Call<BookModel> bookdetails(@Field("b_id") String b_id,
+                                @Field("user_id") String user_id);
+
+
+    @FormUrlEncoded
+    @POST("books_by_course")
+    Call<BookModel> books_by_course(@Field("s_id") String s_id,
+                                @Field("user_id") String user_id);
+
+
+    @FormUrlEncoded
+    @POST("books_by_oldquestion")
+    Call<BookModel> books_by_oldquestion(@Field("s_id") String s_id,
+                                @Field("user_id") String user_id);
+
+
+    @FormUrlEncoded
+    @POST("books_by_syllabus")
+    Call<BookModel> books_by_syllabus(@Field("s_id") String s_id,
                                 @Field("user_id") String user_id);
 
     @FormUrlEncoded
@@ -172,7 +193,9 @@ public interface AppAPI {
                                       @Field("fullname") String fullname,
                                       @Field("email") String email,
                                       @Field("password") String password,
-                                      @Field("mobile_number") String mobile_number);
+                                      @Field("mobile_number") String mobile_number,
+                                      @Field("course") String course
+                                      );
 
 
 }

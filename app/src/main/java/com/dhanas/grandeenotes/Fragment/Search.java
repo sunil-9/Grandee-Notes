@@ -407,7 +407,7 @@ public class Search extends Fragment {
     private void AuthorList() {
         progressDialog.show();
         AppAPI bookNPlayAPI = BaseURL.getVideoAPI();
-        Call<AuthorModel> call = bookNPlayAPI.autherlist();
+        Call<AuthorModel> call = bookNPlayAPI.autherlist(prefManager.getLoginId());
         call.enqueue(new Callback<AuthorModel>() {
             @Override
             public void onResponse(Call<AuthorModel> call, Response<AuthorModel> response) {

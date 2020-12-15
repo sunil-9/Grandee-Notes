@@ -4,11 +4,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragment.CourseFragment">
+    tools:context=".Fragment.QuestionAnswerFragment">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
+    <TextView
+        android:id="@+id/oldQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/old_question"
+        android:textColor="@color/black"
+        android:textSize="35sp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        />
 
     <androidx.cardview.widget.CardView
+        android:layout_below="@+id/oldQuestion"
         android:id="@+id/card_view_oldquestion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,7 +41,7 @@
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_oldquestionlist"
+                android:id="@+id/rv_booklist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -36,6 +51,12 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
-
-
+        <RelativeLayout
+            android:id="@+id/rl_adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="?attr/backgroundcolor"
+            android:visibility="visible"/>
+    </RelativeLayout>
 </FrameLayout>

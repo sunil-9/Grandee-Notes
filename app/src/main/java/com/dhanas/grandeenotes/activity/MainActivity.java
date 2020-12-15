@@ -144,8 +144,6 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-
-
         if(isHomeFrag){
             new AlertDialog.Builder(this)
                     .setMessage("Are you sure you want to exit?")
@@ -160,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             pushFragment(new Home());
+            isHomeFrag =true;
         }
     }
 

@@ -320,7 +320,7 @@ public class Home extends Fragment {
     private void AuthorList() {
         progressDialog.show();
         AppAPI bookNPlayAPI = BaseURL.getVideoAPI();
-        Call<AuthorModel> call = bookNPlayAPI.autherlist();
+        Call<AuthorModel> call = bookNPlayAPI.autherlist(prefManager.getLoginId());
         call.enqueue(new Callback<AuthorModel>() {
             @Override
             public void onResponse(Call<AuthorModel> call, Response<AuthorModel> response) {
@@ -365,7 +365,6 @@ public class Home extends Fragment {
         Call<SemesterModel> call = bookNPlayAPI.semesterlist();
         call.enqueue(new Callback<SemesterModel>() {
 
-
             @Override
             public void onResponse(Call<SemesterModel> call, Response<SemesterModel> response) {
                 if (response.code() == 200) {
@@ -380,10 +379,8 @@ public class Home extends Fragment {
                     if (SemesterList.size() > 0) {
                         Log.e("semester data", "" + response);
                         try {
-//                        Toast.makeText(getActivity(), "semester is :"+SemesterList.get(1).getSname(), Toast.LENGTH_SHORT).show();
                             semesterAdapter = new SemesterAdapter(getActivity(), SemesterList);
                             rv_semester.setHasFixedSize(true);
-                            Toast.makeText(getActivity(), "semester list is not null", Toast.LENGTH_SHORT).show();
                             RecyclerView.LayoutManager mLayoutManager3 = new LinearLayoutManager(getActivity(),
                                     LinearLayoutManager.HORIZONTAL, false);
                             rv_semester.setLayoutManager(mLayoutManager3);
@@ -396,7 +393,6 @@ public class Home extends Fragment {
                             Log.d("onResponse semester: " ,e.toString());
                         }
                     } else {
-                        Toast.makeText(getActivity(), "no semester data found", Toast.LENGTH_SHORT).show();
                         rv_semester.setVisibility(View.GONE);
                         ly_semester.setVisibility(View.GONE);
                     }
@@ -404,14 +400,12 @@ public class Home extends Fragment {
                 progress_hide++;
                 if (progress_hide >= 8)
                     progressDialog.dismiss();
-
             }
             @Override
             public void onFailure(Call<SemesterModel> call, Throwable t) {
                 Toast.makeText(getActivity(), "failed semester api", Toast.LENGTH_SHORT).show();
                 rv_semester.setVisibility(View.GONE);
                 ly_semester.setVisibility(View.GONE);
-
             }
         });
     }

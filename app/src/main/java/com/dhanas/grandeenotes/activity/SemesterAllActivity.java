@@ -14,8 +14,10 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.dhanas.grandeenotes.Adapter.SemesterAdapter;
+import com.dhanas.grandeenotes.Adapter.ViewPagerAdapter;
 import com.dhanas.grandeenotes.Model.SemesterModel.Result;
 import com.dhanas.grandeenotes.Model.SemesterModel.SemesterModel;
 import com.dhanas.grandeenotes.R;
@@ -44,6 +46,7 @@ public class SemesterAllActivity extends AppCompatActivity {
     SemesterAdapter semesterAdapter;
     TextView toolbar_title, txt_back;
     RelativeLayout rl_adView;
+    ViewPager2 viewPager2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,7 @@ public class SemesterAllActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
         setContentView(R.layout.semester_activity);
+
         PrefManager.forceRTLIfSupported(getWindow(), SemesterAllActivity.this);
         rv_semester = (RecyclerView) findViewById(R.id.rv_semester);
 

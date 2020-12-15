@@ -5,11 +5,25 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.CourseFragment">
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_view_syllabus"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+    <TextView
+        android:id="@+id/your_syllabus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/syllabus"
+        android:textColor="@color/black"
+        android:textSize="35sp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        />
+    <androidx.cardview.widget.CardView
+        android:layout_below="@+id/your_syllabus"
+        android:id="@+id/card_view_syllabus"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_margin="3dp"
         app:cardCornerRadius="2dp"
         app:cardPreventCornerOverlap="true"
@@ -23,7 +37,7 @@
             android:background="?attr/backgroundcolor"
             android:orientation="vertical">
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_syllabuslist"
+                android:id="@+id/rv_booklist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -33,5 +47,12 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
-
+        <RelativeLayout
+            android:id="@+id/rl_adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="?attr/backgroundcolor"
+            android:visibility="visible"/>
+    </RelativeLayout>
 </FrameLayout>

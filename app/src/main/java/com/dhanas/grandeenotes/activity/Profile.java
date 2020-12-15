@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +29,9 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,6 +44,8 @@ public class Profile extends AppCompatActivity {
     EditText txt_name, txt_email, txt_Contact, txt_password;
     TextView btn_update;
     RelativeLayout rl_adView;
+    Spinner spinner_course;
+    String course_id;
 
     String str_name, str_email, str_mobile, str_password;
 
@@ -64,6 +72,7 @@ public class Profile extends AppCompatActivity {
         txt_password = findViewById(R.id.txt_password);
         btn_update = findViewById(R.id.btn_update);
         txt_Contact = findViewById(R.id.txt_Contact);
+        spinner_course = findViewById(R.id.spinner_course);
 
         Get_Profile();
 
@@ -108,7 +117,7 @@ public class Profile extends AppCompatActivity {
         progressDialog.show();
         AppAPI bookNPlayAPI = BaseURL.getVideoAPI();
         Call<SuccessModel> call = bookNPlayAPI.update_profile("" + prefManager.getLoginId(),
-                str_name, str_email, str_password, str_mobile);
+                str_name, str_email, str_password, str_mobile,course_id);
         call.enqueue(new Callback<SuccessModel>() {
             @Override
             public void onResponse(Call<SuccessModel> call, Response<SuccessModel> response) {
@@ -120,12 +129,7 @@ public class Profile extends AppCompatActivity {
                             .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-//                                    startActivity(new Intent(Profile.this, MainActivity.class));
 
-                                   /* Intent i = getBaseContext().getPackageManager()
-                                            .getLaunchIntentForPackage(getBaseContext().getPackageName());
-                                    startActivity(i);
-                                    finish();*/
                                     Toast.makeText(Profile.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }).show();
@@ -142,6 +146,7 @@ public class Profile extends AppCompatActivity {
     }
 
     private void Get_Profile() {
+        spinner_course_onclick();
         progressDialog.show();
         AppAPI bookNPlayAPI = BaseURL.getVideoAPI();
         Call<ProfileModel> call = bookNPlayAPI.profile("" + prefManager.getLoginId());
@@ -204,6 +209,45 @@ public class Profile extends AppCompatActivity {
         } catch (Exception e) {
             Log.e("Exception=>", "" + e.getMessage());
         }
+    }
+    private void spinner_course_onclick() {
+        //for course
+        List<String> list_course = new ArrayList<String>();
+        list_course.add("BCA");
+        list_course.add("BBA");
+        list_course.add("BPH");
+        ArrayAdapter<String> adapter_course = new ArrayAdapter<String>(Profile.this, android.R.layout.simple_spinner_item, list_course);
+        adapter_course.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_course.setAdapter(adapter_course);
+
+        spinner_course.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        course_id ="1";
+                        break;
+                    case 1:
+                        course_id ="2";
+
+                        break;
+                    case 2:
+                        course_id ="3";
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+
+        });
+
+
     }
 
 }

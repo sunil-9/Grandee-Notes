@@ -47,7 +47,6 @@ public class Settings extends Fragment {
     SwitchCompat switch_push, switch_theme;
     PrefManager prefManager;
     Spinner spinner;
-    Spinner spinner_course;
     TextView txt_profile, txt_my_download_book, txt_about_us, txt_share_app, txt_rate_app, txt_login, txt_privacy_policy,txt_my_downloaded_book;
     String currentLanguage = "en", currentLang;
 
@@ -67,7 +66,6 @@ public class Settings extends Fragment {
 
         prefManager = new PrefManager(getActivity());
         spinner = root.findViewById(R.id.spinner);
-        spinner_course = root.findViewById(R.id.spinner_course);
         switch_push = (SwitchCompat) root.findViewById(R.id.switch_push);
         switch_theme = (SwitchCompat) root.findViewById(R.id.switch_theme);
         ImageView iv_clear = (ImageView) root.findViewById(R.id.iv_clear);
@@ -76,10 +74,15 @@ public class Settings extends Fragment {
         txt_my_download_book = (TextView) root.findViewById(R.id.txt_my_download_book);
         txt_my_downloaded_book = (TextView) root.findViewById(R.id.txt_my_downloaded_book);
         txt_about_us = root.findViewById(R.id.txt_about_us);
+        txt_login = (TextView) root.findViewById(R.id.txt_login);
+
         txt_share_app = (TextView) root.findViewById(R.id.txt_share_app);
         txt_rate_app = (TextView) root.findViewById(R.id.txt_rate_app);
-        txt_login = (TextView) root.findViewById(R.id.txt_login);
         txt_privacy_policy = root.findViewById(R.id.txt_privacy_policy);
+
+        txt_share_app.setVisibility(View.GONE);
+        txt_rate_app.setVisibility(View.GONE);
+        txt_privacy_policy.setVisibility(View.GONE);
 
         if (prefManager.getBool("PUSH")) {
             switch_push.setChecked(true);
@@ -263,6 +266,7 @@ public class Settings extends Fragment {
         return root;
     }
 
+
     private void spinner_onclick() {
         //for language
         List<String> list = new ArrayList<String>();
@@ -314,43 +318,6 @@ public class Settings extends Fragment {
             }
         });
 
-
-        //for course
-        List<String> list_course = new ArrayList<String>();
-        list_course.add("BCA");
-        list_course.add("BBA");
-        list_course.add("BPH");
-
-
-        ArrayAdapter<String> adapter_course = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, list_course);
-        adapter_course.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_course.setAdapter(adapter_course);
-
-        spinner_course.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        Log.e("onItemSelected: ", "onItemSelected: bca selected" );
-                        Toast.makeText(getActivity(),"Bca selected",Toast.LENGTH_SHORT).show();
-                        break;
-                    case 1:
-                        Toast.makeText(getActivity(),"Bba selected",Toast.LENGTH_SHORT).show();
-                        break;
-                    case 2:
-                        Toast.makeText(getActivity(),"Bph selected",Toast.LENGTH_SHORT).show();
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-
-        });
     }
 
     private void setLocale(String localeName) {

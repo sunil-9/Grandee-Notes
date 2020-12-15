@@ -77,6 +77,11 @@ public class AllPaymentActivity extends AppCompatActivity implements PaymentStat
         ly_razor = findViewById(R.id.ly_razor);
         ly_paypal = findViewById(R.id.ly_paypal);
         ly_upi = findViewById(R.id.ly_upi);
+
+        ly_razor.setVisibility(View.GONE);
+        ly_paypal.setVisibility(View.GONE);
+        ly_upi.setVisibility(View.GONE);
+
         btn_continue = findViewById(R.id.btn_continue);
 
         prefManager = new PrefManager(this);

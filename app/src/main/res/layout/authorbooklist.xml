@@ -253,7 +253,7 @@
                     android:layout_height="wrap_content"
                     android:background="?attr/backgroundcolor"
                     android:layout_alignParentBottom="true"
-                    android:visibility="visible"></RelativeLayout>
+                    android:visibility="visible"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
