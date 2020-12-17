@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragment.CourseFragment">
+   >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/syllabus"
-        android:textColor="@color/black"
+        android:textColor="?attr/textcolor"
         android:textSize="35sp"
         android:gravity="center"
         android:layout_marginTop="10dp"
@@ -23,7 +23,7 @@
         android:layout_below="@+id/your_syllabus"
         android:id="@+id/card_view_syllabus"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="3dp"
         app:cardCornerRadius="2dp"
         app:cardPreventCornerOverlap="true"
@@ -35,6 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/backgroundcolor"
+            android:paddingTop="20dp"
             android:orientation="vertical">
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_booklist"

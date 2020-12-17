@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -51,6 +52,12 @@ public class CourseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            //switch_theme.setChecked(true);
+            getActivity().setTheme(R.style.darktheme);
+        } else {
+            getActivity().setTheme(R.style.AppTheme);
+        }
         // Inflate the layout for this fragment
         view =inflater.inflate(R.layout.fragment_course, container, false);
         prefManager =new PrefManager(getActivity());
@@ -89,24 +96,6 @@ public class CourseFragment extends Fragment {
                     rv_booklist.setItemAnimator(new DefaultItemAnimator());
                     rv_booklist.setAdapter(bookAdapter);
                     bookAdapter.notifyDataSetChanged();
-
-
-
-//                    Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT).show();
-//                    Log.e("course List", "error size of book is: " + BookList.size());
-//                    Log.e("course List", "error not " + response.body().getResult().toString());
-//                    Total Book count show
-//                    txt_books_total.setText("" + BookList.size());
-//                    authorBookAdapter = new AuthorBookAdapter(AuthorBookList.this, BookList);
-//                    rv_booklist.setHasFixedSize(true);
-//                    RecyclerView.LayoutManager mLayoutManager3 = new LinearLayoutManager(AuthorBookList.this,
-//                            LinearLayoutManager.HORIZONTAL, false);
-////                    rv_booklist.setLayoutManager(mLayoutManager3);
-//                    GridLayoutManager gridLayoutManager = new GridLayoutManager(AuthorBookList.this, 3, LinearLayoutManager.VERTICAL, false);
-//                    rv_booklist.setLayoutManager(gridLayoutManager);
-//                    rv_booklist.setItemAnimator(new DefaultItemAnimator());
-//                    rv_booklist.setAdapter(authorBookAdapter);
-//                    authorBookAdapter.notifyDataSetChanged();
                 }
                 Log.e("course List", "error occured");
 

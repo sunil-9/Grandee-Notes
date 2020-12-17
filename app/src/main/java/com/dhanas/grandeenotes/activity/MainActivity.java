@@ -32,6 +32,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.dhanas.grandeenotes.BuildConfig;
 import com.dhanas.grandeenotes.Fragment.BookMark;
+import com.dhanas.grandeenotes.Fragment.ForumFragment;
 import com.dhanas.grandeenotes.Fragment.Home;
 import com.dhanas.grandeenotes.Fragment.Search;
 import com.dhanas.grandeenotes.Fragment.Settings;
@@ -190,8 +191,6 @@ public class MainActivity extends AppCompatActivity {
     protected void selectFragment(MenuItem item) {
 
         item.setChecked(true);
-
-
         switch (item.getItemId()) {
             case R.id.bottom_home:
                 toolbar.setTitle(getResources().getString(R.string.title_home));
@@ -213,7 +212,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.question:
-                Toast.makeText(this, "question and answer", Toast.LENGTH_SHORT).show();
+                isHomeFrag= false;
+                toolbar.setTitle(getResources().getString(R.string.title_question));
+                pushFragment(new ForumFragment());
                 break;
             case R.id.bottom_latest:
                 isHomeFrag= false;

@@ -20,7 +20,7 @@
         android:required="false" />
 
     <application
-        android:name="com.dhanas.grandeenotes.Utility.MyApp"
+        android:name=".Utility.MyApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -30,6 +30,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".Activity.AnswerActivity"></activity>
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -41,7 +42,6 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/admob_main_id" />
-
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -53,119 +53,116 @@
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.VIEW" />-->
 
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
-<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.VIEW" /> -->
 
-<!--                <data android:scheme="@string/fb_login_protocol_scheme"-->
-<!--                    tools:ignore="ManifestResource" />-->
-<!--            </intent-filter>-->
+
+            <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+            <!-- <category android:name="android.intent.category.BROWSABLE" /> -->
+
+
+            <!-- <data android:scheme="@string/fb_login_protocol_scheme" -->
+            <!-- tools:ignore="ManifestResource" /> -->
+            <!-- </intent-filter> -->
         </activity>
-
         <activity
-            android:name="com.dhanas.grandeenotes.Activity.SplashActivity"
+            android:name=".Activity.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.dhanas.grandeenotes.Activity.Privacypolicy"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity
-            android:name="com.dhanas.grandeenotes.Activity.AllPaymentActivity"
+            android:name=".Activity.Privacypolicy"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dhanas.grandeenotes.Activity.DownloadedBooks"
+            android:name=".Activity.AllPaymentActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dhanas.grandeenotes.Activity.Paidbookallview"
+            android:name=".Activity.DownloadedBooks"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dhanas.grandeenotes.Activity.FreeBookallview"
+            android:name=".Activity.Paidbookallview"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
-            android:name="com.dhanas.grandeenotes.Activity.WelcomeActivity"
+            android:name=".Activity.FreeBookallview"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.WelcomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dhanas.grandeenotes.Activity.LoginActivity"
+            android:name=".Activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" >
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name="com.dhanas.grandeenotes.Activity.Registration"
+            android:name=".Activity.Registration"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dhanas.grandeenotes.Activity.MainActivity"
+            android:name=".Activity.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dhanas.grandeenotes.Activity.BookDetails"
+            android:name=".Activity.BookDetails"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dhanas.grandeenotes.Activity.PDFShow"
+            android:name=".Activity.PDFShow"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="DuplicateActivity" />
         <activity
-            android:name="com.dhanas.grandeenotes.Activity.PermissionActivity"
+            android:name=".Activity.PermissionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dhanas.grandeenotes.Activity.AuthorBookList"
+            android:name=".Activity.AuthorBookList"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dhanas.grandeenotes.Activity.CategoryBookList"
+            android:name=".Activity.CategoryBookList"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dhanas.grandeenotes.Activity.NewArrivalAll"
+            android:name=".Activity.NewArrivalAll"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dhanas.grandeenotes.Activity.CategoryViewAll"
+            android:name=".Activity.CategoryViewAll"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dhanas.grandeenotes.Activity.FeatureItemsViewAll"
+            android:name=".Activity.FeatureItemsViewAll"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dhanas.grandeenotes.Activity.AuthorAllActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-       <activity
-            android:name="com.dhanas.grandeenotes.Activity.SemesterAllActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-   <activity
-            android:name="com.dhanas.grandeenotes.Activity.SemesterBookList"
+            android:name=".Activity.AuthorAllActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dhanas.grandeenotes.Activity.MyDownloadBooks"
+            android:name=".Activity.SemesterAllActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dhanas.grandeenotes.Activity.Profile"
+            android:name=".Activity.SemesterBookList"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dhanas.grandeenotes.Activity.AboutUs"
+            android:name=".Activity.MyDownloadBooks"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
+        <activity
+            android:name=".Activity.Profile"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.AboutUs"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service
             android:name="com.paypal.android.sdk.payments.PayPalService"

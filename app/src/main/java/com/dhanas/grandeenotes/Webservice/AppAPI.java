@@ -1,6 +1,7 @@
 package com.dhanas.grandeenotes.Webservice;
 
 
+import com.dhanas.grandeenotes.Model.AnswerModel.AnswerModel;
 import com.dhanas.grandeenotes.Model.AuthorModel.AuthorModel;
 import com.dhanas.grandeenotes.Model.BookModel.BookModel;
 import com.dhanas.grandeenotes.Model.CategoryModel.CategoryModel;
@@ -9,6 +10,7 @@ import com.dhanas.grandeenotes.Model.FreeBookModel.FreeBookModel;
 import com.dhanas.grandeenotes.Model.GeneralSettings.GeneralSettings;
 import com.dhanas.grandeenotes.Model.LoginRegister.LoginRegiModel;
 import com.dhanas.grandeenotes.Model.ProfileModel.ProfileModel;
+import com.dhanas.grandeenotes.Model.Question.QuestionModel;
 import com.dhanas.grandeenotes.Model.ReadDowncntModel.ReadDowncntModel;
 import com.dhanas.grandeenotes.Model.SemesterModel.SemesterModel;
 import com.dhanas.grandeenotes.Model.SuccessModel.SuccessModel;
@@ -40,9 +42,24 @@ public interface AppAPI {
                                       @Field("mobile_number") String phone);
 
     @FormUrlEncoded
+    @POST("add_question")
+    Call<SuccessModel> add_question(@Field("user_id") String user_id,
+                                      @Field("question") String question);
+  @FormUrlEncoded
+    @POST("update_question")
+    Call<SuccessModel> update_question(@Field("user_id") String user_id,
+                                      @Field("question") String question,
+                                      @Field("q_id") String q_id);
+
+    @FormUrlEncoded
     @POST("registration_fb")
     Call<LoginRegiModel> registration_fb(@Field("fullname") String full_name,
                                          @Field("email") String email_id);
+
+
+    @FormUrlEncoded
+    @POST("all_answer")
+    Call<AnswerModel> all_answer(@Field("q_id") String q_id);
 
 
 
@@ -51,6 +68,9 @@ public interface AppAPI {
 
     @GET("categorylist")
     Call<CategoryModel> categorylist();
+
+    @GET("all_question")
+    Call<QuestionModel> all_question();
 
     @FormUrlEncoded
     @POST("books_by_category")

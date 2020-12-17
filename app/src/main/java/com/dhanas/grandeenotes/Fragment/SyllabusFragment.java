@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -50,6 +51,12 @@ public class SyllabusFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            //switch_theme.setChecked(true);
+            getActivity().setTheme(R.style.darktheme);
+        } else {
+            getActivity().setTheme(R.style.AppTheme);
+        }
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_syllabus, container, false);
         prefManager = new PrefManager(getActivity());

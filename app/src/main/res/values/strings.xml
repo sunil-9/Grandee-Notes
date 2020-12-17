@@ -130,6 +130,15 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="old_question">Old Question</string>
     <string name="your_course">Your course</string>
+    <string name="question_and_answers">Question and Answers</string>
+    <string name="ask_your_question">Ask Your Question</string>
+    <string name="what_is_your_question">What is your question?</string>
+    <string name="title_question">Question Fourm</string>
+    <string name="question_here">Question here</string>
+    <string name="question">Question</string>
+    <string name="answer_here">answer here</string>
+    <string name="_0">0</string>
+    <string name="your_answer_here">your answer here</string>
 
 
 </resources>
