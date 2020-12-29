@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.dhanas.grandeenotes.Model.GeneralSettings.GeneralSettings;
 import com.dhanas.grandeenotes.R;
@@ -37,6 +38,7 @@ public class SplashActivity extends AppCompatActivity implements ConnectivityRec
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -46,6 +48,7 @@ public class SplashActivity extends AppCompatActivity implements ConnectivityRec
 
         PrefManager.forceRTLIfSupported(getWindow(), SplashActivity.this);
         prefManager = new PrefManager(SplashActivity.this);
+
 
         checkConnection();
 
@@ -139,6 +142,9 @@ public class SplashActivity extends AppCompatActivity implements ConnectivityRec
                 if (response.code() == 200) {
 
                     prefManager = new PrefManager(SplashActivity.this);
+                   Boolean night_mode= prefManager.isNightModeEnabled();
+                    if (night_mode)
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
                     for (int i = 0; i < response.body().getResult().size(); i++) {
                         Log.e("==>", "" + response.body().getResult().get(i).getKey());

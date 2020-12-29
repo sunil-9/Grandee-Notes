@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.dhanas.grandeenotes.Model.SuccessModel.SuccessModel;
 import com.dhanas.grandeenotes.R;
@@ -71,6 +72,13 @@ public class AllPaymentActivity extends AppCompatActivity implements PaymentStat
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            //switch_theme.setChecked(true);
+            setTheme(R.style.darktheme);
+        } else {
+            setTheme(R.style.AppTheme);
+            getSupportActionBar().hide();
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_payment);
 

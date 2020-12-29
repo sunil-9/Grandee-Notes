@@ -145,13 +145,13 @@ public class Settings extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
-                    // prefManager.setIsNightModeEnabled(true);
+                     prefManager.setIsNightModeEnabled(true);
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
                     getActivity().finish();
                 } else {
-                    //prefManager.setIsNightModeEnabled(false);
+                    prefManager.setIsNightModeEnabled(false);
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     startActivity(intent);
