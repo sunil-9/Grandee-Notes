@@ -82,13 +82,13 @@ public interface AppAPI {
     @GET("feature_item")
     Call<BookModel> feature_item();
 
-    @GET("popularbooklist")
-    Call<BookModel> popularbooklist();
+    @FormUrlEncoded
+    @POST("popularbooklist")
+    Call<BookModel> popularbooklist(@Field("u_id") String u_id);
 
     @FormUrlEncoded
     @POST("autherlist")
     Call<AuthorModel> autherlist(@Field("u_id") String u_id);
-//TODO: add course id
 
     @GET("semesterlist")
     Call<SemesterModel> semesterlist();
