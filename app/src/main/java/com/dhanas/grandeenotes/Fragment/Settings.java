@@ -29,6 +29,7 @@ import com.dhanas.grandeenotes.Activity.MainActivity;
 import com.dhanas.grandeenotes.Activity.MyDownloadBooks;
 import com.dhanas.grandeenotes.Activity.Privacypolicy;
 import com.dhanas.grandeenotes.Activity.Profile;
+import com.dhanas.grandeenotes.Activity.SplashActivity;
 import com.dhanas.grandeenotes.BuildConfig;
 import com.dhanas.grandeenotes.R;
 import com.dhanas.grandeenotes.Utility.LocaleUtils;
@@ -47,7 +48,7 @@ public class Settings extends Fragment {
     SwitchCompat switch_push, switch_theme;
     PrefManager prefManager;
     Spinner spinner;
-    TextView txt_profile, txt_my_download_book, txt_about_us, txt_share_app, txt_rate_app, txt_login, txt_privacy_policy,txt_my_downloaded_book;
+    TextView txt_profile, txt_my_download_book, txt_about_us, txt_share_app, txt_rate_app, txt_login, txt_privacy_policy, txt_my_downloaded_book;
     String currentLanguage = "en", currentLang;
 
     GoogleSignInClient mGoogleSignInClient;
@@ -80,9 +81,9 @@ public class Settings extends Fragment {
         txt_rate_app = (TextView) root.findViewById(R.id.txt_rate_app);
         txt_privacy_policy = root.findViewById(R.id.txt_privacy_policy);
 
-        txt_share_app.setVisibility(View.GONE);
-        txt_rate_app.setVisibility(View.GONE);
-        txt_privacy_policy.setVisibility(View.GONE);
+//        txt_share_app.setVisibility(View.GONE);
+//        txt_rate_app.setVisibility(View.GONE);
+//        txt_privacy_policy.setVisibility(View.GONE);
 
         if (prefManager.getBool("PUSH")) {
             switch_push.setChecked(true);
@@ -130,6 +131,7 @@ public class Settings extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     OneSignal.setSubscription(true);
+
                 } else {
                     OneSignal.setSubscription(false);
                 }
@@ -145,15 +147,15 @@ public class Settings extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
-                     prefManager.setIsNightModeEnabled(true);
+                    prefManager.setIsNightModeEnabled(true);
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    Intent intent = new Intent(getActivity(), SplashActivity.class);
                     startActivity(intent);
                     getActivity().finish();
                 } else {
                     prefManager.setIsNightModeEnabled(false);
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    Intent intent = new Intent(getActivity(), SplashActivity.class);
                     startActivity(intent);
                     getActivity().finish();
                 }
@@ -187,10 +189,16 @@ public class Settings extends Fragment {
                 File file = new File(root);
                 if (file.isDirectory()) {
                     String[] children = file.list();
-                    for (String aChildren : children) {
-                        new File(file, aChildren).delete();
+                    if (children.length > 0) {
+                        for (String aChildren : children) {
+                            new File(file, aChildren).delete();
+                            Toast.makeText(getActivity(), aChildren + " deleted.", Toast.LENGTH_SHORT).show();
+                        }
+                        Toast.makeText(getActivity(), getResources().getString(R.string.locally_cached_data), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), getResources().getString(R.string.no_cache_found), Toast.LENGTH_SHORT).show();
+
                     }
-                    Toast.makeText(getActivity(), getResources().getString(R.string.locally_cached_data), Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -49,8 +49,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Search extends Fragment {
-
     PrefManager prefManager;
+    String user_id;
     ProgressDialog progressDialog;
 
     TextView txt_viewall_new_arrival, txt_viewall_category, txt_viewall_item, txt_viewall_author, txt_viewall_continue;
@@ -375,7 +375,8 @@ public class Search extends Fragment {
     private void FeatureItem() {
         progressDialog.show();
         AppAPI bookNPlayAPI = BaseURL.getVideoAPI();
-        Call<BookModel> call = bookNPlayAPI.popularbooklist();
+        user_id=prefManager.getLoginId();
+        Call<BookModel> call = bookNPlayAPI.popularbooklist(user_id);
         call.enqueue(new Callback<BookModel>() {
             @Override
             public void onResponse(Call<BookModel> call, Response<BookModel> response) {

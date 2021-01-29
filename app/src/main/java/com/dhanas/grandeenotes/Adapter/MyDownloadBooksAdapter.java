@@ -1,8 +1,10 @@
 package com.dhanas.grandeenotes.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import androidx.recyclerview.widget.RecyclerView;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,22 +12,25 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.dhanas.grandeenotes.Activity.BookDetails;
-import com.dhanas.grandeenotes.Model.BookModel.Result;
+import com.dhanas.grandeenotes.Activity.PDFShow;
+import com.dhanas.grandeenotes.Model.downloads.DownloadModel;
 import com.dhanas.grandeenotes.R;
 import com.dhanas.grandeenotes.Utility.PrefManager;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import static com.dhanas.grandeenotes.Utility.Constants.PDF_DIRECTORY;
 import static com.squareup.picasso.Picasso.Priority.HIGH;
 
 public class MyDownloadBooksAdapter extends RecyclerView.Adapter<MyDownloadBooksAdapter.MyViewHolder> {
 
-    private List<Result> NewArrivalList;
+    private List<DownloadModel> NewArrivalList;
     Context mcontext;
     PrefManager prefManager;
-    String from;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView txt_bookname;
@@ -39,44 +44,47 @@ public class MyDownloadBooksAdapter extends RecyclerView.Adapter<MyDownloadBooks
     }
 
 
-    public MyDownloadBooksAdapter(Context context, List<Result> NewArrivalList, String from) {
+    public MyDownloadBooksAdapter(Context context, List<DownloadModel> NewArrivalList, SQLiteDatabase mDatabase) {
         this.NewArrivalList = NewArrivalList;
         this.mcontext = context;
-        this.from = from;
         prefManager = new PrefManager(mcontext);
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView;
-        if (from.equalsIgnoreCase("Home")) {
-            itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.mydownloadbook_item2, parent, false);
-            return new MyViewHolder(itemView);
-        } else {
-            itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.mydownloadbook_item2, parent, false);
-            return new MyViewHolder(itemView);
-        }
+        itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.mydownloadbook_item2, parent, false);
+        return new MyViewHolder(itemView);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
+        String book_link = NewArrivalList.get(position).getBook_name();
+        String fileName=getFileName(book_link);
+        String image_link ="file://"+NewArrivalList.get(position).getImage();
+        holder.txt_bookname.setText(fileName);
 
-        holder.txt_bookname.setText("" + NewArrivalList.get(position).getBTitle());
+        Log.e("click ", "book  image location "+image_link);
 
-        Picasso.with(mcontext).load(NewArrivalList.get(position).getBImage()).priority(HIGH).into(holder.iv_thumb);
+        Picasso.with(mcontext).load(image_link)
+                .priority(HIGH).into(holder.iv_thumb);
 
         holder.iv_thumb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("click", "call");
-                Intent intent = new Intent(mcontext, BookDetails.class);
-                intent.putExtra("ID", NewArrivalList.get(position).getBId());
-                mcontext.startActivity(intent);
+                Log.e("click", "book location "+book_link);
+
+                mcontext.startActivity(new Intent(mcontext, PDFShow.class)
+                        .putExtra("link",  book_link)
+                        .putExtra("toolbarTitle",  fileName)
+                        .putExtra("type", "file"));
             }
         });
-
+    }
+    private String getFileName(String url) {
+        return url.substring(url.lastIndexOf('/'));
     }
 
     @Override

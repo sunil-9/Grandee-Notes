@@ -80,11 +80,9 @@ public class Home extends Fragment {
     List<com.dhanas.grandeenotes.Model.AuthorModel.Result> AuthorList;
     RecyclerView rv_author;
     AuthorAdapter authorAdapter;
-
-
-  List<com.dhanas.grandeenotes.Model.SemesterModel.Result> SemesterList;
-   RecyclerView rv_semester;
-   SemesterAdapter semesterAdapter;
+    List<com.dhanas.grandeenotes.Model.SemesterModel.Result> SemesterList;
+    RecyclerView rv_semester;
+    SemesterAdapter semesterAdapter;
 
     List<com.dhanas.grandeenotes.Model.BookModel.Result> ContinueList;
     RecyclerView rv_continue;
@@ -92,6 +90,7 @@ public class Home extends Fragment {
     LinearLayout ly_continue, ly_paid_book, ly_free_book, ly_author,ly_semester, ly_New_Arrival_Book, ly_top_reading_Book, ly_category;
 
     int progress_hide = 0;
+    String user_id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -240,7 +239,8 @@ public class Home extends Fragment {
     private void FeatureItem() {
         progressDialog.show();
         AppAPI bookNPlayAPI = BaseURL.getVideoAPI();
-        Call<BookModel> call = bookNPlayAPI.popularbooklist();
+        user_id=prefManager.getLoginId();
+        Call<BookModel> call = bookNPlayAPI.popularbooklist(user_id);
         call.enqueue(new Callback<BookModel>() {
             @Override
             public void onResponse(Call<BookModel> call, Response<BookModel> response) {
@@ -320,7 +320,8 @@ public class Home extends Fragment {
     private void AuthorList() {
         progressDialog.show();
         AppAPI bookNPlayAPI = BaseURL.getVideoAPI();
-        Call<AuthorModel> call = bookNPlayAPI.autherlist(prefManager.getLoginId());
+        user_id=prefManager.getLoginId();
+        Call<AuthorModel> call = bookNPlayAPI.autherlist(user_id);
         call.enqueue(new Callback<AuthorModel>() {
             @Override
             public void onResponse(Call<AuthorModel> call, Response<AuthorModel> response) {

@@ -1,139 +1,98 @@
 package com.dhanas.grandeenotes.Activity;
 
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.dhanas.grandeenotes.Model.GeneralSettings.GeneralSettings;
 import com.dhanas.grandeenotes.R;
-import com.dhanas.grandeenotes.Utility.ConnectivityReceiver;
 import com.dhanas.grandeenotes.Utility.MutedVideoView;
 import com.dhanas.grandeenotes.Utility.MyApp;
 import com.dhanas.grandeenotes.Utility.PrefManager;
 import com.dhanas.grandeenotes.Webservice.AppAPI;
 import com.dhanas.grandeenotes.Webservice.BaseURL;
-import com.google.android.material.snackbar.Snackbar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SplashActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener {
+public class SplashActivity extends AppCompatActivity {
 
-    private final int SPLASH_DISPLAY_LENGTH = 500;
+    private final int SPLASH_DISPLAY_LENGTH = 1000;
     private PrefManager prefManager;
     Intent mainIntent;
-
     private boolean ispaused = false;
+    private boolean connection = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         MyApp.getInstance().initAppLanguage(this);
         setContentView(R.layout.splash);
-
-
         PrefManager.forceRTLIfSupported(getWindow(), SplashActivity.this);
         prefManager = new PrefManager(SplashActivity.this);
 
 
-        checkConnection();
+        MutedVideoView vView = (MutedVideoView) findViewById(R.id.video_view);
+        Uri video = Uri.parse("android.resource://" + getPackageName() + "/"
+                + R.raw.splash);
+        if (vView != null) {
+            vView.setVideoURI(video);
+            vView.setZOrderOnTop(true);
+            vView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                public void onCompletion(MediaPlayer mp) {
+                }
 
-        boolean isConnected = ConnectivityReceiver.isConnected();
-        if (isConnected) {
+            });
+
+            vView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+                @Override
+                public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
+
+                    return false;
+                }
+            });
+
+            vView.start();
             general_settings();
-
-            MutedVideoView vView = (MutedVideoView) findViewById(R.id.video_view);
-            Uri video = Uri.parse("android.resource://" + getPackageName() + "/"
-                    + R.raw.splash);
-
-            if (vView != null) {
-                vView.setVideoURI(video);
-                vView.setZOrderOnTop(true);
-                vView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    public void onCompletion(MediaPlayer mp) {
-//                        jump();
-                    }
-                });
-
-                vView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-                    @Override
-                    public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
-//                        jump();
-                        return false;
-                    }
-                });
-                vView.start();
-            } else {
-//                jump();
-            }
-        }
-    }
-
-
-    // Method to manually check connection status
-    private void checkConnection() {
-        boolean isConnected = ConnectivityReceiver.isConnected();
-        showSnack(isConnected);
-    }
-
-    // Showing the status in Snackbar
-    private void showSnack(boolean isConnected) {
-        String message;
-        int color;
-        if (isConnected) {
-//            message = "Good! Connected to Internet";
-//            color = Color.WHITE;
         } else {
-            message = "Sorry! Not connected to internet";
-            color = Color.RED;
-
-            Snackbar snackbar = Snackbar
-                    .make(findViewById(R.id.fab), message, Snackbar.LENGTH_LONG);
-
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(R.id.snackbar_text);
-            textView.setTextColor(color);
-            snackbar.show();
         }
     }
-
     @Override
     protected void onResume() {
         super.onResume();
         // register connection status listener
-        MyApp.getInstance().setConnectivityListener(this);
         if (ispaused) {
-            jump();
+            general_settings();
         }
     }
-
     @Override
     protected void onPause() {
         super.onPause();
         ispaused = true;
     }
 
-
-    @Override
-    public void onNetworkConnectionChanged(boolean isConnected) {
-        showSnack(isConnected);
-    }
-
     private void general_settings() {
+        connection = getConnectivityStatus(SplashActivity.this);
+        if (!connection) {
+
+            Toast.makeText(SplashActivity.this, "No internet Connection view downloaded content", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(SplashActivity.this,DownloadedBooks.class));
+            finish();
+        }
         AppAPI bookNPlayAPI = BaseURL.getVideoAPI();
         Call<GeneralSettings> call = bookNPlayAPI.general_settings();
         call.enqueue(new Callback<GeneralSettings>() {
@@ -142,7 +101,7 @@ public class SplashActivity extends AppCompatActivity implements ConnectivityRec
                 if (response.code() == 200) {
 
                     prefManager = new PrefManager(SplashActivity.this);
-                   Boolean night_mode= prefManager.isNightModeEnabled();
+                    Boolean night_mode = prefManager.isNightModeEnabled();
                     if (night_mode)
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
@@ -151,43 +110,41 @@ public class SplashActivity extends AppCompatActivity implements ConnectivityRec
                         Log.e("==>", "" + response.body().getResult().get(i).getValue());
                         prefManager.setValue(response.body().getResult().get(i).getKey(), response.body().getResult().get(i).getValue());
                     }
-
-
-                    if (!prefManager.isFirstTimeLaunch()) {
-                        if (prefManager.getLoginId().equalsIgnoreCase("0"))
-                            mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
-                        else
-                            mainIntent = new Intent(SplashActivity.this, MainActivity.class);
-                        startActivity(mainIntent);
-                        finish();
-                    } else {
-                        Intent mainIntent = new Intent(SplashActivity.this, WelcomeActivity.class);
-                        startActivity(mainIntent);
-                        finish();
-                    }
-
-
+                    jump();
+                } else {
+                    Toast.makeText(SplashActivity.this, "Unable to fetch data please try again letter", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<GeneralSettings> call, Throwable t) {
+                Toast.makeText(SplashActivity.this, "Server error please try again letter", Toast.LENGTH_SHORT).show();
             }
         });
     }
-
     private void jump() {
         if (!prefManager.isFirstTimeLaunch()) {
             if (prefManager.getLoginId().equalsIgnoreCase("0"))
                 mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
             else
                 mainIntent = new Intent(SplashActivity.this, MainActivity.class);
-            startActivity(mainIntent);
-            finish();
+
         } else {
-            Intent mainIntent = new Intent(SplashActivity.this, WelcomeActivity.class);
-            startActivity(mainIntent);
-            finish();
+             mainIntent = new Intent(SplashActivity.this, WelcomeActivity.class);
         }
+        startActivity(mainIntent);
+        finish();
+    }
+
+    public static boolean getConnectivityStatus(Context context) {
+        boolean status = false;
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (activeNetwork != null) {
+            status = true;
+        } else {
+            status = false;
+        }
+        return status;
     }
 }

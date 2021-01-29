@@ -112,6 +112,7 @@
     <string name="enable_theme">Enable Day/Night mode</string>
     <string name="clear_cache">Clear Cache</string>
     <string name="locally_cached_data">locally cached data</string>
+    <string name="no_cache_found" translatable="false">no cached found</string>
     <string name="Privacy_policy">Privacy policy</string>
 
     <string name="rate_app">Rate App</string>

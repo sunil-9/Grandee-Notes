@@ -97,42 +97,42 @@ public class MyDownloadBooks extends AppCompatActivity {
     }
 
     private void purchaselist() {
-        progressDialog.show();
-        AppAPI bookNPlayAPI = BaseURL.getVideoAPI();
-        Call<BookModel> call = bookNPlayAPI.purchaselist("" + prefManager.getLoginId());
-        call.enqueue(new Callback<BookModel>() {
-            @Override
-            public void onResponse(Call<BookModel> call, Response<BookModel> response) {
-                if (response.code() == 200) {
-
-                    MyDownloadBookList = new ArrayList<>();
-                    MyDownloadBookList = response.body().getResult();
-                    Log.e("MyDownloadBookList", "" + MyDownloadBookList.size());
-                    if (MyDownloadBookList.size() > 0) {
-                        myDownloadBooksAdapter = new MyDownloadBooksAdapter(MyDownloadBooks.this, MyDownloadBookList, "ViewAll");
-                        rv_mydownloadbooks.setHasFixedSize(true);
-                        RecyclerView.LayoutManager mLayoutManager3 = new LinearLayoutManager(MyDownloadBooks.this,
-                                LinearLayoutManager.HORIZONTAL, false);
-                        GridLayoutManager gridLayoutManager = new GridLayoutManager(MyDownloadBooks.this, 3,
-                                LinearLayoutManager.VERTICAL, false);
-                        rv_mydownloadbooks.setLayoutManager(gridLayoutManager);
-                        rv_mydownloadbooks.setItemAnimator(new DefaultItemAnimator());
-                        rv_mydownloadbooks.setAdapter(myDownloadBooksAdapter);
-                        myDownloadBooksAdapter.notifyDataSetChanged();
-                    } else {
-                        ly_dataNotFound.setVisibility(View.VISIBLE);
-                    }
-                }
-                progressDialog.dismiss();
-            }
-
-            @Override
-            public void onFailure(Call<BookModel> call, Throwable t) {
-                ly_dataNotFound.setVisibility(View.VISIBLE);
-                progressDialog.dismiss();
-            }
-
-        });
+//        progressDialog.show();
+//        AppAPI bookNPlayAPI = BaseURL.getVideoAPI();
+//        Call<BookModel> call = bookNPlayAPI.purchaselist("" + prefManager.getLoginId());
+//        call.enqueue(new Callback<BookModel>() {
+//            @Override
+//            public void onResponse(Call<BookModel> call, Response<BookModel> response) {
+//                if (response.code() == 200) {
+//
+//                    MyDownloadBookList = new ArrayList<>();
+//                    MyDownloadBookList = response.body().getResult();
+//                    Log.e("MyDownloadBookList", "" + MyDownloadBookList.size());
+//                    if (MyDownloadBookList.size() > 0) {
+//                        myDownloadBooksAdapter = new MyDownloadBooksAdapter(MyDownloadBooks.this, MyDownloadBookList, "ViewAll");
+//                        rv_mydownloadbooks.setHasFixedSize(true);
+//                        RecyclerView.LayoutManager mLayoutManager3 = new LinearLayoutManager(MyDownloadBooks.this,
+//                                LinearLayoutManager.HORIZONTAL, false);
+//                        GridLayoutManager gridLayoutManager = new GridLayoutManager(MyDownloadBooks.this, 3,
+//                                LinearLayoutManager.VERTICAL, false);
+//                        rv_mydownloadbooks.setLayoutManager(gridLayoutManager);
+//                        rv_mydownloadbooks.setItemAnimator(new DefaultItemAnimator());
+//                        rv_mydownloadbooks.setAdapter(myDownloadBooksAdapter);
+//                        myDownloadBooksAdapter.notifyDataSetChanged();
+//                    } else {
+//                        ly_dataNotFound.setVisibility(View.VISIBLE);
+//                    }
+//                }
+//                progressDialog.dismiss();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<BookModel> call, Throwable t) {
+//                ly_dataNotFound.setVisibility(View.VISIBLE);
+//                progressDialog.dismiss();
+//            }
+//
+//        });
     }
 
     public void Admob() {

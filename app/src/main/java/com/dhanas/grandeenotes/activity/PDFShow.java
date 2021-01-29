@@ -113,37 +113,32 @@ public class PDFShow extends AppCompatActivity implements OnPageChangeListener, 
 
     public void displayFromFile(File file) {
         pdfView.fromFile(file)
-                .pages(0, 2, 1, 3, 3, 3) // all pages are displayed by default
-                .enableSwipe(true) // allows to block changing pages using swipe
-                .swipeHorizontal(false)
-                .enableDoubletap(true)
                 .defaultPage(0)
                 .onPageChange(this)
                 .enableAnnotationRendering(true)
                 .onLoad(this)
                 .swipeHorizontal(true)
                 .scrollHandle(new DefaultScrollHandle(this))
-                .spacing(5) // in dp
-                .onPageError(this)
+
                 .enableAnnotationRendering(false) // render annotations (such as comments, colors or forms)
                 .password(null)
                 .scrollHandle(null)
-                .enableAntialiasing(true) // improve rendering a little bit on low-res screens
-                .spacing(0)
-                .swipeHorizontal(true)
+                .enableAntialiasing(true)
+
+                .spacing(10) // in dp
+                .onPageError(this)
                 .load();
     }
 
     @Override
     public void onPageChanged(int page, int pageCount) {
 
-
     }
-
     @Override
     public void loadComplete(int nbPages) {
         progressDialog.dismiss();
         PdfDocument.Meta meta = pdfView.getDocumentMeta();
+
         Log.e(TAG, "title = " + meta.getTitle());
         Log.e(TAG, "author = " + meta.getAuthor());
         Log.e(TAG, "subject = " + meta.getSubject());
@@ -153,14 +148,12 @@ public class PDFShow extends AppCompatActivity implements OnPageChangeListener, 
         Log.e(TAG, "creationDate = " + meta.getCreationDate());
         Log.e(TAG, "modDate = " + meta.getModDate());
     }
-
     @Override
     public void onPageError(int page, Throwable t) {
         progressDialog.dismiss();
-        Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
-
+        Toast.makeText(this, "error "+ t.toString(), Toast.LENGTH_SHORT).show();
+        Log.e(TAG, "onPageError: "+ t.toString() );
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[],
                                            @NonNull int[] grantResults) {

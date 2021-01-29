@@ -3,6 +3,7 @@ package com.dhanas.grandeenotes.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -56,6 +57,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.dhanas.grandeenotes.Utility.Constants.DATABASE_NAME;
+import static com.dhanas.grandeenotes.Utility.Constants.IMAGE_DIRECTORY;
+import static com.dhanas.grandeenotes.Utility.Constants.PDF_DIRECTORY;
 import static com.squareup.picasso.Picasso.Priority.HIGH;
 
 public class BookDetails extends AppCompatActivity {
@@ -82,12 +86,14 @@ public class BookDetails extends AppCompatActivity {
     List<com.dhanas.grandeenotes.Model.CommentModel.Result> CommentList;
     CommentAdapter commentAdapter;
     SimpleRatingBar ratingbar;
-    private static final String PDF_DIRECTORY = "/Ebooks";
 
     RelativeLayout rl_adView, rl_native_adView;
     private InterstitialAd interstitial;
 
     String click_check = "";
+
+    //for sql database
+    SQLiteDatabase mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -506,9 +512,7 @@ public class BookDetails extends AppCompatActivity {
                 myFileUrl = new URL(args[0]);
                 String path = myFileUrl.getPath();
                 String fileName = path.substring(path.lastIndexOf('/'));
-                //   File dir = new File(Environment.getExternalStorageDirectory() + "/" + getString(R.string.app_name) + "/");
-                File dir = new File(Environment.getExternalStorageDirectory() + "" + PDF_DIRECTORY);
-
+                File dir = new File(Environment.getExternalStorageDirectory() + "" + args[1]);
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
@@ -532,7 +536,7 @@ public class BookDetails extends AppCompatActivity {
                     fos.flush();
                     fos.close();
 
-                    if (option.equals("save")) {
+                    if (option.equals("savePDF")) {
                         MediaScannerConnection.scanFile(BookDetails.this, new String[]{file.getAbsolutePath()},
                                 null,
                                 new MediaScannerConnection.OnScanCompletedListener() {
@@ -542,6 +546,7 @@ public class BookDetails extends AppCompatActivity {
                                     }
                                 });
                     }
+
                     return "1";
                 } else {
                     return "2";
@@ -555,10 +560,11 @@ public class BookDetails extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String args) {
-            if (args.equals("1") || args.equals("2")) {
+            if (args.equals("1") || args.equals("2") || args.equals("3")) {
                 switch (option) {
-                    case "save":
-                        if (args.equals("2")) {
+                    case "savePDF":
+                    case "saveIMG":
+                        if (args.equals("3")) {
                             Toast.makeText(BookDetails.this, "Already Download", Toast.LENGTH_SHORT).show();
                         } else {
                             AddDownload();
@@ -594,7 +600,6 @@ public class BookDetails extends AppCompatActivity {
     }
 
     private void DownloadBook() {
-
         if (prefManager.isNetworkAvailable(BookDetails.this)) {
             if (!prefManager.getLoginId().equalsIgnoreCase("0")) {
                 if (BookList.get(0).getIsPaid().equalsIgnoreCase("1")) {
@@ -607,11 +612,15 @@ public class BookDetails extends AppCompatActivity {
                     intent.putExtra("bookdate", "" + BookList.get(0).getBDate());
                     startActivity(intent);
                 } else {
-                    if (BookList.get(0).getBUrl().contains(".epub")) {
-                        new DownloadBook("save").execute(BookList.get(0).getBUrl(),BookList.get(0).getBId());
-                    } else {
-                        new DownloadBook("save").execute(BookList.get(0).getBUrl(),BookList.get(0).getBId());
-                    }
+                    String book_name, img_name;
+                    book_name = Environment.getExternalStorageDirectory() +PDF_DIRECTORY+getFileName(BookList.get(0).getBUrl());
+                    img_name = Environment.getExternalStorageDirectory() + IMAGE_DIRECTORY+getFileName(BookList.get(0).getBImage());
+                    new DownloadBook("savePDF").execute(BookList.get(0).getBUrl(), PDF_DIRECTORY, BookList.get(0).getBId());
+                    new DownloadBook("saveIMG").execute(BookList.get(0).getBImage(), IMAGE_DIRECTORY, BookList.get(0).getBId());
+                    mDatabase = openOrCreateDatabase(DATABASE_NAME, MODE_PRIVATE, null);
+                    createBookTable();
+                    Log.e("TAG", "book name is: "+book_name+" and image name is "+img_name );
+                    addRecord(book_name, img_name);
                 }
             } else {
                 startActivity(new Intent(BookDetails.this, LoginActivity.class));
@@ -619,6 +628,31 @@ public class BookDetails extends AppCompatActivity {
         } else {
             Toast.makeText(BookDetails.this, getResources().getString(R.string.internet_connection), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private String getFileName(String url) {
+        return url.substring(url.lastIndexOf('/'));
+    }
+    private void addRecord(String book_name, String img_name) {
+
+        if (!book_name.isEmpty() && !img_name.isEmpty()) {
+            String insertSQL = "INSERT INTO books \n" +
+                    "(book_name,img_name)\n" +
+                    "VALUES \n" +
+                    "(?, ?);";
+            mDatabase.execSQL(insertSQL, new String[]{book_name, img_name});
+        }
+    }
+    private void createBookTable() {
+
+        mDatabase.execSQL("drop table books");
+        mDatabase.execSQL(
+                "CREATE TABLE IF NOT EXISTS books (\n" +
+                        "    id INTEGER NOT NULL CONSTRAINT book_pk PRIMARY KEY AUTOINCREMENT,\n" +
+                        "    book_name varchar(200) NOT NULL,\n" +
+                        "     img_name varchar(200)  NOT NULL\n" +
+                        ");"
+        );
     }
 
     private void ReadBook() {
@@ -648,7 +682,7 @@ public class BookDetails extends AppCompatActivity {
                         }
 
                     }
-                } else if (BookList.get(0).getBUrl().contains(".pdf")||
+                } else if (BookList.get(0).getBUrl().contains(".pdf") ||
                         BookList.get(0).getBUrl().contains(".PDF")) {
                     if (txt_read.getText().toString().equalsIgnoreCase("Sample Book")) {
                         startActivity(new Intent(BookDetails.this, PDFShow.class)
