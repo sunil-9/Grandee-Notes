@@ -140,6 +140,8 @@
     <string name="answer_here">answer here</string>
     <string name="_0">0</string>
     <string name="your_answer_here">your answer here</string>
+    <string name="results">Searched Results</string>
+    <string name="recent_searches">Recent Search</string>
 
 
 </resources>

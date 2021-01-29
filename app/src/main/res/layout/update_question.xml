@@ -50,14 +50,31 @@
                         android:textAppearance="?android:textAppearanceMedium"
                         android:textColor="?attr/textcolor"
                         android:textSize="25sp" />
-                    <Button
+                    <LinearLayout
                         android:layout_below="@+id/et_question"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/save_question"
-                        android:text="save"
-                        android:background="@color/colorPrimary"
+                        android:orientation="horizontal"
+                        android:layout_margin="10dp"
+                        >
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_weight="0.5"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/delete_question"
+                            android:text="Delete"
+                            android:background="@color/dot_dark_screen1"
+                            />
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_weight="0.5"
+                            android:background="@color/colorPrimary"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/update_question"
+                        android:text="Update"
                         />
+                    </LinearLayout>
+
 
 
 

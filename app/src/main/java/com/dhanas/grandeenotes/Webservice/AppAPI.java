@@ -47,9 +47,11 @@ public interface AppAPI {
                                       @Field("question") String question);
   @FormUrlEncoded
     @POST("update_question")
-    Call<SuccessModel> update_question(@Field("user_id") String user_id,
-                                      @Field("question") String question,
+    Call<SuccessModel> update_question(@Field("question") String question,
                                       @Field("q_id") String q_id);
+@FormUrlEncoded
+    @POST("delete_question")
+    Call<SuccessModel> delete_question(@Field("q_id") String q_id);
 
     @FormUrlEncoded
     @POST("registration_fb")
@@ -92,7 +94,6 @@ public interface AppAPI {
 
     @GET("semesterlist")
     Call<SemesterModel> semesterlist();
-//TODO: add course id
     @FormUrlEncoded
     @POST("books_by_author")
     Call<BookModel> books_by_author(@Field("a_id") String a_id);
@@ -109,10 +110,19 @@ public interface AppAPI {
                                 @Field("user_id") String user_id);
 
 
+    @GET("booklist")
+    Call<BookModel> booklist();
+
+
     @FormUrlEncoded
     @POST("books_by_oldquestion")
     Call<BookModel> books_by_oldquestion(@Field("s_id") String s_id,
                                 @Field("user_id") String user_id);
+
+
+    @FormUrlEncoded
+    @POST("bookSearch")
+    Call<BookModel> bookSearch(@Field("query") String query);
 
 
     @FormUrlEncoded

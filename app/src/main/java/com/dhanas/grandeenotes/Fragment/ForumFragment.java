@@ -85,7 +85,6 @@ public class ForumFragment extends Fragment {
                         }
                         else {
                             Toast.makeText(getActivity(), "you asked "+question, Toast.LENGTH_SHORT).show();
-
                             prefManager =new PrefManager(getActivity());
                             String  user_id = prefManager.getLoginId();
                             addQuestion(user_id,question);
