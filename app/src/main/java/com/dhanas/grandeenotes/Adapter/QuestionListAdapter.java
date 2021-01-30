@@ -80,7 +80,7 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
         String uid = prefManager.getLoginId();
         String fu_id = QuestionList.get(position).getUser_id();
         if (uid.equals(fu_id)) {
-            holder.status_pic.setImageResource(R.drawable.ic_user1);
+            holder.status_pic.setImageResource(R.drawable.ic_edit);
             holder.status_pic.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -147,12 +147,6 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
             public void onResponse(Call<SuccessModel> call, Response<SuccessModel> response) {
                 if (response.code() == 200) {
                     Toast.makeText(mcontext, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
-
-//                    FragmentTransaction ft = mcontext.getFragmentManager().beginTransaction();
-//                    if (Build.VERSION.SDK_INT >= 26) {
-//                        ft.setReorderingAllowed(false);
-//                    }
-//                    ft.detach(fragment).attach(this).commit();
                     progressDialog.dismiss();
                 }
             }
@@ -180,7 +174,6 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
                     progressDialog.dismiss();
                 }
             }
-
             @Override
             public void onFailure(Call<SuccessModel> call, Throwable t) {
                 Toast.makeText(mcontext, "" + t.toString(), Toast.LENGTH_SHORT).show();

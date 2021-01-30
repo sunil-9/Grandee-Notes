@@ -142,6 +142,8 @@
     <string name="your_answer_here">your answer here</string>
     <string name="results">Searched Results</string>
     <string name="recent_searches">Recent Search</string>
+    <string name="update_your_answer">Update your Answer</string>
+    <string name="delete_history">Delete history</string>
 
 
 </resources>

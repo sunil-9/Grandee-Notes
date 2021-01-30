@@ -94,7 +94,6 @@ public class ForumFragment extends Fragment {
                 });
             }
         });
-        //TODO: add adaptor for recycle view
         prefManager =new PrefManager(getActivity());
 
         progressDialog = new ProgressDialog(getActivity());

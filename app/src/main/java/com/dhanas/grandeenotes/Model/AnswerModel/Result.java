@@ -22,9 +22,21 @@ public class Result {
     @Expose
     private String date;
 
+    @SerializedName("user_id")
+    @Expose
+    private String user_id;
+
     @SerializedName("q_id")
     @Expose
     private String q_id;
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
 
     public String getA_id() {
         return a_id;

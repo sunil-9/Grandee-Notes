@@ -106,7 +106,7 @@
                             android:layout_weight="0.7"
                             android:fontFamily="@font/roboto_medium"
                             android:gravity="center_vertical"
-                            android:text="@string/recent_searches"
+                            android:text="@string/delete_history"
                             android:textColor="?attr/textcolor"
                             android:textSize="@dimen/text_16" />
                         <TextView

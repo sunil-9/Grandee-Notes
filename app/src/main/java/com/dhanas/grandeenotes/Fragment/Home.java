@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -237,10 +238,10 @@ public class Home extends Fragment {
     }
 
     private void FeatureItem() {
+
         progressDialog.show();
         AppAPI bookNPlayAPI = BaseURL.getVideoAPI();
-        user_id=prefManager.getLoginId();
-        Call<BookModel> call = bookNPlayAPI.popularbooklist(user_id);
+        Call<BookModel> call = bookNPlayAPI.feature_item();
         call.enqueue(new Callback<BookModel>() {
             @Override
             public void onResponse(Call<BookModel> call, Response<BookModel> response) {
@@ -249,25 +250,17 @@ public class Home extends Fragment {
                     FeatureList = new ArrayList<>();
                     FeatureList = response.body().getResult();
                     Log.e("FeatureList", "" + FeatureList.size());
-                    if (FeatureList.size() > 0) {
-                        featureAdapter = new FeatureAdapter(getActivity(), FeatureList, "Home");
-                        rv_feature_item.setHasFixedSize(true);
-                        RecyclerView.LayoutManager mLayoutManager3 = new LinearLayoutManager(getActivity(),
-                                LinearLayoutManager.HORIZONTAL, false);
-                        rv_feature_item.setLayoutManager(mLayoutManager3);
-                        rv_feature_item.setItemAnimator(new DefaultItemAnimator());
-                        rv_feature_item.setAdapter(featureAdapter);
-                        featureAdapter.notifyDataSetChanged();
-                        ly_top_reading_Book.setVisibility(View.VISIBLE);
-                        rv_feature_item.setVisibility(View.VISIBLE);
-                    } else {
-                        ly_top_reading_Book.setVisibility(View.GONE);
-                        rv_feature_item.setVisibility(View.GONE);
-                    }
+
+                    featureAdapter = new FeatureAdapter(getActivity(), FeatureList, "Home");
+                    rv_feature_item.setHasFixedSize(true);
+                    RecyclerView.LayoutManager  mLayoutManager3 = new LinearLayoutManager(getActivity(),
+                            LinearLayoutManager.HORIZONTAL, false);
+                    rv_feature_item.setLayoutManager(mLayoutManager3);
+                    rv_feature_item.setItemAnimator(new DefaultItemAnimator());
+                    rv_feature_item.setAdapter(featureAdapter);
+                    featureAdapter.notifyDataSetChanged();
                 }
-                progress_hide++;
-                if (progress_hide >= 8)
-                    progressDialog.dismiss();
+                progressDialog.dismiss();
             }
 
             @Override
@@ -275,6 +268,7 @@ public class Home extends Fragment {
                 progressDialog.dismiss();
             }
         });
+
     }
 
     private void NewArrival() {
