@@ -645,7 +645,7 @@ public class BookDetails extends AppCompatActivity {
     }
     private void createBookTable() {
 
-        mDatabase.execSQL("drop table books");
+//        mDatabase.execSQL("drop table books");
         mDatabase.execSQL(
                 "CREATE TABLE IF NOT EXISTS books (\n" +
                         "    id INTEGER NOT NULL CONSTRAINT book_pk PRIMARY KEY AUTOINCREMENT,\n" +

@@ -93,11 +93,7 @@ public interface AppAPI {
     @POST("books_by_category")
     Call<BookModel> books_by_category(@Field("cat_id") String cat_id);
 
-    @GET("newarriaval")
-    Call<BookModel> newarriaval();
 
-    @GET("feature_item")
-    Call<BookModel> feature_item();
 
     @FormUrlEncoded
     @POST("popularbooklist")
@@ -106,6 +102,14 @@ public interface AppAPI {
     @FormUrlEncoded
     @POST("autherlist")
     Call<AuthorModel> autherlist(@Field("u_id") String u_id);
+
+    @FormUrlEncoded
+    @POST("newarriaval")
+    Call<BookModel> newarriaval(@Field("u_id") String u_id);
+
+    @FormUrlEncoded
+    @POST("feature_item")
+    Call<BookModel> feature_item(@Field("u_id") String u_id);
 
     @GET("semesterlist")
     Call<SemesterModel> semesterlist();

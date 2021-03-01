@@ -37,7 +37,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.MyViewHold
     PrefManager prefManager;
     ProgressDialog progressDialog;
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView answer,thumb_count;
+        public TextView answer,thumb_count,name;
         ImageView iv_thumb;
 
         public MyViewHolder(View view) {
@@ -45,6 +45,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.MyViewHold
             answer= (TextView) view.findViewById(R.id.answer);
             thumb_count= (TextView) view.findViewById(R.id.tv_thumb_count);
             iv_thumb= (ImageView) view.findViewById(R.id.iv_thumb);
+            name = (TextView) view.findViewById(R.id.name);
         }
     }
 
@@ -66,6 +67,14 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.MyViewHold
 
         holder.answer.setText("" + answerList.get(position).getAnswer());
         String answer_id =answerList.get(position).getA_id();
+
+        String user_id1 =answerList.get(position).getUser_id();
+        if( user_id1.equals(prefManager.getLoginId())){
+            holder.name.setText("You ");
+        }
+        else {
+            holder.name.setText(answerList.get(position).getFullname());
+        }
 
 //        getVoteCount(answer_id);
 //        Log.e("onBind(QuestionList): ","total vote for each answer"+total_vote_count);

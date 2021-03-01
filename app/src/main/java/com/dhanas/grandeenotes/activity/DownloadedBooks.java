@@ -108,21 +108,29 @@ public class DownloadedBooks extends AppCompatActivity {
     private void downloadlist() {
         progressDialog.show();
         //we used rawQuery(sql, selectionargs) for fetching all the employees
-        Cursor cursorBooks = mDatabase.rawQuery("SELECT * FROM books", null);
-        //if the cursor has some data
-        if (cursorBooks.moveToFirst()) {
-            //looping through all the records
-            do {
-                //pushing each record in the employee list
-                bookList.add(new DownloadModel(
-                        cursorBooks.getInt(0),
-                        cursorBooks.getString(1),
-                        cursorBooks.getString(2)
-                ));
-            } while (cursorBooks.moveToNext());
+        Cursor cursorBooks;
+        try {
+             cursorBooks = mDatabase.rawQuery("SELECT * FROM books", null);
+            //if the cursor has some data
+            if (cursorBooks.moveToFirst()) {
+                //looping through all the records
+                do {
+                    //pushing each record in the employee list
+                    bookList.add(new DownloadModel(
+                            cursorBooks.getInt(0),
+                            cursorBooks.getString(1),
+                            cursorBooks.getString(2)
+                    ));
+                } while (cursorBooks.moveToNext());
+            }
+
+            //closing the cursor
+            cursorBooks.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        //closing the cursor
-        cursorBooks.close();
+
+
 
         if (bookList.size() > 0) {
             myDownloadBooksAdapter = new MyDownloadBooksAdapter(DownloadedBooks.this, bookList, mDatabase);

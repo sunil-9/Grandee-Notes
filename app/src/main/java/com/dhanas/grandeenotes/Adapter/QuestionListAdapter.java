@@ -2,11 +2,8 @@ package com.dhanas.grandeenotes.Adapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,18 +42,18 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView Question;
+        public TextView Question, name;
         ImageView status_pic;
 
         public MyViewHolder(View view) {
             super(view);
             Question = (TextView) view.findViewById(R.id.Question);
+            name = (TextView) view.findViewById(R.id.name);
             status_pic = view.findViewById(R.id.status_pic);
-
         }
     }
 
-    public QuestionListAdapter(Activity context, List<Result> QuestionList ) {
+    public QuestionListAdapter(Activity context, List<Result> QuestionList) {
         this.QuestionList = QuestionList;
         this.mcontext = context;
         prefManager = new PrefManager(mcontext);
@@ -75,6 +72,14 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
     public void onBindViewHolder(final QuestionListAdapter.MyViewHolder holder, final int position) {
         Log.e("onBind(QuestionList): ", QuestionList.get(position).getQ_id());
         String question_asked_each_position = QuestionList.get(position).getQuestion();
+
+        String user_id =QuestionList.get(position).getId();
+        if( user_id.equals(prefManager.getLoginId())){
+            holder.name.setText("You ");
+        }
+        else {
+            holder.name.setText(QuestionList.get(position).getFullname());
+        }
 
         holder.Question.setText("" + question_asked_each_position);
         String uid = prefManager.getLoginId();
@@ -99,14 +104,14 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
                             @Override
                             public void onClick(View v) {
                                 dialog1.dismiss();
-                                updateQuestion( asked_question.getText().toString().trim(), QuestionList.get(position).getQ_id());
+                                updateQuestion(asked_question.getText().toString().trim(), QuestionList.get(position).getQ_id());
                             }
                         });
                         et_question_delete.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 dialog1.dismiss();
-                                DeleteQuestion( QuestionList.get(position).getQ_id());
+                                DeleteQuestion(QuestionList.get(position).getQ_id());
                             }
                         });
 
@@ -141,7 +146,7 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
 //        todo delete question
         AppAPI bookNPlayAPI = BaseURL.getVideoAPI();
         Call<SuccessModel> call = bookNPlayAPI.delete_question(q_id);
-        Log.e("TAG", "DeleteQuestion: deleting"+q_id );
+        Log.e("TAG", "DeleteQuestion: deleting" + q_id);
         call.enqueue(new Callback<SuccessModel>() {
             @Override
             public void onResponse(Call<SuccessModel> call, Response<SuccessModel> response) {
@@ -159,13 +164,13 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
         });
     }
 
-    public void updateQuestion( String Questions, String q_id) {
+    public void updateQuestion(String Questions, String q_id) {
         progressDialog = new ProgressDialog(mcontext);
         progressDialog.setTitle(please_wait);
         progressDialog.show();
         AppAPI bookNPlayAPI = BaseURL.getVideoAPI();
-        Call<SuccessModel> call = bookNPlayAPI.update_question( Questions, q_id);
-        Log.e("TAG", "updateQuestion: " +q_id);
+        Call<SuccessModel> call = bookNPlayAPI.update_question(Questions, q_id);
+        Log.e("TAG", "updateQuestion: " + q_id);
         call.enqueue(new Callback<SuccessModel>() {
             @Override
             public void onResponse(Call<SuccessModel> call, Response<SuccessModel> response) {
@@ -174,6 +179,7 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
                     progressDialog.dismiss();
                 }
             }
+
             @Override
             public void onFailure(Call<SuccessModel> call, Throwable t) {
                 Toast.makeText(mcontext, "" + t.toString(), Toast.LENGTH_SHORT).show();

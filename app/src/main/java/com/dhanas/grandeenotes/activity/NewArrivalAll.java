@@ -90,7 +90,7 @@ public class NewArrivalAll extends AppCompatActivity {
     private void NewArrival() {
         progressDialog.show();
         AppAPI bookNPlayAPI = BaseURL.getVideoAPI();
-        Call<BookModel> call = bookNPlayAPI.newarriaval();
+        Call<BookModel> call = bookNPlayAPI.newarriaval(prefManager.getLoginId());
         call.enqueue(new Callback<BookModel>() {
             @Override
             public void onResponse(Call<BookModel> call, Response<BookModel> response) {

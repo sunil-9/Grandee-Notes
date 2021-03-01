@@ -90,7 +90,7 @@ public class FeatureItemsViewAll extends AppCompatActivity {
     private void FeatureItem() {
         progressDialog.show();
         AppAPI bookNPlayAPI = BaseURL.getVideoAPI();
-        Call<BookModel> call = bookNPlayAPI.feature_item();
+        Call<BookModel> call = bookNPlayAPI.feature_item(prefManager.getLoginId());
         call.enqueue(new Callback<BookModel>() {
             @Override
             public void onResponse(Call<BookModel> call, Response<BookModel> response) {
