@@ -120,7 +120,6 @@ public class ForumFragment extends Fragment {
                     rv_questionList.setHasFixedSize(true);
                     RecyclerView.LayoutManager mLayoutManager3 = new LinearLayoutManager(getActivity(),
                             LinearLayoutManager.HORIZONTAL, false);
-//                    rv_booklist.setLayoutManager(mLayoutManager3);
                     GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 1, LinearLayoutManager.VERTICAL, false);
                     rv_questionList.setLayoutManager(gridLayoutManager);
                     rv_questionList.setItemAnimator(new DefaultItemAnimator());

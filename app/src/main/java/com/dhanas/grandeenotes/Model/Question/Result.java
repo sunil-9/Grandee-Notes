@@ -20,9 +20,32 @@ public class Result {
     @SerializedName("user_id")
     @Expose
     private String user_id;
-@SerializedName("course_id")
+    @SerializedName("course_id")
     @Expose
     private String course_id;
+ @SerializedName("fullname")
+    @Expose
+    private String fullname;
+
+@SerializedName("id")
+    @Expose
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
 
     public String getQ_id() {
         return q_id;

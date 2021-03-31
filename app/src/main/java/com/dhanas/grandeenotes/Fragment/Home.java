@@ -56,7 +56,7 @@ public class Home extends Fragment {
     PrefManager prefManager;
     ProgressDialog progressDialog;
 
-    TextView txt_viewall_new_arrival, txt_viewall_category, txt_viewall_item, txt_viewall_author,txt_viewall_semester, txt_viewall_continue, txt_viewall_paidbook, txt_viewall_freebook;
+    TextView txt_viewall_new_arrival, txt_viewall_category, txt_viewall_item, txt_viewall_author,txt_viewall_semester, txt_viewall_continue;
 
     List<Result> CategoryList;
     RecyclerView ry_category;
@@ -66,13 +66,13 @@ public class Home extends Fragment {
     RecyclerView rv_newarrival;
     NewArrivalAdapter newArrivalAdapter;
 
-    List<com.dhanas.grandeenotes.Model.FreeBookModel.Result> freebookList;
-    RecyclerView rv_freebook;
-    FreebookAdapter freebookAdapter;
+//    List<com.dhanas.grandeenotes.Model.FreeBookModel.Result> freebookList;
+//    RecyclerView rv_freebook;
+//    FreebookAdapter freebookAdapter;
 
-    List<com.dhanas.grandeenotes.Model.FreeBookModel.Result> paidbookList;
-    RecyclerView rv_paidbook;
-    PaidBookAdapter paidBookAdapter;
+//    List<com.dhanas.grandeenotes.Model.FreeBookModel.Result> paidbookList;
+//    RecyclerView rv_paidbook;
+//    PaidBookAdapter paidBookAdapter;
 
     List<com.dhanas.grandeenotes.Model.BookModel.Result> FeatureList;
     RecyclerView rv_feature_item;
@@ -88,7 +88,7 @@ public class Home extends Fragment {
     List<com.dhanas.grandeenotes.Model.BookModel.Result> ContinueList;
     RecyclerView rv_continue;
     ContinueReadAdapter continueReadAdapter;
-    LinearLayout ly_continue, ly_paid_book, ly_free_book, ly_author,ly_semester, ly_New_Arrival_Book, ly_top_reading_Book, ly_category;
+    LinearLayout ly_continue, ly_author,ly_semester, ly_New_Arrival_Book, ly_top_reading_Book, ly_category;
 
     int progress_hide = 0;
     String user_id;
@@ -102,6 +102,8 @@ public class Home extends Fragment {
             getActivity().setTheme(R.style.AppTheme);
         }
         View root = inflater.inflate(R.layout.homefragment, container, false);
+        prefManager=new PrefManager(getActivity());
+        user_id =prefManager.getLoginId();
 
         prefManager = new PrefManager(getActivity());
 
@@ -115,12 +117,12 @@ public class Home extends Fragment {
         rv_author = (RecyclerView) root.findViewById(R.id.rv_author);
         rv_semester = (RecyclerView) root.findViewById(R.id.rv_semester);
         rv_continue = (RecyclerView) root.findViewById(R.id.rv_continue);
-        rv_freebook = root.findViewById(R.id.rv_freebook);
-        rv_paidbook = root.findViewById(R.id.rv_paidbook);
+//        rv_freebook = root.findViewById(R.id.rv_freebook);
+//        rv_paidbook = root.findViewById(R.id.rv_paidbook);
 
         ly_continue = (LinearLayout) root.findViewById(R.id.ly_continue);
-        ly_paid_book = root.findViewById(R.id.ly_paid_book);
-        ly_free_book = root.findViewById(R.id.ly_free_book);
+//        ly_paid_book = root.findViewById(R.id.ly_paid_book);
+//        ly_free_book = root.findViewById(R.id.ly_free_book);
         ly_author = root.findViewById(R.id.ly_author);
         ly_semester = root.findViewById(R.id.ly_semester);
         ly_New_Arrival_Book = root.findViewById(R.id.ly_New_Arrival_Book);
@@ -134,28 +136,28 @@ public class Home extends Fragment {
         txt_viewall_author = (TextView) root.findViewById(R.id.txt_viewall_author);
         txt_viewall_semester = (TextView) root.findViewById(R.id.txt_viewall_semester);
         txt_viewall_continue = (TextView) root.findViewById(R.id.txt_viewall_continue);
-        txt_viewall_paidbook = root.findViewById(R.id.txt_viewall_paidbook);
-        txt_viewall_freebook = root.findViewById(R.id.txt_viewall_freebook);
+//        txt_viewall_paidbook = root.findViewById(R.id.txt_viewall_paidbook);
+//        txt_viewall_freebook = root.findViewById(R.id.txt_viewall_freebook);
         txt_viewall_new_arrival.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), NewArrivalAll.class));
             }
         });
+//
+//        txt_viewall_freebook.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(getActivity(), FreeBookallview.class));
+//            }
+//        });
 
-        txt_viewall_freebook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), FreeBookallview.class));
-            }
-        });
-
-        txt_viewall_paidbook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), Paidbookallview.class));
-            }
-        });
+//        txt_viewall_paidbook.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(getActivity(), Paidbookallview.class));
+//            }
+//        });
 
         txt_viewall_category.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,8 +193,8 @@ public class Home extends Fragment {
         NewArrival();
         AuthorList();
         ContinueRead();
-        freebook();
-        paidbook();
+//        freebook();
+//        paidbook();
 
         return root;
     }
@@ -241,7 +243,7 @@ public class Home extends Fragment {
 
         progressDialog.show();
         AppAPI bookNPlayAPI = BaseURL.getVideoAPI();
-        Call<BookModel> call = bookNPlayAPI.feature_item();
+        Call<BookModel> call = bookNPlayAPI.feature_item(user_id);
         call.enqueue(new Callback<BookModel>() {
             @Override
             public void onResponse(Call<BookModel> call, Response<BookModel> response) {
@@ -274,7 +276,7 @@ public class Home extends Fragment {
     private void NewArrival() {
         progressDialog.show();
         AppAPI bookNPlayAPI = BaseURL.getVideoAPI();
-        Call<BookModel> call = bookNPlayAPI.newarriaval();
+        Call<BookModel> call = bookNPlayAPI.newarriaval(user_id);
         call.enqueue(new Callback<BookModel>() {
             @Override
             public void onResponse(Call<BookModel> call, Response<BookModel> response) {
@@ -307,6 +309,7 @@ public class Home extends Fragment {
             @Override
             public void onFailure(Call<BookModel> call, Throwable t) {
                 progressDialog.dismiss();
+                Log.e("NewArrivalList", "" + t.toString());
             }
         });
     }
@@ -446,90 +449,90 @@ public class Home extends Fragment {
         });
     }
 
-    private void freebook() {
-        progressDialog.show();
-        AppAPI appAPI = BaseURL.getVideoAPI();
-        Call<FreeBookModel> call = appAPI.free_paid_booklist("0");
-        call.enqueue(new Callback<FreeBookModel>() {
-            @Override
-            public void onResponse(Call<FreeBookModel> call, Response<FreeBookModel> response) {
-                if (response.code() == 200 && response.isSuccessful()) {
-                    Log.e("free_book_data", "" + response);
-                    Log.e("free_book_data", "" + response.body().getResult());
-                    freebookList = new ArrayList<>();
-                    freebookList = response.body().getResult();
-                    Log.e("freebookList", "" + freebookList.size());
-                    if (freebookList.size() > 0) {
-                        freebookAdapter = new FreebookAdapter(getActivity(), freebookList, "Home");
-                        rv_freebook.setHasFixedSize(true);
-                        RecyclerView.LayoutManager mLayoutManager3 = new LinearLayoutManager(getActivity(),
-                                LinearLayoutManager.HORIZONTAL, false);
-                        rv_freebook.setLayoutManager(mLayoutManager3);
-                        rv_freebook.setItemAnimator(new DefaultItemAnimator());
-                        rv_freebook.setAdapter(freebookAdapter);
-                        freebookAdapter.notifyDataSetChanged();
-                        rv_freebook.setVisibility(View.VISIBLE);
-                        ly_free_book.setVisibility(View.VISIBLE);
-                    } else {
-                        rv_freebook.setVisibility(View.GONE);
-                        ly_free_book.setVisibility(View.GONE);
-                    }
-                }
-                progress_hide++;
-                if (progress_hide >= 8)
-                    progressDialog.dismiss();
-            }
+//    private void freebook() {
+//        progressDialog.show();
+//        AppAPI appAPI = BaseURL.getVideoAPI();
+//        Call<FreeBookModel> call = appAPI.free_paid_booklist("0");
+//        call.enqueue(new Callback<FreeBookModel>() {
+//            @Override
+//            public void onResponse(Call<FreeBookModel> call, Response<FreeBookModel> response) {
+//                if (response.code() == 200 && response.isSuccessful()) {
+//                    Log.e("free_book_data", "" + response);
+//                    Log.e("free_book_data", "" + response.body().getResult());
+//                    freebookList = new ArrayList<>();
+//                    freebookList = response.body().getResult();
+//                    Log.e("freebookList", "" + freebookList.size());
+//                    if (freebookList.size() > 0) {
+//                        freebookAdapter = new FreebookAdapter(getActivity(), freebookList, "Home");
+//                        rv_freebook.setHasFixedSize(true);
+//                        RecyclerView.LayoutManager mLayoutManager3 = new LinearLayoutManager(getActivity(),
+//                                LinearLayoutManager.HORIZONTAL, false);
+//                        rv_freebook.setLayoutManager(mLayoutManager3);
+//                        rv_freebook.setItemAnimator(new DefaultItemAnimator());
+//                        rv_freebook.setAdapter(freebookAdapter);
+//                        freebookAdapter.notifyDataSetChanged();
+//                        rv_freebook.setVisibility(View.VISIBLE);
+//                        ly_free_book.setVisibility(View.VISIBLE);
+//                    } else {
+//                        rv_freebook.setVisibility(View.GONE);
+//                        ly_free_book.setVisibility(View.GONE);
+//                    }
+//                }
+//                progress_hide++;
+//                if (progress_hide >= 8)
+//                    progressDialog.dismiss();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<FreeBookModel> call, Throwable t) {
+//                progressDialog.dismiss();
+//                Log.e("free_book_error", "" + t.getMessage());
+//            }
+//        });
+//    }
 
-            @Override
-            public void onFailure(Call<FreeBookModel> call, Throwable t) {
-                progressDialog.dismiss();
-                Log.e("free_book_error", "" + t.getMessage());
-            }
-        });
-    }
-
-    private void paidbook() {
-        progressDialog.show();
-        AppAPI appAPI = BaseURL.getVideoAPI();
-        Call<FreeBookModel> call = appAPI.free_paid_booklist("1");
-        call.enqueue(new Callback<FreeBookModel>() {
-            @Override
-            public void onResponse(Call<FreeBookModel> call, Response<FreeBookModel> response) {
-                if (response.code() == 200 && response.isSuccessful()) {
-                    Log.e("paid_book_data", "" + response.body());
-                    Log.e("paid_book_data", "" + response.body().getResult());
-                    paidbookList = new ArrayList<>();
-                    paidbookList = response.body().getResult();
-                    Log.e("paidbookList", "" + paidbookList.size());
-                    if (paidbookList.size() > 0) {
-                        paidBookAdapter = new PaidBookAdapter(getActivity(), paidbookList, "Home");
-                        rv_paidbook.setHasFixedSize(true);
-                        RecyclerView.LayoutManager mLayoutManager3 = new LinearLayoutManager(getActivity(),
-                                LinearLayoutManager.HORIZONTAL, false);
-                        rv_paidbook.setLayoutManager(mLayoutManager3);
-                        rv_paidbook.setItemAnimator(new DefaultItemAnimator());
-                        rv_paidbook.setAdapter(paidBookAdapter);
-                        paidBookAdapter.notifyDataSetChanged();
-                        rv_paidbook.setVisibility(View.VISIBLE);
-                        ly_paid_book.setVisibility(View.VISIBLE);
-                    } else {
-                        rv_paidbook.setVisibility(View.GONE);
-                        ly_paid_book.setVisibility(View.GONE);
-                    }
-                }
-                progress_hide++;
-                if (progress_hide >= 8)
-                    progressDialog.dismiss();
-
-            }
-
-            @Override
-            public void onFailure(Call<FreeBookModel> call, Throwable t) {
-                progressDialog.dismiss();
-                Log.e("free_book_error", "" + t.getMessage());
-            }
-        });
-
-    }
+//    private void paidbook() {
+//        progressDialog.show();
+//        AppAPI appAPI = BaseURL.getVideoAPI();
+//        Call<FreeBookModel> call = appAPI.free_paid_booklist("1");
+//        call.enqueue(new Callback<FreeBookModel>() {
+//            @Override
+//            public void onResponse(Call<FreeBookModel> call, Response<FreeBookModel> response) {
+//                if (response.code() == 200 && response.isSuccessful()) {
+//                    Log.e("paid_book_data", "" + response.body());
+//                    Log.e("paid_book_data", "" + response.body().getResult());
+//                    paidbookList = new ArrayList<>();
+//                    paidbookList = response.body().getResult();
+//                    Log.e("paidbookList", "" + paidbookList.size());
+//                    if (paidbookList.size() > 0) {
+//                        paidBookAdapter = new PaidBookAdapter(getActivity(), paidbookList, "Home");
+//                        rv_paidbook.setHasFixedSize(true);
+//                        RecyclerView.LayoutManager mLayoutManager3 = new LinearLayoutManager(getActivity(),
+//                                LinearLayoutManager.HORIZONTAL, false);
+//                        rv_paidbook.setLayoutManager(mLayoutManager3);
+//                        rv_paidbook.setItemAnimator(new DefaultItemAnimator());
+//                        rv_paidbook.setAdapter(paidBookAdapter);
+//                        paidBookAdapter.notifyDataSetChanged();
+//                        rv_paidbook.setVisibility(View.VISIBLE);
+//                        ly_paid_book.setVisibility(View.VISIBLE);
+//                    } else {
+//                        rv_paidbook.setVisibility(View.GONE);
+//                        ly_paid_book.setVisibility(View.GONE);
+//                    }
+//                }
+//                progress_hide++;
+//                if (progress_hide >= 8)
+//                    progressDialog.dismiss();
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<FreeBookModel> call, Throwable t) {
+//                progressDialog.dismiss();
+//                Log.e("free_book_error", "" + t.getMessage());
+//            }
+//        });
+//
+//    }
 }
 

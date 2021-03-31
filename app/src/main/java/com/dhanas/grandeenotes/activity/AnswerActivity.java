@@ -35,7 +35,7 @@ import static com.dhanas.grandeenotes.Utility.Constants.please_wait;
 
 public class AnswerActivity extends AppCompatActivity {
     private String q_id, question;
-    private TextView tv_question, subbmit_answer;
+    private TextView tv_question, subbmit_answer, txt_back;
     ProgressDialog progressDialog;
     List<Result> answerList;
     AnswerAdapter answerAdapter;
@@ -71,7 +71,6 @@ public class AnswerActivity extends AppCompatActivity {
         progressDialog.setCanceledOnTouchOutside(false);
         rv_questionList = (RecyclerView) findViewById(R.id.recycleView);
 
-
 // getting the bundle back from the android
         Bundle bundle = getIntent().getExtras();
 
@@ -80,6 +79,13 @@ public class AnswerActivity extends AppCompatActivity {
         question = bundle.getString("question", "");
         tv_question.setText(question);
         list_answer(q_id);
+        txt_back = findViewById(R.id.txt_back);
+        txt_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               onBackPressed();
+            }
+        });
 //        Toast.makeText(this, q_id, Toast.LENGTH_SHORT).show();
 
     }
@@ -130,7 +136,6 @@ public class AnswerActivity extends AppCompatActivity {
                     rv_questionList.setHasFixedSize(true);
                     RecyclerView.LayoutManager mLayoutManager3 = new LinearLayoutManager(AnswerActivity.this,
                             LinearLayoutManager.HORIZONTAL, false);
-//                    rv_booklist.setLayoutManager(mLayoutManager3);
                     GridLayoutManager gridLayoutManager = new GridLayoutManager(AnswerActivity.this, 1, LinearLayoutManager.VERTICAL, false);
                     rv_questionList.setLayoutManager(gridLayoutManager);
                     rv_questionList.setItemAnimator(new DefaultItemAnimator());
