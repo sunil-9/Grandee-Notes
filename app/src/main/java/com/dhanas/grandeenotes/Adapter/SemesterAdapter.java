@@ -67,20 +67,21 @@ public class SemesterAdapter extends RecyclerView.Adapter<SemesterAdapter.MyView
 //        Toast.makeText(mcontext, "semester is :"+SemesterList.get(position).getSname(), Toast.LENGTH_SHORT).show();
 //        holder.txt_tag.setText("" + SemesterList.get(position).getSname().charAt(0));
 
+//todo: change colors of each image view
 
-        if (position == 0) {
-            holder.iv_thumb.setBackgroundColor(mcontext.getResources().getColor(R.color.cat_1));
-        } else if (position == 1) {
-            holder.iv_thumb.setBackgroundColor(mcontext.getResources().getColor(R.color.cat_2));
-        } else if (position == 2) {
-            holder.iv_thumb.setBackgroundColor(mcontext.getResources().getColor(R.color.cat_3));
-        } else if (position == 3) {
-            holder.iv_thumb.setBackgroundColor(mcontext.getResources().getColor(R.color.cat_4));
-        } else if (position == 4) {
-            holder.iv_thumb.setBackgroundColor(mcontext.getResources().getColor(R.color.cat_5));
-        } else {
+//        if (position == 0) {
+//            holder.iv_thumb.setBackgroundColor(mcontext.getResources().getColor(R.color.cat_1));
+//        } else if (position == 1) {
+//            holder.iv_thumb.setBackgroundColor(mcontext.getResources().getColor(R.color.cat_2));
+//        } else if (position == 2) {
+//            holder.iv_thumb.setBackgroundColor(mcontext.getResources().getColor(R.color.cat_3));
+//        } else if (position == 3) {
+//            holder.iv_thumb.setBackgroundColor(mcontext.getResources().getColor(R.color.cat_4));
+//        } else if (position == 4) {
+//            holder.iv_thumb.setBackgroundColor(mcontext.getResources().getColor(R.color.cat_5));
+//        } else {
             holder.iv_thumb.setBackgroundColor(getRandomColor());
-        }
+//        }
 //        Picasso.with(mcontext).load(SemesterList.get(position).getAImage()).priority(HIGH).into(holder.iv_thumb);
 
         holder.iv_thumb.setOnClickListener(new View.OnClickListener() {

@@ -113,6 +113,7 @@ public class SplashActivity extends AppCompatActivity {
                     jump();
                 } else {
                     Toast.makeText(SplashActivity.this, "Unable to fetch data please try again letter", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
 

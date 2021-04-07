@@ -301,14 +301,18 @@ public class LoginActivity extends AppCompatActivity {
     public void onClick(View v) {
         if (v == btn_google) {
             Log.e("gmail", "perform");
-            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-            startActivityForResult(signInIntent, 101);
+//            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+//            startActivityForResult(signInIntent, 101);
+            Toast.makeText(this, "This feature is coming soon.", Toast.LENGTH_SHORT).show();
+
         }
     }
 
     public void onClickFacebookButton(View view) {
         if (view == fb) {
-            loginButton.performClick();
+//            loginButton.performClick();
+            Toast.makeText(this, "This feature is coming soon.", Toast.LENGTH_SHORT).show();
+
         }
     }
 

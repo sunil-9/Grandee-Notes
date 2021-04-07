@@ -28,7 +28,7 @@ android {
         android {
             defaultConfig {
                 manifestPlaceholders = [
-                        onesignal_app_id               : '6e703206-bd5e-4aba-9dee-4ddcd6d96db6',
+                        onesignal_app_id               : '24c0bc9b-f016-4004-9688-ef26a8c4e25d',
                         onesignal_google_project_number: 'REMOTE'
                 ]
             }
