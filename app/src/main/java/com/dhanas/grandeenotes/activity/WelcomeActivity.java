@@ -38,6 +38,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private int[] layouts;
     private Button btnSkip, btnNext;
     private PrefManager prefManager;
+    int current =0;
 
     private static final int PERMISSION_REQUEST_CODE = 1;
 
@@ -113,7 +114,7 @@ public class WelcomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // checking for last page
                 // if last page home screen will be launched
-                int current = getItem(+1);
+                 current = getItem(+1);
                 if (current < layouts.length) {
                     // move to next screen
                     viewPager.setCurrentItem(current);
@@ -175,22 +176,6 @@ public class WelcomeActivity extends AppCompatActivity {
         @Override
         public void onPageSelected(int position) {
             addBottomDots(position);
-
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (ContextCompat.checkSelfPermission(WelcomeActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(WelcomeActivity.this, Manifest.permission.READ_CONTACTS)) {
-                        Intent intent_status = new Intent(getApplicationContext(), PermissionActivity.class);
-                        startActivity(intent_status);
-                        overridePendingTransition(R.anim.enter, R.anim.exit);
-                    } else {
-                        Intent intent_status = new Intent(getApplicationContext(), PermissionActivity.class);
-                        startActivity(intent_status);
-                        overridePendingTransition(R.anim.enter, R.anim.exit);
-                    }
-                }
-            }
-
             // changing the next button text 'NEXT' / 'GOT IT'
             if (position == layouts.length - 1) {
                 // last page. make button text to GOT IT
@@ -201,6 +186,21 @@ public class WelcomeActivity extends AppCompatActivity {
                 btnNext.setText(getString(R.string.next));
                 btnSkip.setVisibility(View.VISIBLE);
             }
+
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                if (ContextCompat.checkSelfPermission(WelcomeActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//                    if (ActivityCompat.shouldShowRequestPermissionRationale(WelcomeActivity.this, Manifest.permission.READ_CONTACTS)) {
+//                        Intent intent_status = new Intent(getApplicationContext(), PermissionActivity.class);
+//                        startActivity(intent_status);
+//                        overridePendingTransition(R.anim.enter, R.anim.exit);
+//                    } else {
+//                        Intent intent_status = new Intent(getApplicationContext(), PermissionActivity.class);
+//                        startActivity(intent_status);
+//                        overridePendingTransition(R.anim.enter, R.anim.exit);
+//                    }
+//                }
+//            }
+
         }
 
         @Override
@@ -227,11 +227,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private boolean checkPermission() {
         int result = ContextCompat.checkSelfPermission(WelcomeActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (result == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        } else {
-            return false;
-        }
+        return result == PackageManager.PERMISSION_GRANTED;
     }
 
     private void requestPermission() {
@@ -244,7 +240,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case PERMISSION_REQUEST_CODE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {

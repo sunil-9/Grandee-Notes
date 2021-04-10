@@ -31,7 +31,7 @@ import retrofit2.Response;
 import static com.dhanas.grandeenotes.Utility.Constants.please_wait;
 
 public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.MyViewHolder>{
-    private List<Result>  answerList;
+    private final List<Result>  answerList;
     Context mcontext;
     String total_vote_count;
     PrefManager prefManager;

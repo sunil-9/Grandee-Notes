@@ -22,7 +22,7 @@ import java.net.URLConnection;
 
 public class DownloadEpub {
 
-    private Activity activity;
+    private final Activity activity;
 
     public DownloadEpub(Activity activity) {
         this.activity = activity;
@@ -78,7 +78,7 @@ public class DownloadEpub {
                     InputStream input = new BufferedInputStream(url.openStream(), 8192);
                     // Output stream to write file
                     OutputStream output = new FileOutputStream(sdIconStorageDir);
-                    byte data[] = new byte[1024];
+                    byte[] data = new byte[1024];
                     while ((count = input.read(data)) != -1) {
                         output.write(data, 0, count);
                     }

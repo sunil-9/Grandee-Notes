@@ -24,7 +24,7 @@ import static com.squareup.picasso.Picasso.Priority.HIGH;
 
 public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHolder> {
 
-    private List<Result> AuthorList;
+    private final List<Result> AuthorList;
     Context mcontext;
     PrefManager prefManager;
 

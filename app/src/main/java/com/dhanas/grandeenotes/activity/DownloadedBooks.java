@@ -117,7 +117,8 @@ public class DownloadedBooks extends AppCompatActivity {
                 bookList.add(new DownloadModel(
                         cursorBooks.getInt(0),
                         cursorBooks.getString(1),
-                        cursorBooks.getString(2)
+                        cursorBooks.getString(2),
+                        cursorBooks.getString(3)
                 ));
             } while (cursorBooks.moveToNext());
         }

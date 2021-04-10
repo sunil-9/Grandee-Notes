@@ -19,8 +19,10 @@
 
             <ImageView
                 android:id="@+id/iv_login_icon"
-                android:layout_width="120dp"
-                android:layout_height="120dp" />
+                android:layout_width="match_parent"
+                android:scaleType="fitXY"
+                android:layout_height="120dp"
+                android:layout_margin="25dp"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -273,7 +275,7 @@
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp">
 
-                            <com.facebook.login.widget.LoginButton
+                            <Button
                                 android:id="@+id/login_button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -294,22 +296,6 @@
                     </LinearLayout>
 
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/txt_skip"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/round_bor"
-                    android:fontFamily="@font/roboto_medium"
-                    android:gravity="center"
-                    android:text="@string/skip1"
-                    android:textColor="@color/font_dark"
-                    android:textSize="14dp" />
-
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="35dp"

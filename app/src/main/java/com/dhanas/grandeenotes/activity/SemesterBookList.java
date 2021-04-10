@@ -34,7 +34,7 @@ public class SemesterBookList extends AppCompatActivity {
     ProgressDialog progressDialog;
     public String s_id, s_name;
     private static final int NUM_PAGES = 3;
-    private String[] titles = new String[]{"Course", "Old Questions", "Syllabus"};
+    private final String[] titles = new String[]{"Course", "Old Questions", "Syllabus"};
 
     TextView toolbar_title, txt_back, txt_course_book, txt_oldquestion, txt_syllabus, txt_semester_name, txt_books_total;
     CircularImageView iv_thumb;

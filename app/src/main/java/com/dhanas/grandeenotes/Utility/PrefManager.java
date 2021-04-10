@@ -120,7 +120,7 @@ public class PrefManager {
     }
 
     public boolean isNightModeEnabled() {
-        return pref.getBoolean(NIGHT_MODE, true);
+        return pref.getBoolean(NIGHT_MODE, false);
     }
 
     public void setIsNightModeEnabled(boolean isNightModeEnabled) {

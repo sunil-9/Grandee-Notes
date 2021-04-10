@@ -23,7 +23,7 @@ import static com.squareup.picasso.Picasso.Priority.HIGH;
 
 public class NewArrivalAdapter extends RecyclerView.Adapter<NewArrivalAdapter.MyViewHolder> {
 
-    private List<Result> NewArrivalList;
+    private final List<Result> NewArrivalList;
     Context mcontext;
     PrefManager prefManager;
     String from;
@@ -72,6 +72,7 @@ public class NewArrivalAdapter extends RecyclerView.Adapter<NewArrivalAdapter.My
             @Override
             public void onClick(View view) {
                 Log.e("click", "call");
+                Log.e("id is",  NewArrivalList.get(position).getBId());
                 Intent intent = new Intent(mcontext, BookDetails.class);
                 intent.putExtra("ID", NewArrivalList.get(position).getBId());
                 mcontext.startActivity(intent);

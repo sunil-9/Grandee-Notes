@@ -1,9 +1,12 @@
 package com.dhanas.grandeenotes.Activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -52,6 +55,8 @@ public class AuthorBookList extends AppCompatActivity {
     CircularImageView iv_thumb;
     TextView txt_view_book, txt_download_book;
     RelativeLayout rl_adView;
+    LinearLayout li_email_layout;
+    String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +75,9 @@ public class AuthorBookList extends AppCompatActivity {
         progressDialog = new ProgressDialog(AuthorBookList.this);
         progressDialog.setMessage("Please wait...");
         progressDialog.setCanceledOnTouchOutside(false);
+
+        li_email_layout =findViewById(R.id.email_layout);
+
 
         rl_adView = findViewById(R.id.rl_adView);
         txt_author_book = (TextView) findViewById(R.id.txt_author_book);
@@ -114,6 +122,13 @@ public class AuthorBookList extends AppCompatActivity {
             read_download_by_author();
 
         }
+        li_email_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                        "mailto", a_address, null));
+            }
+        });
 
         if (prefManager.getValue("banner_ad").equalsIgnoreCase("yes")) {
             Admob();

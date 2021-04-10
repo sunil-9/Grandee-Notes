@@ -77,7 +77,7 @@ public class AboutUs extends AppCompatActivity {
         txt_mobile.setText(prefManager.getValue("contact"));
         txt_about_us.setText(prefManager.getValue("app_desripation"));
 
-        Picasso.with(AboutUs.this).load(BaseURL.Image_URL + "" + prefManager.getValue("app_logo")).priority(HIGH).into(iv_app_icon);
+//        Picasso.with(AboutUs.this).load(BaseURL.Image_URL + "" + prefManager.getValue("app_logo")).priority(HIGH).into(iv_app_icon);
 
         if (prefManager.getValue("banner_ad").equalsIgnoreCase("yes")) {
             Admob();

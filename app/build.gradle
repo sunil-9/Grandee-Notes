@@ -16,19 +16,19 @@ repositories {
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.dhanas.grandeenotes"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
-        versionName "1.0"
+        versionName "1.5"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         android {
             defaultConfig {
                 manifestPlaceholders = [
-                        onesignal_app_id               : '24c0bc9b-f016-4004-9688-ef26a8c4e25d',
+                        onesignal_app_id : '24c0bc9b-f016-4004-9688-ef26a8c4e25d',
                         onesignal_google_project_number: 'REMOTE'
                 ]
             }
@@ -57,7 +57,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
     implementation 'com.google.android.material:material:1.2.1'
-    implementation files('libs/PayPalAndroidSDK.jar')
     // RecyclerView
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
@@ -83,10 +82,7 @@ dependencies {
     implementation 'com.folioreader:folioreader:0.5.4'
     implementation 'androidx.multidex:multidex:2.0.0'
     implementation 'com.iarcuschin:simpleratingbar:0.1.5'
-    implementation 'com.razorpay:checkout:1.5.12'
     implementation 'com.shreyaspatil:EasyUpiPayment:1.1'
-    implementation 'com.facebook.android:facebook-android-sdk:4.31.0'
-
     configurations.matching { it.name == '_internal_aapt2_binary' }.all { config ->
         config.resolutionStrategy.eachDependency { details ->
             details.useVersion("3.3.2-5309881")

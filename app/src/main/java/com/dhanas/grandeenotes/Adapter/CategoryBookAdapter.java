@@ -22,7 +22,7 @@ import static com.squareup.picasso.Picasso.Priority.HIGH;
 
 public class CategoryBookAdapter extends RecyclerView.Adapter<CategoryBookAdapter.MyViewHolder> {
 
-    private List<Result> NewArrivalList;
+    private final List<Result> NewArrivalList;
     Context mcontext;
     PrefManager prefManager;
 

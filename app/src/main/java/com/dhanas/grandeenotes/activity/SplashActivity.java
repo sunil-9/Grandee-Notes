@@ -61,6 +61,7 @@ public class SplashActivity extends AppCompatActivity {
             vView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
                 @Override
                 public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
+                    Toast.makeText(SplashActivity.this, "somwting went wrong", Toast.LENGTH_SHORT).show();
 
                     return false;
                 }
@@ -87,10 +88,8 @@ public class SplashActivity extends AppCompatActivity {
 
     private void general_settings() {
         connection = getConnectivityStatus(SplashActivity.this);
-        if (!connection) {
-
-            Toast.makeText(SplashActivity.this, "No internet Connection view downloaded content", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(SplashActivity.this,DownloadedBooks.class));
+        if (prefManager.isFirstTimeLaunch() && !connection) {
+            Toast.makeText(SplashActivity.this, "No internet Connection!", Toast.LENGTH_SHORT).show();
             finish();
         }
         AppAPI bookNPlayAPI = BaseURL.getVideoAPI();
@@ -111,6 +110,7 @@ public class SplashActivity extends AppCompatActivity {
                         prefManager.setValue(response.body().getResult().get(i).getKey(), response.body().getResult().get(i).getValue());
                     }
                     jump();
+
                 } else {
                     Toast.makeText(SplashActivity.this, "Unable to fetch data please try again letter", Toast.LENGTH_SHORT).show();
                     finish();
@@ -122,9 +122,16 @@ public class SplashActivity extends AppCompatActivity {
                 Toast.makeText(SplashActivity.this, "Server error please try again letter", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
     private void jump() {
         if (!prefManager.isFirstTimeLaunch()) {
+            connection = getConnectivityStatus(SplashActivity.this);
+            if (!connection) {
+                Toast.makeText(SplashActivity.this, "No internet Connection view downloaded content", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(SplashActivity.this,DownloadedBooks.class));
+                finish();
+            }
             if (prefManager.getLoginId().equalsIgnoreCase("0"))
                 mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
             else
@@ -141,11 +148,7 @@ public class SplashActivity extends AppCompatActivity {
         boolean status = false;
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        if (activeNetwork != null) {
-            status = true;
-        } else {
-            status = false;
-        }
+        status = activeNetwork != null;
         return status;
     }
 }

@@ -57,6 +57,7 @@
     <string name="Top_Reading_Book">Top Reading Book</string>
     <string name="New_Arrival_Book">New Arrival Book</string>
     <string name="Authors">Teachers</string>
+    <string name="notification" >Notifications</string>
     <string name="Free_Book">Free Book</string>
     <string name="Paid_Book">Paid Book</string>
     <string name="Continue_Reading">Continue Reading</string>
@@ -84,13 +85,11 @@
     <string name="My_Purchase_Books">My Purchase Books</string>
     <string name="ALLOW_PERMISSION">ALLOW PERMISSION</string>
 
-    <string name="wel_one">Book Details</string>
-    <string name="wel_two">Reviews</string>
-    <string name="wel_three">Downloads</string>
-    <string name="wel_four">Downloads</string>
-
+    <string name="wel_one">Find all books and notes that you need of your course</string>
+    <string name="wel_two">get updated old question collection </string>
+    <string name="wel_three">share your questions and problems to the public.</string>
+    <string name="wel_four">Download books and other resources and read even in offline</string>
     <!--End Search-->
-
     <string name="title_home">Home</string>
     <string name="title_search">Search</string>
     <string name="title_bookmark">Bookmark</string>
@@ -112,7 +111,7 @@
     <string name="enable_theme">Enable Day/Night mode</string>
     <string name="clear_cache">Clear Cache</string>
     <string name="locally_cached_data">locally cached data</string>
-    <string name="no_cache_found" translatable="false">no cached found</string>
+    <string name="no_cache_found" >no cached found</string>
     <string name="Privacy_policy">Privacy policy</string>
 
     <string name="rate_app">Rate App</string>
@@ -121,10 +120,10 @@
     <string name="downloading">Downloading</string>
 
     <string name="change_language">Language</string>
-    <string name="course" translatable="false">Course</string>
-    <string name="ask" translatable="false">Ask</string>
-    <string name="teachers" translatable="false">Teachers</string>
-    <string name="semester" translatable="false">Semester</string>
+    <string name="course" >Course</string>
+    <string name="ask" >Ask</string>
+    <string name="teachers" >Teachers</string>
+    <string name="semester" >Semester</string>
     <string name="syllabus">Syllabus</string>
     <string name="oldquestion">Old Question</string>
     <!-- TODO: Remove or change this placeholder text -->

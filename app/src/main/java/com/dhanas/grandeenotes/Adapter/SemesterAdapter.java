@@ -28,7 +28,7 @@ import static com.squareup.picasso.Picasso.Priority.HIGH;
 
 public class SemesterAdapter extends RecyclerView.Adapter<SemesterAdapter.MyViewHolder>{
 
-    private List<Result> SemesterList;
+    private final List<Result> SemesterList;
     Context mcontext;
     PrefManager prefManager;
 

@@ -9,6 +9,7 @@ import com.dhanas.grandeenotes.Model.CommentModel.CommentModel;
 import com.dhanas.grandeenotes.Model.FreeBookModel.FreeBookModel;
 import com.dhanas.grandeenotes.Model.GeneralSettings.GeneralSettings;
 import com.dhanas.grandeenotes.Model.LoginRegister.LoginRegiModel;
+import com.dhanas.grandeenotes.Model.NotificationsModel.NotificationModel;
 import com.dhanas.grandeenotes.Model.ProfileModel.ProfileModel;
 import com.dhanas.grandeenotes.Model.Question.QuestionModel;
 import com.dhanas.grandeenotes.Model.ReadDowncntModel.ReadDowncntModel;
@@ -257,4 +258,6 @@ public interface AppAPI {
     @POST("total_vote")
     Call<SuccessModel> total_vote(@Field("a_id") String a_id);
 
+    @GET("notificationList")
+    Call<NotificationModel> notificationList();
 }

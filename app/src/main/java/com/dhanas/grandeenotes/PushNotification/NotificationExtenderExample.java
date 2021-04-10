@@ -100,9 +100,9 @@ public class NotificationExtenderExample extends NotificationExtenderService {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             notificationBuilder.setColor(getColour());
-            return R.mipmap.ic_launcher_icon;
+            return R.mipmap.ic_launcher;
         } else {
-            return R.mipmap.ic_launcher_icon;
+            return R.mipmap.ic_launcher;
         }
     }
 

@@ -37,6 +37,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
                         android:orientation="horizontal">
 
                         <RelativeLayout
@@ -56,6 +57,7 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
                                     android:text="Someone"
+                                    android:layout_marginLeft="7dp"
                                     android:textAppearance="?android:textAppearanceMedium"
                                     android:textColor="#FFE91E63" />
 
