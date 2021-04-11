@@ -119,7 +119,9 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<GeneralSettings> call, Throwable t) {
-                Toast.makeText(SplashActivity.this, "Server error please try again letter", Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(SplashActivity.this, "Server Error see  your downloads", Toast.LENGTH_SHORT).show();
+               startActivity(new Intent(SplashActivity.this,DownloadedBooks.class));
             }
         });
 
