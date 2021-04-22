@@ -177,23 +177,20 @@ public class LoginActivity extends AppCompatActivity {
                             finish();
                         }
                     } else if (response.body().getStatus() == 400) {
-                        Toast.makeText(LoginActivity.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Wrong password", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else  {
                     Toast.makeText(LoginActivity.this, "Failed please try again", Toast.LENGTH_SHORT).show();
                 }
-
             }
-
             @Override
             public void onFailure(Call<LoginRegiModel> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(LoginActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Server Error please Try again!" , Toast.LENGTH_SHORT).show();
             }
         });
     }
-
     private void rewardAds() {
         interstitial = new InterstitialAd(LoginActivity.this);
         interstitial.setAdUnitId(prefManager.getValue("interstital_adid"));

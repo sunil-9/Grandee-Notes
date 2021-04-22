@@ -31,8 +31,8 @@
 
                 <ImageView
                     android:id="@+id/iv_thumb"
-                    android:layout_width="120dp"
-                    android:layout_height="140dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:scaleType="fitXY" />
             </androidx.cardview.widget.CardView>
 

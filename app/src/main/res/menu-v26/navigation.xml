@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/bottom_home"
+        android:icon="@drawable/ic_home"
+        android:iconTint="@color/colorPrimary"
+        android:title="@string/title_home"
+        app:showAsAction="withText" />
+
+    <item
+        android:id="@+id/bottom_treding"
+        android:icon="@drawable/ic_search"
+        android:iconTint="@color/colorPrimary"
+        android:title="@string/title_search"
+        app:showAsAction="withText" />
+
+    <item
+        android:id="@+id/bottom_category"
+        android:icon="@drawable/ic_bookmark"
+        android:iconTint="@color/colorPrimary"
+        android:title="@string/title_bookmark"
+        app:showAsAction="withText" />
+
+    <item
+        android:id="@+id/question"
+        android:icon="@drawable/forum"
+        android:iconTint="@color/colorPrimary"
+        android:title="@string/ask"
+        android:visible="true"
+        app:showAsAction="withText" />
+
+    <item
+        android:id="@+id/bottom_latest"
+        android:icon="@drawable/ic_settings"
+        android:iconTint="@color/colorPrimary"
+        android:title="@string/title_settings"
+        app:showAsAction="withText" />
+</menu>

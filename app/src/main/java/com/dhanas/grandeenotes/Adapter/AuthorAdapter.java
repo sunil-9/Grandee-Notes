@@ -61,17 +61,11 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.MyViewHold
         holder.txt_bookname.setText("" + AuthorList.get(position).getATitle());
 
         Picasso.with(mcontext).load(AuthorList.get(position).getAImage()).priority(HIGH).into(holder.iv_thumb);
+//        Toast.makeText(mcontext, "url is " + AuthorList.get(position).getAImage(), Toast.LENGTH_SHORT).show();
 
         holder.iv_thumb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("click", "call");
-//                PrefManager prefManager = new PrefManager(mcontext);
-//                prefManager.WallpaperList = new ArrayList<>();
-//                prefManager.WallpaperList = LatestList;
-//
-//                Toast.makeText(mcontext, "clicked semester" +AuthorList.get(position).getAImage(), Toast.LENGTH_SHORT).show();
-
                 Intent intent = new Intent(mcontext, AuthorBookList.class);
                 intent.putExtra("a_id", AuthorList.get(position).getAId());
                 intent.putExtra("a_name", AuthorList.get(position).getATitle());

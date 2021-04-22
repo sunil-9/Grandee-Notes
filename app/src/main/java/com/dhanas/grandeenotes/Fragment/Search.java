@@ -52,7 +52,7 @@ public class Search extends Fragment {
     TextView clear_history;
 
     LinearLayout ly_all_books, ly_search_list, ly_recent_search;
-    RecyclerView  rv_all_books, rv_search_list, rv_recent_search;
+    RecyclerView  rv_all_books, rv_search_list;
 
 
     @Override
@@ -72,19 +72,10 @@ public class Search extends Fragment {
         ly_all_books = root.findViewById(R.id.ly_all_books);
 
         rv_search_list = root.findViewById(R.id.rv_search_list);
-        rv_recent_search = root.findViewById(R.id.rv_recent_search);
         rv_all_books = root.findViewById(R.id.rv_all_books);
 
         scrollbar = (ScrollView) root.findViewById(R.id.scrollbar);
         user_id = prefManager.getLoginId();
-
-        clear_history =root.findViewById(R.id.clear_history);
-        clear_history.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clearHistory();
-            }
-        });
 
         searchOnOff(false);
 
@@ -114,9 +105,7 @@ public class Search extends Fragment {
     }
     private void displaySearchHistory() {
 //        todo list all history data
-
     }
-
     private void clearHistory() {
 //        todo delete all data form sqllite database using sugar orm
     }

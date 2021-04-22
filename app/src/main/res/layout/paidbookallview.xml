@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:background="?attr/backgroundcolor"
             android:layout_alignParentBottom="true"
-            android:visibility="visible"></RelativeLayout>
+            android:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_paid_book"
