@@ -108,6 +108,7 @@ public class DownloadedBooks extends AppCompatActivity {
     private void downloadlist() {
         progressDialog.show();
         //we used rawQuery(sql, selectionargs) for fetching all the employees
+
         Cursor cursorBooks;
         try {
              cursorBooks = mDatabase.rawQuery("SELECT * FROM books", null);
@@ -146,7 +147,8 @@ public class DownloadedBooks extends AppCompatActivity {
         } else {
             ly_dataNotFound.setVisibility(View.VISIBLE);
         }
-                progressDialog.dismiss();
+
+        progressDialog.dismiss();
     }
 
     public void Admob() {

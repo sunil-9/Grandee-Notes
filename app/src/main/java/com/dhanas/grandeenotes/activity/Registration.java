@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -72,29 +73,30 @@ public class Registration extends AppCompatActivity {
                 str_password = et_password.getText().toString();
                 str_phone = et_phone.getText().toString();
 
-
                 if (TextUtils.isEmpty(str_fullname)) {
                     Toast.makeText(Registration.this, "Enter FullName", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if (TextUtils.isEmpty(str_email)) {
-                    Toast.makeText(Registration.this, "Enter Email Address", Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(str_password) && str_password.length() < 6) {
+                    Toast.makeText(Registration.this, "Enter Password at least 6 digits", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if (TextUtils.isEmpty(str_password)) {
-                    Toast.makeText(Registration.this, "Enter Password", Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(str_phone)  && str_phone.length() < 8) {
+                    Toast.makeText(Registration.this, "Phone Number Not Valid", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                if (TextUtils.isEmpty(str_phone)) {
-                    Toast.makeText(Registration.this, "Enter Phone Number", Toast.LENGTH_SHORT).show();
+                if (!isValidEmail(str_email)) {
+                    Toast.makeText(Registration.this, "Email not valid", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 SignUp();
             }
         });
+    }
+    public static boolean isValidEmail(CharSequence target) {
+        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
 
 

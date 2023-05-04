@@ -17,6 +17,7 @@ import android.os.Build;
 import androidx.core.app.NotificationCompat;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 
 import com.dhanas.grandeenotes.R;
@@ -31,9 +32,12 @@ import java.util.Date;
 import java.util.List;
 
 public class NotificationUtils {
-    private static String TAG = NotificationUtils.class.getSimpleName();
+    // notification icon
+    final int icon = R.mipmap.ic_launcher;
 
-    private Context mContext;
+    private static final String TAG = NotificationUtils.class.getSimpleName();
+
+    private final Context mContext;
 
     public NotificationUtils(Context mContext) {
         this.mContext = mContext;
@@ -48,8 +52,7 @@ public class NotificationUtils {
         if (TextUtils.isEmpty(message))
             return;
 
-        // notification icon
-        final int icon = R.mipmap.ic_launcher;
+
 
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         final PendingIntent resultPendingIntent =
@@ -59,7 +62,6 @@ public class NotificationUtils {
                         intent,
                         PendingIntent.FLAG_CANCEL_CURRENT
                 );
-
         final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
                 mContext);
 
@@ -99,7 +101,7 @@ public class NotificationUtils {
                 .setSound(alarmSound)
                 .setStyle(inboxStyle)
                 .setWhen(getTimeMilliSec(timeStamp))
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(icon)
                 .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), icon))
                 .setContentText(message)
                 .build();
@@ -121,7 +123,7 @@ public class NotificationUtils {
                 .setSound(alarmSound)
                 .setStyle(bigPictureStyle)
                 .setWhen(getTimeMilliSec(timeStamp))
-                .setSmallIcon(R.mipmap.ic_launcher_icon)
+                .setSmallIcon(icon)
                 .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), icon))
                 .setContentText(message)
                 .build();

@@ -3,11 +3,13 @@ package com.dhanas.grandeenotes.Fragment;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +24,7 @@ import com.dhanas.grandeenotes.Activity.AuthorAllActivity;
 import com.dhanas.grandeenotes.Activity.CategoryViewAll;
 import com.dhanas.grandeenotes.Activity.FeatureItemsViewAll;
 import com.dhanas.grandeenotes.Activity.FreeBookallview;
+import com.dhanas.grandeenotes.Activity.LoginActivity;
 import com.dhanas.grandeenotes.Activity.NewArrivalAll;
 import com.dhanas.grandeenotes.Activity.Paidbookallview;
 import com.dhanas.grandeenotes.Activity.SemesterAllActivity;
@@ -43,6 +46,7 @@ import com.dhanas.grandeenotes.R;
 import com.dhanas.grandeenotes.Utility.PrefManager;
 import com.dhanas.grandeenotes.Webservice.AppAPI;
 import com.dhanas.grandeenotes.Webservice.BaseURL;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +54,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.squareup.picasso.Picasso.Priority.HIGH;
 
 public class Home extends Fragment {
 
@@ -110,6 +116,8 @@ public class Home extends Fragment {
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Please wait...");
         progressDialog.setCanceledOnTouchOutside(false);
+        ImageView iv_login_icon = root.findViewById(R.id.iv_login_icon);
+        Picasso.with(getActivity()).load(BaseURL.Image_URL + "" + prefManager.getValue("app_logo")).priority(HIGH).into(iv_login_icon);
 
         ry_category = (RecyclerView) root.findViewById(R.id.ry_category);
         rv_newarrival = (RecyclerView) root.findViewById(R.id.rv_newarrival);

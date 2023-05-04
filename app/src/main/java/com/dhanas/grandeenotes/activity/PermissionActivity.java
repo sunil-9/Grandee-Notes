@@ -1,7 +1,11 @@
 package com.dhanas.grandeenotes.Activity;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.core.app.ActivityCompat;
@@ -22,22 +26,12 @@ public class PermissionActivity extends AppCompatActivity implements ActivityCom
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
-            case REQUEST_WRITE_PERMISSION : {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-
-//                    Intent intent_status  =  new Intent(getApplicationContext(), MainActivity.class);
-//                    startActivity(intent_status);
-//                    overridePendingTransition(R.anim.enter, R.anim.exit);
-                    finish();
-                }
-                return;
-            }
+            case REQUEST_WRITE_PERMISSION :
             case REQUEST_READ_PERMISSION : {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-
-//                    Intent intent_status  =  new Intent(getApplicationContext(), MainActivity.class);
-//                    startActivity(intent_status);
-//                    overridePendingTransition(R.anim.enter, R.anim.exit);
+                    startActivity(new Intent(PermissionActivity.this, LoginActivity.class));
+                    prefManager.setFirstTimeLaunch(false);
+                    overridePendingTransition(R.anim.enter, R.anim.exit);
                     finish();
                 }
                 return;
@@ -73,7 +67,5 @@ public class PermissionActivity extends AppCompatActivity implements ActivityCom
                     Manifest.permission.CAMERA}, REQUEST_WRITE_PERMISSION);
         }
     }
-
-
 
 }

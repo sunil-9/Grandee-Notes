@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.SettingInjectorService;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +28,7 @@ import com.dhanas.grandeenotes.Activity.DownloadedBooks;
 import com.dhanas.grandeenotes.Activity.LoginActivity;
 import com.dhanas.grandeenotes.Activity.MainActivity;
 import com.dhanas.grandeenotes.Activity.MyDownloadBooks;
+import com.dhanas.grandeenotes.Activity.NotificationHistory;
 import com.dhanas.grandeenotes.Activity.Privacypolicy;
 import com.dhanas.grandeenotes.Activity.Profile;
 import com.dhanas.grandeenotes.Activity.SplashActivity;
@@ -34,7 +36,6 @@ import com.dhanas.grandeenotes.BuildConfig;
 import com.dhanas.grandeenotes.R;
 import com.dhanas.grandeenotes.Utility.LocaleUtils;
 import com.dhanas.grandeenotes.Utility.PrefManager;
-import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -48,7 +49,7 @@ public class Settings extends Fragment {
     SwitchCompat switch_push, switch_theme;
     PrefManager prefManager;
     Spinner spinner;
-    TextView txt_profile, txt_my_download_book, txt_about_us, txt_share_app, txt_rate_app, txt_login, txt_privacy_policy, txt_my_downloaded_book;
+    TextView txt_profile, txt_my_download_book, txt_about_us, txt_share_app, txt_rate_app, txt_login, txt_privacy_policy, txt_my_downloaded_book,txt_my_notifications;
     String currentLanguage = "en", currentLang;
 
     GoogleSignInClient mGoogleSignInClient;
@@ -76,20 +77,19 @@ public class Settings extends Fragment {
         txt_my_downloaded_book = (TextView) root.findViewById(R.id.txt_my_downloaded_book);
         txt_about_us = root.findViewById(R.id.txt_about_us);
         txt_login = (TextView) root.findViewById(R.id.txt_login);
+        txt_my_notifications = (TextView) root.findViewById(R.id.txt_my_notifications);
+        txt_my_notifications.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), NotificationHistory.class));
+            }
+        });
 
         txt_share_app = (TextView) root.findViewById(R.id.txt_share_app);
         txt_rate_app = (TextView) root.findViewById(R.id.txt_rate_app);
         txt_privacy_policy = root.findViewById(R.id.txt_privacy_policy);
 
-//        txt_share_app.setVisibility(View.GONE);
-//        txt_rate_app.setVisibility(View.GONE);
-//        txt_privacy_policy.setVisibility(View.GONE);
-
-        if (prefManager.getBool("PUSH")) {
-            switch_push.setChecked(true);
-        } else {
-            switch_push.setChecked(false);
-        }
+        switch_push.setChecked(prefManager.getBool("PUSH"));
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
@@ -129,12 +129,7 @@ public class Settings extends Fragment {
         switch_push.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    OneSignal.setSubscription(true);
-
-                } else {
-                    OneSignal.setSubscription(false);
-                }
+                OneSignal.setSubscription(isChecked);
                 prefManager.setBool("PUSH", isChecked);
             }
         });
@@ -279,6 +274,8 @@ public class Settings extends Fragment {
         //for language
         List<String> list = new ArrayList<String>();
         list.add("English");
+        list.add("Nepali");
+        list.add("Indian");
         list.add("Arabic");
         list.add("French");
 
@@ -291,13 +288,22 @@ public class Settings extends Fragment {
             Log.e("selected_eng", "english");
             spinner.setSelection(0);
         }
-        if (LocaleUtils.getSelectedLanguageId().equalsIgnoreCase("ar")) {
-            Log.e("select_Arabic", "Arabic");
+        if (LocaleUtils.getSelectedLanguageId().equalsIgnoreCase("ne")) {
+            Log.e("select_Nepali", "Nepali");
             spinner.setSelection(1);
         }
+        if (LocaleUtils.getSelectedLanguageId().equalsIgnoreCase("hi")) {
+            Log.e("select_Hindi", "Hindi");
+            spinner.setSelection(2);
+        }
+        if (LocaleUtils.getSelectedLanguageId().equalsIgnoreCase("ar")) {
+            Log.e("select_Arabic", "Arabic");
+            spinner.setSelection(3);
+        }
+
         if (LocaleUtils.getSelectedLanguageId().equalsIgnoreCase("fr")) {
             Log.e("select_Franch", "fr");
-            spinner.setSelection(2);
+            spinner.setSelection(4);
         }
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -309,9 +315,15 @@ public class Settings extends Fragment {
                         setLocale("en");
                         break;
                     case 1:
-                        setLocale("ar");
+                        setLocale("ne");
                         break;
                     case 2:
+                        setLocale("hi");
+                        break;
+                    case 3:
+                        setLocale("ar");
+                        break;
+                    case 4:
                         setLocale("fr");
                         break;
                     default:
@@ -357,7 +369,6 @@ public class Settings extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         prefManager.setLoginId("0");
-                        LoginManager.getInstance().logOut();
                         mGoogleSignInClient.signOut();
                         Intent intent = new Intent(getActivity(), LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

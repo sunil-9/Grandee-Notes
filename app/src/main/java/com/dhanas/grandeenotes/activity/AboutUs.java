@@ -49,9 +49,7 @@ public class AboutUs extends AppCompatActivity {
         setContentView(R.layout.about_us);
         PrefManager.forceRTLIfSupported(getWindow(), AboutUs.this);
         prefManager = new PrefManager(AboutUs.this);
-
         toolbar = findViewById(R.id.toolbar);
-
         toolbar_title = findViewById(R.id.toolbar_title);
         toolbar_title.setText(getResources().getString(R.string.about_us));
 
@@ -72,8 +70,6 @@ public class AboutUs extends AppCompatActivity {
                 finish();
             }
         });
-
-
         txt_app_name.setText(prefManager.getValue("app_name"));
         txt_company.setText(prefManager.getValue("Author"));
         txt_email.setText(prefManager.getValue("host_email"));
@@ -81,7 +77,7 @@ public class AboutUs extends AppCompatActivity {
         txt_mobile.setText(prefManager.getValue("contact"));
         txt_about_us.setText(prefManager.getValue("app_desripation"));
 
-        Picasso.with(AboutUs.this).load(BaseURL.Image_URL + "" + prefManager.getValue("app_logo")).priority(HIGH).into(iv_app_icon);
+//        Picasso.with(AboutUs.this).load(BaseURL.Image_URL + "" + prefManager.getValue("app_logo")).priority(HIGH).into(iv_app_icon);
 
         if (prefManager.getValue("banner_ad").equalsIgnoreCase("yes")) {
             Admob();

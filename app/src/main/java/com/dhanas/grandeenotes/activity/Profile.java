@@ -73,6 +73,13 @@ public class Profile extends AppCompatActivity {
         btn_update = findViewById(R.id.btn_update);
         txt_Contact = findViewById(R.id.txt_Contact);
         spinner_course = findViewById(R.id.spinner_course);
+        TextView txt_back = (TextView) findViewById(R.id.txt_back);
+        txt_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         Get_Profile();
 

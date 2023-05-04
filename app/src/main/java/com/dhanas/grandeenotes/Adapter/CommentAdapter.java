@@ -18,7 +18,7 @@ import java.util.Random;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHolder> {
 
-    private List<Result> CommentList;
+    private final List<Result> CommentList;
     Context mcontext;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

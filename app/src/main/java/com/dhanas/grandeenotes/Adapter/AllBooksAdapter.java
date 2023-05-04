@@ -22,7 +22,7 @@ import static com.squareup.picasso.Picasso.Priority.HIGH;
 
 public class AllBooksAdapter extends RecyclerView.Adapter<AllBooksAdapter.MyViewHolder>{
 
-    private List<Result> NewArrivalList;
+    private final List<Result> NewArrivalList;
     Context mcontext;
     PrefManager prefManager;
     SQLiteDatabase mDatabase;
@@ -64,7 +64,8 @@ public class AllBooksAdapter extends RecyclerView.Adapter<AllBooksAdapter.MyView
         holder.iv_thumb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("click", "call");
+                Log.d("click", "call");
+                Log.d("id is ", NewArrivalList.get(position).getBId());
                 Intent intent = new Intent(mcontext, BookDetails.class);
                 intent.putExtra("ID", NewArrivalList.get(position).getBId());
                 mcontext.startActivity(intent);

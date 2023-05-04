@@ -35,7 +35,7 @@ import static com.dhanas.grandeenotes.Utility.Constants.please_wait;
 
 public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapter.MyViewHolder> {
 
-    private List<Result> QuestionList;
+    private final List<Result> QuestionList;
     Activity mcontext;
     PrefManager prefManager;
     ProgressDialog progressDialog;
@@ -127,8 +127,6 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
             @Override
             public void onClick(View view) {
                 Log.e("click", "call");
-
-                Toast.makeText(mcontext, "clicked this question " + QuestionList.get(position).getQuestion(), Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(mcontext, AnswerActivity.class);
                 intent.putExtra("q_id", QuestionList.get(position).getQ_id());

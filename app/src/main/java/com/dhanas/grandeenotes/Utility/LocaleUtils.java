@@ -15,6 +15,8 @@ import java.util.Locale;
 public class LocaleUtils {
 
     public static final String ENGLISH = "en";
+    public static final String NEPALI = "ne";
+    public static final String HINDI = "hi";
     public static final String FRENCH = "fr";
     public static final String Arabic = "ar";
 
@@ -40,9 +42,9 @@ public class LocaleUtils {
     }
 
     @Retention(RetentionPolicy.SOURCE)
-    @StringDef({ENGLISH, Arabic, FRENCH})
+    @StringDef({ENGLISH,NEPALI,HINDI ,Arabic, FRENCH})
     public @interface LocaleDef {
-        String[] SUPPORTED_LOCALES = {ENGLISH, Arabic, FRENCH};
+        String[] SUPPORTED_LOCALES = {ENGLISH,NEPALI,HINDI ,Arabic, FRENCH};
     }
 
 

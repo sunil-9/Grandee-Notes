@@ -1,8 +1,10 @@
 package com.dhanas.grandeenotes.Activity;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
@@ -19,9 +21,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -64,10 +69,11 @@ import static com.squareup.picasso.Picasso.Priority.HIGH;
 
 public class BookDetails extends AppCompatActivity {
 
+    private static final String TAG = "Bookedtails";
     PrefManager prefManager;
     ProgressDialog progressDialog;
-
-    String ID, fcat_id;
+    private static final int STORAGE_PERMISSION_CODE = 101;
+    String ID, b_id;
     Toolbar toolbar;
 
     RecyclerView rv_related;
@@ -179,7 +185,7 @@ public class BookDetails extends AppCompatActivity {
         txt_bookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (prefManager.isNetworkAvailable(BookDetails.this)) {
+                if (PrefManager.isNetworkAvailable(BookDetails.this)) {
                     if (!prefManager.getLoginId().equalsIgnoreCase("0")) {
                         AddBookMark();
                     } else {
@@ -296,18 +302,18 @@ public class BookDetails extends AppCompatActivity {
         progressDialog.show();
         AppAPI bookNPlayAPI = BaseURL.getVideoAPI();
         Call<BookModel> call = bookNPlayAPI.bookdetails(ID, prefManager.getLoginId());
+        Log.d(TAG, "BookDetails: working " + ID + " and user is " + prefManager.getLoginId());
         call.enqueue(new Callback<BookModel>() {
             @Override
             public void onResponse(Call<BookModel> call, Response<BookModel> response) {
                 if (response.code() == 200) {
-
-                    Log.e("bookdetails", "" + response.body());
+                    Log.d("bookdetails", "test" + response.body());
                     if (response.body().getResult().size() > 0) {
 
-                        BookList = response.body().getResult();
-                        fcat_id = response.body().getResult().get(0).getFcatId();
 
-                        Log.e("fcat_id", "" + fcat_id);
+                        BookList = response.body().getResult();
+                        b_id = response.body().getResult().get(0).getBId();
+
                         //prefManager.setValue("price",""+);
                         txt_title.setText("" + BookList.get(0).getBTitle());
                         txt_price.setText("$" + BookList.get(0).getBPrice());
@@ -331,8 +337,11 @@ public class BookDetails extends AppCompatActivity {
                         Comments();
                         CheckBookMark();
                     }
-
+                    Log.d("bookdetails", "error happen");
+                } else {
+                    Log.d("bookdetails", "test error 200" + response.body());
                 }
+
                 progressDialog.dismiss();
             }
 
@@ -346,7 +355,7 @@ public class BookDetails extends AppCompatActivity {
     private void Related_Item() {
         progressDialog.show();
         AppAPI bookNPlayAPI = BaseURL.getVideoAPI();
-        Call<BookModel> call = bookNPlayAPI.related_item(fcat_id);
+        Call<BookModel> call = bookNPlayAPI.related_item(b_id);
         call.enqueue(new Callback<BookModel>() {
             @Override
             public void onResponse(Call<BookModel> call, Response<BookModel> response) {
@@ -524,7 +533,7 @@ public class BookDetails extends AppCompatActivity {
                     conn.connect();
                     InputStream is = conn.getInputStream();
                     FileOutputStream fos = new FileOutputStream(file);
-                    byte data[] = new byte[4096];
+                    byte[] data = new byte[4096];
                     int count;
                     while ((count = is.read(data)) != -1) {
                         if (isCancelled()) {
@@ -573,7 +582,7 @@ public class BookDetails extends AppCompatActivity {
                         break;
                 }
             } else {
-                Toast.makeText(BookDetails.this, "Please try again.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(BookDetails.this, "Please try again." + args, Toast.LENGTH_SHORT).show();
             }
             pDialog.dismiss();
         }
@@ -600,49 +609,94 @@ public class BookDetails extends AppCompatActivity {
     }
 
     private void DownloadBook() {
-        if (prefManager.isNetworkAvailable(BookDetails.this)) {
-            if (!prefManager.getLoginId().equalsIgnoreCase("0")) {
-                if (BookList.get(0).getIsPaid().equalsIgnoreCase("1")) {
-
-                    Intent intent = new Intent(BookDetails.this, AllPaymentActivity.class);
-                    intent.putExtra("bookprice", "" + BookList.get(0).getBPrice());
-                    intent.putExtra("bookid", "" + BookList.get(0).getBId());
-                    intent.putExtra("booktitle", "" + BookList.get(0).getBTitle());
-                    intent.putExtra("bookdesc", "" + BookList.get(0).getBDescription());
-                    intent.putExtra("bookdate", "" + BookList.get(0).getBDate());
-                    startActivity(intent);
-                } else {
+        try {
+//            checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, STORAGE_PERMISSION_CODE);
+            if (PrefManager.isNetworkAvailable(BookDetails.this)) {
+                if (!prefManager.getLoginId().equalsIgnoreCase("0")) {
                     String book_name, img_name;
-                    book_name = Environment.getExternalStorageDirectory() +PDF_DIRECTORY+getFileName(BookList.get(0).getBUrl());
-                    img_name = Environment.getExternalStorageDirectory() + IMAGE_DIRECTORY+getFileName(BookList.get(0).getBImage());
+                    book_name = Environment.getExternalStorageDirectory() + PDF_DIRECTORY + getFileName(BookList.get(0).getBUrl());
+                    img_name = Environment.getExternalStorageDirectory() + IMAGE_DIRECTORY + getFileName(BookList.get(0).getBImage());
                     new DownloadBook("savePDF").execute(BookList.get(0).getBUrl(), PDF_DIRECTORY, BookList.get(0).getBId());
                     new DownloadBook("saveIMG").execute(BookList.get(0).getBImage(), IMAGE_DIRECTORY, BookList.get(0).getBId());
                     mDatabase = openOrCreateDatabase(DATABASE_NAME, MODE_PRIVATE, null);
                     createBookTable();
-                    Log.e("TAG", "book name is: "+book_name+" and image name is "+img_name );
-                    addRecord(book_name, img_name);
+                    Log.e("TAG", "book name is: " + book_name + " and image name is " + img_name);
+                    addRecord(book_name, img_name, BookList.get(0).getBTitle());
+
+                } else {
+                    startActivity(new Intent(BookDetails.this, LoginActivity.class));
                 }
             } else {
-                startActivity(new Intent(BookDetails.this, LoginActivity.class));
+                Toast.makeText(BookDetails.this, getResources().getString(R.string.internet_connection), Toast.LENGTH_SHORT).show();
             }
+        } catch (Exception e) {
+            Toast.makeText(this, "error is " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+    // Function to check and request permission
+    public void checkPermission(String permission, int requestCode) {
+
+        // Checking if permission is not granted
+        if (ContextCompat.checkSelfPermission(
+                BookDetails.this,
+                permission)
+                == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat
+                    .requestPermissions(
+                            BookDetails.this,
+                            new String[]{permission},
+                            requestCode);
         } else {
-            Toast.makeText(BookDetails.this, getResources().getString(R.string.internet_connection), Toast.LENGTH_SHORT).show();
+            Toast
+                    .makeText(BookDetails.this,
+                            "Permission already granted",
+                            Toast.LENGTH_SHORT)
+                    .show();
+        }
+    }
+    // This function is called when the user accepts or decline the permission.
+    // Request Code is used to check which permission called this function.
+    // This request code is provided when the user is prompt for permission.
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super
+                .onRequestPermissionsResult(requestCode,
+                        permissions,
+                        grantResults);
+        if (requestCode == STORAGE_PERMISSION_CODE) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(BookDetails.this,
+                        "Storage Permission Granted",
+                        Toast.LENGTH_SHORT)
+                        .show();
+            } else {
+                Toast.makeText(BookDetails.this,
+                        "Storage Permission Denied",
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
         }
     }
 
     private String getFileName(String url) {
         return url.substring(url.lastIndexOf('/'));
     }
-    private void addRecord(String book_name, String img_name) {
+
+    private void addRecord(String book_name, String img_name, String book_title) {
 
         if (!book_name.isEmpty() && !img_name.isEmpty()) {
             String insertSQL = "INSERT INTO books \n" +
-                    "(book_name,img_name)\n" +
+                    "(book_name,img_name,book_title)\n" +
                     "VALUES \n" +
-                    "(?, ?);";
-            mDatabase.execSQL(insertSQL, new String[]{book_name, img_name});
+                    "(?, ?,?);";
+            mDatabase.execSQL(insertSQL, new String[]{book_name, img_name, book_title});
         }
     }
+
     private void createBookTable() {
 
 //        mDatabase.execSQL("drop table books");
@@ -650,14 +704,15 @@ public class BookDetails extends AppCompatActivity {
                 "CREATE TABLE IF NOT EXISTS books (\n" +
                         "    id INTEGER NOT NULL CONSTRAINT book_pk PRIMARY KEY AUTOINCREMENT,\n" +
                         "    book_name varchar(200) NOT NULL,\n" +
-                        "     img_name varchar(200)  NOT NULL\n" +
+                        "     img_name varchar(200)  NOT NULL,\n" +
+                        "book_title varchar(200)  NOT NULL\n" +
                         ");"
         );
     }
 
     private void ReadBook() {
         try {
-            if (prefManager.isNetworkAvailable(BookDetails.this)) {
+            if (PrefManager.isNetworkAvailable(BookDetails.this)) {
                 Log.e("url_data", "" + BookList.get(0).getBUrl().contains(".EPUB"));
                 if (BookList.get(0).getBUrl().contains(".epub") ||
                         BookList.get(0).getBUrl().contains(".EPUB")) {

@@ -22,18 +22,7 @@ import com.dhanas.grandeenotes.R;
 import com.dhanas.grandeenotes.Utility.PrefManager;
 import com.dhanas.grandeenotes.Webservice.AppAPI;
 import com.dhanas.grandeenotes.Webservice.BaseURL;
-import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
+
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -62,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText et_fullname, et_email, et_password, et_phone;
     String str_fullname, str_email, str_password, str_phone;
 
-    TextView txt_already_signup, txt_login, txt_skip, txt_forgot;
+    TextView txt_already_signup, txt_login, txt_forgot;
 
     ProgressDialog progressDialog;
     private PrefManager prefManager;
@@ -70,17 +59,7 @@ public class LoginActivity extends AppCompatActivity {
     ImageView iv_login_icon;
     InterstitialAd interstitial;
 
-    LoginButton loginButton;
     ImageView fb, btn_google;
-
-    CallbackManager callbackManager;
-    private AccessTokenTracker accessTokenTracker;
-
-    private static final String EMAIL = "email";
-    private static final String PROFILE = "public_profile";
-
-    String fb_name, fb_email,course;
-
     GoogleSignInOptions gso;
     GoogleSignInClient mGoogleSignInClient;
     SignInButton sign_in_button;
@@ -95,10 +74,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.loginactivity);
 
         PrefManager.forceRTLIfSupported(getWindow(), LoginActivity.this);
-
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(this);
-        callbackManager = CallbackManager.Factory.create();
 
         Init();
 
@@ -135,22 +110,6 @@ public class LoginActivity extends AppCompatActivity {
                 SignIn();
             }
         });
-        txt_skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (prefManager.getValue("interstital_ad").equalsIgnoreCase("yes")) {
-                    if (interstitial.isLoaded()) {
-                        interstitial.show();
-                    } else {
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        finish();
-                    }
-                } else {
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    finish();
-                }
-            }
-        });
         txt_forgot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,37 +117,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        loginButton = (LoginButton) findViewById(R.id.login_button);
-        loginButton.setReadPermissions(Arrays.asList(PROFILE, EMAIL));
 
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                Log.e("loginResult1", "Token::" + loginResult.getAccessToken());
-                Log.e("loginResult", "" + loginResult.getAccessToken().getToken());
-                AccessToken accessToken = loginResult.getAccessToken();
-                Log.e("loginResult3", "" + accessToken);
-                useLoginInformation(accessToken);
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                Log.e("exception", "" + error.getMessage());
-            }
-        });
-
-        accessTokenTracker = new AccessTokenTracker() {
-            // This method is invoked everytime access token changes
-            @Override
-            protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-                useLoginInformation(currentAccessToken);
-            }
-        };
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         sign_in_button = (SignInButton) findViewById(R.id.sign_in_button);
@@ -215,7 +144,6 @@ public class LoginActivity extends AppCompatActivity {
         et_password = findViewById(R.id.et_password);
         txt_already_signup = findViewById(R.id.txt_already_signup);
         txt_login = findViewById(R.id.txt_login);
-        txt_skip = findViewById(R.id.txt_skip);
         txt_forgot = findViewById(R.id.txt_forgot);
 
         iv_login_icon = findViewById(R.id.iv_login_icon);
@@ -235,7 +163,6 @@ public class LoginActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 if (response.code() == 200) {
                     if (response.body().getStatus() == 200) {
-                        Toast.makeText(LoginActivity.this, "id is: " + response.body().getUserid(), Toast.LENGTH_SHORT).show();
                         prefManager.setLoginId("" + response.body().getUserid());
 
                         if (prefManager.getValue("interstital_ad").equalsIgnoreCase("yes")) {
@@ -250,23 +177,20 @@ public class LoginActivity extends AppCompatActivity {
                             finish();
                         }
                     } else if (response.body().getStatus() == 400) {
-                        Toast.makeText(LoginActivity.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Wrong password", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else  {
                     Toast.makeText(LoginActivity.this, "Failed please try again", Toast.LENGTH_SHORT).show();
                 }
-
             }
-
             @Override
             public void onFailure(Call<LoginRegiModel> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(LoginActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Server Error please Try again!" , Toast.LENGTH_SHORT).show();
             }
         });
     }
-
     private void rewardAds() {
         interstitial = new InterstitialAd(LoginActivity.this);
         interstitial.setAdUnitId(prefManager.getValue("interstital_adid"));
@@ -301,153 +225,20 @@ public class LoginActivity extends AppCompatActivity {
     public void onClick(View v) {
         if (v == btn_google) {
             Log.e("gmail", "perform");
-            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-            startActivityForResult(signInIntent, 101);
+//            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+//            startActivityForResult(signInIntent, 101);
+            Toast.makeText(this, "This feature is coming soon.", Toast.LENGTH_SHORT).show();
+
         }
     }
 
     public void onClickFacebookButton(View view) {
         if (view == fb) {
-            loginButton.performClick();
+//            loginButton.performClick();
+            Toast.makeText(this, "This feature is coming soon.", Toast.LENGTH_SHORT).show();
+
         }
     }
 
-    private void useLoginInformation(AccessToken accessToken) {
 
-        GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
-            //OnCompleted is invoked once the GraphRequest is successful
-            @Override
-            public void onCompleted(JSONObject object, GraphResponse response) {
-
-                if (object != null) {
-
-                    fb_email = object.optString("email");
-                    fb_name = object.optString("name");
-
-                    if (fb_email.length() == 0) {
-                        fb_email = fb_name.trim() + "@facebook.com";
-                    }
-                    Log.e("name", "" + fb_name);
-                    Log.e("email", "" + fb_email);
-
-
-                    AppAPI bookNPlayAPI = BaseURL.getVideoAPI();
-                    Call<LoginRegiModel> call = bookNPlayAPI.login_fb(fb_email);
-                    call.enqueue(new Callback<LoginRegiModel>() {
-                        @Override
-                        public void onResponse(Call<LoginRegiModel> call, Response<LoginRegiModel> response) {
-
-                            progressDialog.dismiss();
-                            if (response.code() == 200) {
-                                if (response.body().getStatus() == 200) {
-                                    Log.e("loginid", "" + response.body().getUserid());
-                                    Log.e("loginid", "" + response.body().getMessage());
-                                    prefManager.setLoginId("" + response.body().getUserid());
-                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                    finish();
-                                } else if (response.body().getStatus() == 400) {
-                                    Log.e("namesss", "" + fb_name);
-                                    Log.e("namesss", "" + fb_email);
-                                    SignUp(fb_name, fb_email);
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<LoginRegiModel> call, Throwable t) {
-                            progressDialog.dismiss();
-                            LoginManager.getInstance().logOut();
-                            Toast.makeText(LoginActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-            }
-        });
-        // We set parameters to the GraphRequest using a Bundle.
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,name,email");
-        request.setParameters(parameters);
-        // Initiate the GraphRequest
-        request.executeAsync();
-    }
-
-    public void SignUp(String strN, String StrE) {
-        progressDialog.show();
-        AppAPI bookNPlayAPI = BaseURL.getVideoAPI();
-        Log.e("namesss1", "" + strN);
-        Log.e("namesss1", "" + StrE);
-        Call<LoginRegiModel> call = bookNPlayAPI.registration_fb(strN, StrE);
-        call.enqueue(new Callback<LoginRegiModel>() {
-            @Override
-            public void onResponse(Call<LoginRegiModel> call, Response<LoginRegiModel> response) {
-                progressDialog.dismiss();
-                if (response.code() == 200) {
-                    if (response.body().getStatus() == 200) {
-                        prefManager.setLoginId("" + response.body().getUserid());
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        finish();
-                    }
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<LoginRegiModel> call, Throwable t) {
-                progressDialog.dismiss();
-                LoginManager.getInstance().logOut();
-            }
-        });
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 101) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            handleSignInResult(task);
-        }
-
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-    }
-
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-        try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            // Signed in successfully, show authenticated UI.
-            Log.e("getDisplayName", "" + account.getDisplayName());
-            Log.e("getEmail", "" + account.getEmail());
-            Log.e("getIdToken", "" + account.getIdToken());
-            Log.e("getPhotoUrl", "" + account.getPhotoUrl());
-
-            progressDialog.show();
-
-            AppAPI bookNPlayAPI = BaseURL.getVideoAPI();
-            Call<LoginRegiModel> call = bookNPlayAPI.login(account.getEmail(), "");
-            call.enqueue(new Callback<LoginRegiModel>() {
-                @Override
-                public void onResponse(Call<LoginRegiModel> call, Response<LoginRegiModel> response) {
-                    progressDialog.dismiss();
-                    if (response.code() == 200) {
-                        if (response.body().getStatus() == 200) {
-                            prefManager.setLoginId("" + response.body().getUserid());
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                            finish();
-                        } else if (response.body().getStatus() == 400) {
-                            SignUp(account.getDisplayName(), account.getEmail());
-                        }
-                    }
-                }
-                @Override
-                public void onFailure(Call<LoginRegiModel> call, Throwable t) {
-                    progressDialog.dismiss();
-                    Toast.makeText(LoginActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-
-        } catch (ApiException e) {
-            Log.e("ApiException", "signInResult:failed code=" + e.getStatusCode());
-        }
-    }
 }

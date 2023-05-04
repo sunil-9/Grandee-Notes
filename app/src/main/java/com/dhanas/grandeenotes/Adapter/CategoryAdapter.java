@@ -23,7 +23,7 @@ import java.util.Random;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
 
-    private List<Result> CategoryList;
+    private final List<Result> CategoryList;
     Context mcontext;
     PrefManager prefManager;
     String from;
@@ -47,7 +47,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         this.CategoryList = CategoryList;
         this.mcontext = context;
         this.from = from;
-        prefManager = new PrefManager(mcontext);
+        prefManager = new PrefManager(this.mcontext);
     }
 
     @Override

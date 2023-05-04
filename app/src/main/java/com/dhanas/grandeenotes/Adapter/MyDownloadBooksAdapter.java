@@ -29,7 +29,7 @@ import static com.squareup.picasso.Picasso.Priority.HIGH;
 
 public class MyDownloadBooksAdapter extends RecyclerView.Adapter<MyDownloadBooksAdapter.MyViewHolder> {
 
-    private List<DownloadModel> NewArrivalList;
+    private final List<DownloadModel> downloadedData;
     Context mcontext;
     PrefManager prefManager;
 
@@ -45,8 +45,8 @@ public class MyDownloadBooksAdapter extends RecyclerView.Adapter<MyDownloadBooks
     }
 
 
-    public MyDownloadBooksAdapter(Context context, List<DownloadModel> NewArrivalList, SQLiteDatabase mDatabase) {
-        this.NewArrivalList = NewArrivalList;
+    public MyDownloadBooksAdapter(Context context, List<DownloadModel> downloadedData, SQLiteDatabase mDatabase) {
+        this.downloadedData = downloadedData;
         this.mcontext = context;
         prefManager = new PrefManager(mcontext);
     }
@@ -62,6 +62,7 @@ public class MyDownloadBooksAdapter extends RecyclerView.Adapter<MyDownloadBooks
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
+
         if(NewArrivalList!=null){
             String book_link = NewArrivalList.get(position).getBook_name();
             String fileName=getFileName(book_link);
@@ -88,7 +89,6 @@ public class MyDownloadBooksAdapter extends RecyclerView.Adapter<MyDownloadBooks
         else {
             Toast.makeText(mcontext, "no download history", Toast.LENGTH_SHORT).show();
         }
-
     }
     private String getFileName(String url) {
         return url.substring(url.lastIndexOf('/'));
@@ -96,7 +96,7 @@ public class MyDownloadBooksAdapter extends RecyclerView.Adapter<MyDownloadBooks
 
     @Override
     public int getItemCount() {
-        return NewArrivalList.size();
+        return downloadedData.size();
     }
 
 }

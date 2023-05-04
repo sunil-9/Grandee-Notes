@@ -4,11 +4,22 @@ public class DownloadModel {
     private int Id;
     private String book_name;
     private String image;
+    private String title;
 
-    public DownloadModel(int id, String book_name, String image) {
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+
+    public DownloadModel(int id, String book_name, String image, String title) {
         Id = id;
         this.book_name = book_name;
         this.image = image;
+        this.title = title;
     }
 
     public int getId() {

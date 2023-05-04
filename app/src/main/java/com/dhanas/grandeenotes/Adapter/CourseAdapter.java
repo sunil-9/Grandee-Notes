@@ -24,7 +24,7 @@ import static com.squareup.picasso.Picasso.Priority.HIGH;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHolder>{
 
-    private List<Result> NewArrivalList;
+    private final List<Result> NewArrivalList;
     Context mcontext;
     PrefManager prefManager;
 

@@ -155,7 +155,7 @@ public class PDFShow extends AppCompatActivity implements OnPageChangeListener, 
         Log.e(TAG, "onPageError: "+ t.toString() );
     }
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[],
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         if (requestCode == PERMISSION_CODE) {
             if (grantResults.length > 0
@@ -195,7 +195,7 @@ public class PDFShow extends AppCompatActivity implements OnPageChangeListener, 
                 conn.setDoInput(true);
                 conn.connect();
                 is = conn.getInputStream();
-                Log.d("uri", uri.toString());
+                Log.d("uri", uri);
 
             } catch (Exception e) {
                 Log.d("toast", e.toString());

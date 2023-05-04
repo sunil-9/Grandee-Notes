@@ -21,7 +21,7 @@ import static com.squareup.picasso.Picasso.Priority.HIGH;
 
 public class RelatedAdapter extends RecyclerView.Adapter<RelatedAdapter.MyViewHolder> {
 
-    private List<Result> RelatedList;
+    private final List<Result> RelatedList;
     Context mcontext;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

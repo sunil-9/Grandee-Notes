@@ -31,14 +31,13 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
-                android:orientation="vertical"
-                android:layout_gravity="center"
+                android:layout_margin="10dp"
                 android:weightSum="1.0">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
                     android:visibility="visible">
 
                     <ImageView
@@ -47,6 +46,19 @@
                         android:layout_height="100dp"
                         android:scaleType="fitXY" />
 
+                    <TextView
+                        android:id="@+id/txt_bookname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:layout_marginStart="5dp"
+                        android:textColor="?attr/textcolor"
+                        android:fontFamily="@font/roboto_medium"
+                        android:textSize="@dimen/text_16"
+                        android:textIsSelectable="true"
+                        android:layout_margin="8dp"
+                        android:visibility="visible" />
+
                 </LinearLayout>
 
 
@@ -54,20 +66,7 @@
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/txt_bookname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:singleLine="true"
-            android:layout_gravity="center"
-            android:layout_marginStart="5dp"
-            android:textColor="?attr/textcolor"
-            android:fontFamily="@font/roboto_medium"
-            android:textSize="@dimen/text_14"
-            android:textIsSelectable="true"
-            android:layout_margin="8dp"
-            android:visibility="visible" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,8 +16,8 @@ import com.dhanas.grandeenotes.Fragment.SyllabusFragment;
 import com.dhanas.grandeenotes.R;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
-private  int get_item_count;
-private  String  sem_id;
+private final int get_item_count;
+private final String  sem_id;
 
     public ViewPagerAdapter(@NonNull FragmentActivity fm,int get_item_count,String  sem_id) {
         super(fm);

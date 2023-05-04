@@ -22,7 +22,7 @@ import static com.squareup.picasso.Picasso.Priority.HIGH;
 
 public class ContinueReadAdapter extends RecyclerView.Adapter<ContinueReadAdapter.MyViewHolder> {
 
-    private List<Result> ContinueReadList;
+    private final List<Result> ContinueReadList;
     Context mcontext;
     PrefManager prefManager;
 

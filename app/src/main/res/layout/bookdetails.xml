@@ -176,7 +176,7 @@
                                     android:paddingStart="8dp"
                                     android:paddingEnd="8dp"
                                     android:singleLine="true"
-                                    android:textColor="?attr/textcolor"
+                                    android:textColor="@color/white"
                                     android:textSize="12dp" />
 
                                 <LinearLayout
@@ -190,6 +190,8 @@
                                         android:layout_height="30dp"
                                         android:background="@drawable/round_purchase"
                                         android:fontFamily="@font/roboto_medium"
+                                        android:text="@string/Download"
+
                                         android:gravity="center"
                                         android:minWidth="50dp"
                                         android:paddingStart="8dp"
@@ -209,7 +211,7 @@
                                         android:paddingEnd="8dp"
                                         android:singleLine="true"
                                         android:text="Sample Book"
-                                        android:textColor="?attr/textcolor"
+                                        android:textColor="@color/white"
                                         android:textSize="12dp" />
                                 </LinearLayout>
                             </LinearLayout>

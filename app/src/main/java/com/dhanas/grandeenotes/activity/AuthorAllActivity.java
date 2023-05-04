@@ -97,11 +97,8 @@ public class AuthorAllActivity extends AppCompatActivity {
                     AuthorList = new ArrayList<>();
                     AuthorList = response.body().getResult();
                     Log.e("AuthorList", "" + AuthorList.size());
-
                     authorAdapter = new AuthorAdapter(AuthorAllActivity.this, AuthorList);
                     rv_author.setHasFixedSize(true);
-                    RecyclerView.LayoutManager mLayoutManager3 = new LinearLayoutManager(AuthorAllActivity.this,
-                            LinearLayoutManager.HORIZONTAL, false);
                     GridLayoutManager gridLayoutManager = new GridLayoutManager(AuthorAllActivity.this, 3, LinearLayoutManager.VERTICAL, false);
                     rv_author.setLayoutManager(gridLayoutManager);
                     rv_author.setItemAnimator(new DefaultItemAnimator());
