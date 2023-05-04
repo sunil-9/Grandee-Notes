@@ -108,8 +108,10 @@ public class DownloadedBooks extends AppCompatActivity {
     private void downloadlist() {
         progressDialog.show();
         //we used rawQuery(sql, selectionargs) for fetching all the employees
-        try{
-            Cursor cursorBooks = mDatabase.rawQuery("SELECT * FROM books", null);
+
+        Cursor cursorBooks;
+        try {
+             cursorBooks = mDatabase.rawQuery("SELECT * FROM books", null);
             //if the cursor has some data
             if (cursorBooks.moveToFirst()) {
                 //looping through all the records
@@ -118,31 +120,32 @@ public class DownloadedBooks extends AppCompatActivity {
                     bookList.add(new DownloadModel(
                             cursorBooks.getInt(0),
                             cursorBooks.getString(1),
-                            cursorBooks.getString(2),
-                            cursorBooks.getString(3)
+                            cursorBooks.getString(2)
                     ));
                 } while (cursorBooks.moveToNext());
             }
+
             //closing the cursor
             cursorBooks.close();
-
-            if (bookList.size() > 0) {
-                myDownloadBooksAdapter = new MyDownloadBooksAdapter(DownloadedBooks.this, bookList, mDatabase);
-                rv_mydownloadbooks.setHasFixedSize(true);
-                RecyclerView.LayoutManager mLayoutManager3 = new LinearLayoutManager(DownloadedBooks.this,
-                        LinearLayoutManager.HORIZONTAL, false);
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(DownloadedBooks.this, 3,
-                        LinearLayoutManager.VERTICAL, false);
-                rv_mydownloadbooks.setLayoutManager(gridLayoutManager);
-                rv_mydownloadbooks.setItemAnimator(new DefaultItemAnimator());
-                rv_mydownloadbooks.setAdapter(myDownloadBooksAdapter);
-                myDownloadBooksAdapter.notifyDataSetChanged();
-            } else {
-                ly_dataNotFound.setVisibility(View.VISIBLE);
-            }
-
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+
+
+        if (bookList.size() > 0) {
+            myDownloadBooksAdapter = new MyDownloadBooksAdapter(DownloadedBooks.this, bookList, mDatabase);
+            rv_mydownloadbooks.setHasFixedSize(true);
+            RecyclerView.LayoutManager mLayoutManager3 = new LinearLayoutManager(DownloadedBooks.this,
+                    LinearLayoutManager.HORIZONTAL, false);
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(DownloadedBooks.this, 3,
+                    LinearLayoutManager.VERTICAL, false);
+            rv_mydownloadbooks.setLayoutManager(gridLayoutManager);
+            rv_mydownloadbooks.setItemAnimator(new DefaultItemAnimator());
+            rv_mydownloadbooks.setAdapter(myDownloadBooksAdapter);
+            myDownloadBooksAdapter.notifyDataSetChanged();
+        } else {
+            ly_dataNotFound.setVisibility(View.VISIBLE);
         }
 
         progressDialog.dismiss();

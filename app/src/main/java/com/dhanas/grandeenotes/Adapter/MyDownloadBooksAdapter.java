@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -61,26 +62,33 @@ public class MyDownloadBooksAdapter extends RecyclerView.Adapter<MyDownloadBooks
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        String book_link = downloadedData.get(position).getBook_name();
-        String fileName=getFileName(book_link);
-        String image_link ="file://"+downloadedData.get(position).getImage();
-        holder.txt_bookname.setText(downloadedData.get(position).getTitle());
-        Log.e("click ", "book  image location "+image_link);
 
-        Picasso.with(mcontext).load(image_link)
-                .priority(HIGH).into(holder.iv_thumb);
+        if(NewArrivalList!=null){
+            String book_link = NewArrivalList.get(position).getBook_name();
+            String fileName=getFileName(book_link);
+            String image_link ="file://"+NewArrivalList.get(position).getImage();
+            holder.txt_bookname.setText(fileName);
 
-        holder.iv_thumb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.e("click", "book location "+book_link);
+            Log.e("click ", "book  image location "+image_link);
 
-                mcontext.startActivity(new Intent(mcontext, PDFShow.class)
-                        .putExtra("link",  book_link)
-                        .putExtra("toolbarTitle",  fileName)
-                        .putExtra("type", "file"));
-            }
-        });
+            Picasso.with(mcontext).load(image_link)
+                    .priority(HIGH).into(holder.iv_thumb);
+
+            holder.iv_thumb.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.e("click", "book location "+book_link);
+
+                    mcontext.startActivity(new Intent(mcontext, PDFShow.class)
+                            .putExtra("link",  book_link)
+                            .putExtra("toolbarTitle",  fileName)
+                            .putExtra("type", "file"));
+                }
+            });
+        }
+        else {
+            Toast.makeText(mcontext, "no download history", Toast.LENGTH_SHORT).show();
+        }
     }
     private String getFileName(String url) {
         return url.substring(url.lastIndexOf('/'));
